@@ -33,12 +33,20 @@ export interface AttributeMetadata<Value> {
   /**
    * Manipulate the value whenever it is transformed into AttributeValue from Value
    */
-  manipulateWrite?: (attributeValue: AttributeValue | null, value: Value | null, attribute: Attribute<any>) => AttributeValue | null
+  manipulateWrite?: (
+    attributeValue: AttributeValue | null,
+    value: Value | null,
+    attribute: Attribute<any>
+  ) => AttributeValue | null
 
   /**
    * Manipulate the value whenever it is read from the AttributeValue into Value
    */
-  manipulateRead?: (value: Value | null, attributeValue: AttributeValue | null, attribute: Attribute<any>) => Value | null
+  manipulateRead?: (
+    value: Value | null,
+    attributeValue: AttributeValue | null,
+    attribute: Attribute<any>
+  ) => Value | null
 
   /**
    * Define custom validation logic.
@@ -46,5 +54,5 @@ export interface AttributeMetadata<Value> {
    * When the value is invalid, this function should throw an error.
    * Optionally, it can return false and Dyngoose will throw an `ValidationError`.
    */
-  validate?: (value: Value) => boolean
+  validate?: (value: Value | null) => boolean
 }

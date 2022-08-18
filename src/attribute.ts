@@ -11,9 +11,10 @@ export class Attribute<Value> {
   constructor(
     public readonly propertyName: string,
     public readonly type: IAttributeType<Value>,
-    public metadata: AttributeMetadata<Value> = {},
+    public metadata: AttributeMetadata<Value> = {}
   ) {
-    this.name = this.metadata.name == null ? this.propertyName : this.metadata.name
+    this.name =
+      this.metadata.name == null ? this.propertyName : this.metadata.name
   }
 
   /**
@@ -21,7 +22,9 @@ export class Attribute<Value> {
    */
   getDefaultValue(): Value | null {
     if (typeof this.metadata.default !== 'undefined') {
-      return _.isFunction(this.metadata.default) ? this.metadata.default() : this.metadata.default
+      return _.isFunction(this.metadata.default)
+        ? this.metadata.default()
+        : this.metadata.default
     } else if (typeof this.type.getDefault === 'function') {
       return this.type.getDefault()
     } else {
@@ -38,8 +41,6 @@ export class Attribute<Value> {
       // if we have no value, allow the manipulateWrite a chance to provide a value
       if (typeof this.metadata.manipulateWrite === 'function') {
         return this.metadata.manipulateWrite(null, null, this)
-      } else {
-        return null
       }
     }
 
@@ -48,10 +49,12 @@ export class Attribute<Value> {
       if (this.metadata.required === true) {
         throw new ValidationError('Required value missing: ' + this.name)
       }
-      return null
     }
 
-    if (typeof this.metadata.validate === 'function' && !this.metadata.validate(value)) {
+    if (
+      typeof this.metadata.validate === 'function' &&
+      !this.metadata.validate(value)
+    ) {
       throw new ValidationError('Validation failed: ' + this.name)
     }
 
@@ -68,7 +71,9 @@ export class Attribute<Value> {
     const attributeValue = this.toDynamo(value)
 
     if (attributeValue == null) {
-      throw new ValidationError(`Attribute.toDynamoAssert called without a valid value for ${this.name}`)
+      throw new ValidationError(
+        `Attribute.toDynamoAssert called without a valid value for ${this.name}`
+      )
     } else {
       return attributeValue
     }
