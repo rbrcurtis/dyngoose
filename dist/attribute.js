@@ -32,20 +32,16 @@ class Attribute {
      * Convert the given value for this attribute to a DynamoDB AttributeValue
      */
     toDynamo(value) {
-        // if there is no value, do not not return an empty DynamoDB.AttributeValue
-        if (value == null) {
-            if (this.metadata.required === true) {
-                throw new errors_1.ValidationError('Required value missing: ' + this.name);
-            }
-            return null;
-        }
         // if there is no value, inject the default value for this attribute
         if (value == null || truly_empty_1.isTrulyEmpty(value)) {
             // if we have no value, allow the manipulateWrite a chance to provide a value
             if (typeof this.metadata.manipulateWrite === 'function') {
                 return this.metadata.manipulateWrite(null, null, this);
-            }
-            else {
+            } // if there is no value, do not not return an empty DynamoDB.AttributeValue
+            else if (value == null) {
+                if (this.metadata.required === true) {
+                    throw new errors_1.ValidationError('Required value missing: ' + this.name);
+                }
                 return null;
             }
         }
