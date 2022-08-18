@@ -36,18 +36,21 @@ export class Attribute<Value> {
    * Convert the given value for this attribute to a DynamoDB AttributeValue
    */
   toDynamo(value: Value | null): DynamoDB.AttributeValue | null {
+    // if there is no value, do not not return an empty DynamoDB.AttributeValue
+    if (value == null) {
+      if (this.metadata.required === true) {
+        throw new ValidationError('Required value missing: ' + this.name)
+      }
+      return null
+    }
+
     // if there is no value, inject the default value for this attribute
     if (value == null || isTrulyEmpty(value)) {
       // if we have no value, allow the manipulateWrite a chance to provide a value
       if (typeof this.metadata.manipulateWrite === 'function') {
         return this.metadata.manipulateWrite(null, null, this)
-      }
-    }
-
-    // if there is no value, do not not return an empty DynamoDB.AttributeValue
-    if (value == null) {
-      if (this.metadata.required === true) {
-        throw new ValidationError('Required value missing: ' + this.name)
+      } else {
+        return null
       }
     }
 
