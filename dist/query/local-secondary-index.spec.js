@@ -64,9 +64,9 @@ describe('Query/LocalSecondaryIndex', () => {
             }, {
                 rangeOrder: 'DESC',
             });
-            chai_1.expect(res.records.length).to.eq(2);
-            chai_1.expect(res.records[0].count).to.eq(4);
-            chai_1.expect(res.records[1].count).to.eq(3);
+            (0, chai_1.expect)(res.records.length).to.eq(2);
+            (0, chai_1.expect)(res.records[0].count).to.eq(4);
+            (0, chai_1.expect)(res.records[1].count).to.eq(3);
         });
     });
 });

@@ -7,14 +7,14 @@ const utils_1 = require("./utils");
 class NumberAttributeType extends attribute_type_1.AttributeType {
     constructor() {
         super(...arguments);
-        this.type = "N" /* Number */;
+        this.type = "N" /* DynamoAttributeType.Number */;
     }
     toDynamo(value) {
-        if (!utils_1.isNumber(value)) {
+        if (!(0, utils_1.isNumber)(value)) {
             throw new errors_1.ValidationError(`Expected ${this.propertyName} to be a number`);
         }
         return {
-            N: utils_1.numberToString(value),
+            N: (0, utils_1.numberToString)(value),
         };
     }
     fromDynamo(value) {
@@ -22,7 +22,7 @@ class NumberAttributeType extends attribute_type_1.AttributeType {
             return null;
         }
         else {
-            return utils_1.stringToNumber(value.N);
+            return (0, utils_1.stringToNumber)(value.N);
         }
     }
 }

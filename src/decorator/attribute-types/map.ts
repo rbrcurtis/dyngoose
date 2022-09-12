@@ -9,8 +9,10 @@ import { Table } from '../../table'
 import { AttributeType } from '../../tables/attribute-type'
 import { isTrulyEmpty } from '../../utils/truly-empty'
 
-export class MapAttributeType<Value> extends AttributeType<Value, MapAttributeMetadata<Value>>
-  implements IAttributeType<Value> {
+export class MapAttributeType<Value>
+  extends AttributeType<Value, MapAttributeMetadata<Value>>
+  implements IAttributeType<Value>
+{
   type = DynamoAttributeType.Map
   attributes: { [key: string]: Attribute<any> }
 
@@ -100,6 +102,7 @@ export class MapAttributeType<Value> extends AttributeType<Value, MapAttributeMe
   toJSON(mapValue: Value): any {
     const json: any = {}
 
+    // @ts-ignore
     for (const propertyName of Object.keys(mapValue)) {
       const attribute = _.find(this.attributes, (attr) => attr.propertyName === propertyName)
       const value = _.get(mapValue, propertyName)

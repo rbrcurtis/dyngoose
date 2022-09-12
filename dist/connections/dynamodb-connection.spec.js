@@ -7,13 +7,13 @@ describe(dynamodb_connection_1.DynamoDBConnection.name, () => {
     describe('#constructor', () => {
         it('should work', () => {
             const conn = new dynamodb_connection_1.DynamoDBConnection({ endpoint: undefined, enableAWSXray: false });
-            chai_1.expect(conn).to.be.instanceof(dynamodb_connection_1.DynamoDBConnection);
+            (0, chai_1.expect)(conn).to.be.instanceof(dynamodb_connection_1.DynamoDBConnection);
         });
     });
     describe('#client', () => {
         it('should return client', () => {
             const conn = new dynamodb_connection_1.DynamoDBConnection({ endpoint: undefined, enableAWSXray: false });
-            chai_1.expect(conn.client).to.be.instanceof(AWS.DynamoDB);
+            (0, chai_1.expect)(conn.client).to.be.instanceof(AWS.DynamoDB);
         });
     });
 });

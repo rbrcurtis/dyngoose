@@ -10,9 +10,9 @@ class DateAttributeType extends attribute_type_1.AttributeType {
     constructor(record, propertyName, metadata) {
         var _a, _b, _c;
         super(record, propertyName, metadata);
-        this.type = "S" /* String */;
+        this.type = "S" /* DynamoAttributeType.String */;
         if (((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.unixTimestamp) === true || ((_b = this.metadata) === null || _b === void 0 ? void 0 : _b.millisecondTimestamp) === true || ((_c = this.metadata) === null || _c === void 0 ? void 0 : _c.timeToLive) === true) {
-            this.type = "N" /* Number */;
+            this.type = "N" /* DynamoAttributeType.Number */;
         }
     }
     decorate() {
@@ -56,10 +56,10 @@ class DateAttributeType extends attribute_type_1.AttributeType {
         // the timestamp will have been stored in UTC
         if (attributeValue.N != null) {
             if (((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.millisecondTimestamp) === true) {
-                return new Date(utils_1.stringToNumber(attributeValue.N));
+                return new Date((0, utils_1.stringToNumber)(attributeValue.N));
             }
             else if (((_b = this.metadata) === null || _b === void 0 ? void 0 : _b.unixTimestamp) === true || ((_c = this.metadata) === null || _c === void 0 ? void 0 : _c.timeToLive) === true) {
-                return new Date(utils_1.stringToNumber(attributeValue.N) * 1000);
+                return new Date((0, utils_1.stringToNumber)(attributeValue.N) * 1000);
             }
             else {
                 return null;
@@ -75,10 +75,10 @@ class DateAttributeType extends attribute_type_1.AttributeType {
     fromJSON(dt) {
         var _a, _b, _c;
         if (((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.unixTimestamp) === true || ((_b = this.metadata) === null || _b === void 0 ? void 0 : _b.timeToLive) === true) {
-            return new Date(utils_1.stringToNumber(dt) * 1000);
+            return new Date((0, utils_1.stringToNumber)(dt) * 1000);
         }
         else if (((_c = this.metadata) === null || _c === void 0 ? void 0 : _c.millisecondTimestamp) === true) {
-            return new Date(utils_1.stringToNumber(dt));
+            return new Date((0, utils_1.stringToNumber)(dt));
         }
         else {
             return new Date(dt);
@@ -116,10 +116,10 @@ class DateAttributeType extends attribute_type_1.AttributeType {
                 // if timestamp, assume the value is a timestamp
             }
             else if (((_b = this.metadata) === null || _b === void 0 ? void 0 : _b.unixTimestamp) === true || ((_c = this.metadata) === null || _c === void 0 ? void 0 : _c.timeToLive) === true) {
-                dt = new Date(utils_1.stringToNumber(dt) * 1000);
+                dt = new Date((0, utils_1.stringToNumber)(dt) * 1000);
             }
             else if (((_d = this.metadata) === null || _d === void 0 ? void 0 : _d.millisecondTimestamp) === true) {
-                dt = new Date(utils_1.stringToNumber(dt));
+                dt = new Date((0, utils_1.stringToNumber)(dt));
             }
             else if (ISOPattern.test(dt)) {
                 dt = new Date(dt);

@@ -14,11 +14,10 @@ module.exports = {
         asyncArrow: 'always',
       },
     ],
-    'comma-dangle': [
-      'error',
-      'always-multiline',
-    ],
-    'no-labels': 'off'
+    'comma-dangle': ['error', 'always-multiline'],
+    'no-labels': 'off',
+    '@typescript-eslint/prefer-ts-expect-error': 0,
+    '@typescript-eslint/brace-style': 0,
   },
   // "env": {
   //   "browser": true,
@@ -203,4 +202,4 @@ module.exports = {
   //   //   }
   //   // ]
   // }
-};
+}

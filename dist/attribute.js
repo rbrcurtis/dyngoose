@@ -9,17 +9,14 @@ class Attribute {
         this.propertyName = propertyName;
         this.type = type;
         this.metadata = metadata;
-        this.name =
-            this.metadata.name == null ? this.propertyName : this.metadata.name;
+        this.name = this.metadata.name == null ? this.propertyName : this.metadata.name;
     }
     /**
      * Set the default value for an attribute, if no value is currently set
      */
     getDefaultValue() {
         if (typeof this.metadata.default !== 'undefined') {
-            return _.isFunction(this.metadata.default)
-                ? this.metadata.default()
-                : this.metadata.default;
+            return _.isFunction(this.metadata.default) ? this.metadata.default() : this.metadata.default;
         }
         else if (typeof this.type.getDefault === 'function') {
             return this.type.getDefault();
@@ -31,22 +28,21 @@ class Attribute {
     /**
      * Convert the given value for this attribute to a DynamoDB AttributeValue
      */
-    toDynamo(value) {
+    toDynamo(value, enforceRequired = true) {
         // if there is no value, inject the default value for this attribute
-        if (value == null || truly_empty_1.isTrulyEmpty(value)) {
+        if (value == null || (0, truly_empty_1.isTrulyEmpty)(value)) {
             // if we have no value, allow the manipulateWrite a chance to provide a value
             if (typeof this.metadata.manipulateWrite === 'function') {
                 return this.metadata.manipulateWrite(null, null, this);
             } // if there is no value, do not not return an empty DynamoDB.AttributeValue
             else if (value == null) {
-                if (this.metadata.required === true) {
+                if (this.metadata.required === true && enforceRequired) {
                     throw new errors_1.ValidationError('Required value missing: ' + this.name);
                 }
                 return null;
             }
         }
-        if (typeof this.metadata.validate === 'function' &&
-            !this.metadata.validate(value)) {
+        if (typeof this.metadata.validate === 'function' && !this.metadata.validate(value)) {
             throw new errors_1.ValidationError('Validation failed: ' + this.name);
         }
         const attributeValue = this.type.toDynamo(value, this);
@@ -72,7 +68,7 @@ class Attribute {
     fromDynamo(attributeValue) {
         // if there is no value, apply the default, but allow the value to become null
         if (attributeValue == null) {
-            attributeValue = this.toDynamo(null);
+            attributeValue = this.toDynamo(null, false);
         }
         // all attributes support null
         if (attributeValue == null || attributeValue.NULL === true) {

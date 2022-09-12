@@ -584,7 +584,7 @@ const reservedKeywords = [
 function buildProjectionExpression(tableClass, attributes, existingExpressionAttributeNames = {}) {
     const projection = [];
     const map = existingExpressionAttributeNames;
-    attributes = lodash_1.uniq(attributes);
+    attributes = (0, lodash_1.uniq)(attributes);
     let i = 0;
     for (const attribute of attributes) {
         const existingMappedKey = Object.keys(map).find((key) => map[key] === attribute);

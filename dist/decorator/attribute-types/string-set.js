@@ -5,7 +5,7 @@ const attribute_type_1 = require("../../tables/attribute-type");
 class StringSetAttributeType extends attribute_type_1.AttributeType {
     constructor() {
         super(...arguments);
-        this.type = "SS" /* StringSet */;
+        this.type = "SS" /* DynamoAttributeType.StringSet */;
     }
 }
 exports.StringSetAttributeType = StringSetAttributeType;

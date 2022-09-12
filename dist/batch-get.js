@@ -59,13 +59,13 @@ class BatchGet {
     }
     async retrieve() {
         const chunkSize = this.atomicity ? BatchGet.MAX_TRANSACT_ITEMS : BatchGet.MAX_BATCH_ITEMS;
-        return await Promise.all(lodash_1.chunk(this.items, chunkSize).map(async (chunkedItems) => {
+        return await Promise.all((0, lodash_1.chunk)(this.items, chunkSize).map(async (chunkedItems) => {
             const requestMap = {};
             const transactItems = [];
             for (const item of chunkedItems) {
                 const tableClass = item.constructor;
                 const attributes = this.projectionMap.get(tableClass);
-                const expression = attributes == null ? null : projection_expression_1.buildProjectionExpression(tableClass, attributes);
+                const expression = attributes == null ? null : (0, projection_expression_1.buildProjectionExpression)(tableClass, attributes);
                 if (this.atomicity) {
                     const transactItem = {
                         Key: item.getDynamoKey(),
@@ -116,13 +116,13 @@ class BatchGet {
                 const tableClass = item.constructor;
                 const key = item.getDynamoKey();
                 let attributeMap;
-                if (lodash_1.isArray(responses)) {
+                if ((0, lodash_1.isArray)(responses)) {
                     const itemResponse = responses.find((record) => {
                         if (record.Item == null) {
                             return false;
                         }
                         for (const keyName of Object.keys(key)) {
-                            if (!lodash_1.isEqual(record.Item[keyName], key[keyName])) {
+                            if (!(0, lodash_1.isEqual)(record.Item[keyName], key[keyName])) {
                                 return false;
                             }
                         }
@@ -136,7 +136,7 @@ class BatchGet {
                     const records = responses[tableClass.schema.name];
                     attributeMap = records.find((record) => {
                         for (const keyName of Object.keys(key)) {
-                            if (!lodash_1.isEqual(record[keyName], key[keyName])) {
+                            if (!(0, lodash_1.isEqual)(record[keyName], key[keyName])) {
                                 return false;
                             }
                         }
@@ -151,9 +151,9 @@ class BatchGet {
                     return item;
                 }
             });
-            return lodash_1.filter(items);
+            return (0, lodash_1.filter)(items);
         })).then((chunks) => {
-            return lodash_1.filter(lodash_1.flatten(chunks));
+            return (0, lodash_1.filter)((0, lodash_1.flatten)(chunks));
         });
     }
     async retrieveMapped() {

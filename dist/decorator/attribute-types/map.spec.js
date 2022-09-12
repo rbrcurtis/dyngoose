@@ -80,11 +80,12 @@ describe('AttributeType/Map', () => {
                 middle: 'Jacobs',
                 last: 'Smith',
                 level: 1,
+                // nick is left empty to ensure optional properties work
             },
         });
         await record.save();
         const loaded = await MapTestTable.primaryKey.get(1);
-        chai_1.expect(loaded === null || loaded === void 0 ? void 0 : loaded.getAttributeDynamoValue('person')).to.deep.eq({
+        (0, chai_1.expect)(loaded === null || loaded === void 0 ? void 0 : loaded.getAttributeDynamoValue('person')).to.deep.eq({
             M: {
                 first: { S: 'John' },
                 middle: { S: 'Jacobs' },
@@ -92,8 +93,8 @@ describe('AttributeType/Map', () => {
                 level: { N: '1' },
             },
         });
-        chai_1.expect(loaded === null || loaded === void 0 ? void 0 : loaded.person.first).to.eq('John');
-        chai_1.expect(loaded === null || loaded === void 0 ? void 0 : loaded.getAttributeDynamoValue('person')).to.deep.eq({
+        (0, chai_1.expect)(loaded === null || loaded === void 0 ? void 0 : loaded.person.first).to.eq('John');
+        (0, chai_1.expect)(loaded === null || loaded === void 0 ? void 0 : loaded.getAttributeDynamoValue('person')).to.deep.eq({
             M: {
                 first: { S: 'John' },
                 middle: { S: 'Jacobs' },
@@ -101,7 +102,7 @@ describe('AttributeType/Map', () => {
                 level: { N: '1' },
             },
         });
-        chai_1.expect(loaded === null || loaded === void 0 ? void 0 : loaded.toJSON()).to.deep.eq({
+        (0, chai_1.expect)(loaded === null || loaded === void 0 ? void 0 : loaded.toJSON()).to.deep.eq({
             id: 1,
             person: {
                 first: 'John',
@@ -119,24 +120,25 @@ describe('AttributeType/Map', () => {
                 middle: 'Shelly',
                 last: 'Samuel',
                 level: 1,
+                // nick is left empty to ensure optional properties work
             },
         });
         await record.save();
         const result = await MapTestTable.search({
             'person.first': 'Sally',
         }).exec();
-        chai_1.expect(result.count).to.eq(1);
-        chai_1.expect(result[0].person.first).to.eq('Sally');
-        chai_1.expect(result.records[0].person.first).to.eq('Sally');
+        (0, chai_1.expect)(result.count).to.eq(1);
+        (0, chai_1.expect)(result[0].person.first).to.eq('Sally');
+        (0, chai_1.expect)(result.records[0].person.first).to.eq('Sally');
         // ensure you can look through the result as an array
         for (const doc of result) {
-            chai_1.expect(doc.person.first).to.eq('Sally');
+            (0, chai_1.expect)(doc.person.first).to.eq('Sally');
         }
         const searchOutput = await MapTestTable.search()
             .filter('person', 'first').eq('Sally')
             .exec();
-        chai_1.expect(searchOutput.count).to.eq(1);
-        chai_1.expect(searchOutput[0].person.first).to.eq('Sally');
+        (0, chai_1.expect)(searchOutput.count).to.eq(1);
+        (0, chai_1.expect)(searchOutput[0].person.first).to.eq('Sally');
     });
     it('should allow maps within maps', async () => {
         var _a, _b;
@@ -152,16 +154,16 @@ describe('AttributeType/Map', () => {
                     city: 'Springfield',
                     state: 'Simpcity',
                 },
-                dob: new Date(1956, 4, 12),
+                dob: new Date(1956, 4, 12), // May 12, 1956
             },
         });
-        chai_1.expect((_a = record.contact) === null || _a === void 0 ? void 0 : _a.name.first).to.eq('homer');
-        chai_1.expect((_b = record.contact) === null || _b === void 0 ? void 0 : _b.name.last).to.eq('SIMPSON');
+        (0, chai_1.expect)((_a = record.contact) === null || _a === void 0 ? void 0 : _a.name.first).to.eq('homer');
+        (0, chai_1.expect)((_b = record.contact) === null || _b === void 0 ? void 0 : _b.name.last).to.eq('SIMPSON');
         await record.save();
         const loaded = await MapTestTable.primaryKey.get(3);
-        chai_1.should().exist(loaded);
+        (0, chai_1.should)().exist(loaded);
         if (loaded != null) {
-            chai_1.expect(loaded.getAttributeDynamoValue('contact')).to.deep.eq({
+            (0, chai_1.expect)(loaded.getAttributeDynamoValue('contact')).to.deep.eq({
                 M: {
                     name: {
                         M: {
@@ -181,9 +183,9 @@ describe('AttributeType/Map', () => {
                     },
                 },
             });
-            chai_1.expect(loaded.contact.name.first).to.eq('homer');
-            chai_1.expect(loaded.contact.name.last).to.eq('SIMPSON');
-            chai_1.expect(loaded.toJSON()).to.deep.eq({
+            (0, chai_1.expect)(loaded.contact.name.first).to.eq('homer');
+            (0, chai_1.expect)(loaded.contact.name.last).to.eq('SIMPSON');
+            (0, chai_1.expect)(loaded.toJSON()).to.deep.eq({
                 id: 3,
                 contact: {
                     name: {
@@ -214,15 +216,15 @@ describe('AttributeType/Map', () => {
         const result = await MapTestTable.search({
             'contact.name.first': 'Marge',
         }).exec();
-        chai_1.expect(result.count).to.eq(1);
-        chai_1.expect(result.length).to.eq(1);
-        chai_1.expect(result[0].contact.name.first).to.eq('marge');
+        (0, chai_1.expect)(result.count).to.eq(1);
+        (0, chai_1.expect)(result.length).to.eq(1);
+        (0, chai_1.expect)(result[0].contact.name.first).to.eq('marge');
         const searchOutput = await MapTestTable.search()
             .filter('contact', 'name', 'first').eq('marge')
             .exec();
-        chai_1.expect(searchOutput.count).to.eq(1);
-        chai_1.expect(searchOutput.length).to.eq(1);
-        chai_1.expect(searchOutput[0].contact.name.first).to.eq('marge');
+        (0, chai_1.expect)(searchOutput.count).to.eq(1);
+        (0, chai_1.expect)(searchOutput.length).to.eq(1);
+        (0, chai_1.expect)(searchOutput[0].contact.name.first).to.eq('marge');
     });
     it('should support use of fromJSON to support REST APIs and DB Seeding', async () => {
         var _a, _b;
@@ -241,9 +243,9 @@ describe('AttributeType/Map', () => {
                 dob: '1956-05-12',
             },
         });
-        chai_1.expect((_a = record.contact.address) === null || _a === void 0 ? void 0 : _a.line1).to.eq('742 Evergreen Terrace');
-        chai_1.expect(record.contact.dob).to.be.instanceOf(Date);
-        chai_1.expect((_b = record.contact.dob) === null || _b === void 0 ? void 0 : _b.toISOString()).to.eq('1956-05-12T00:00:00.000Z');
+        (0, chai_1.expect)((_a = record.contact.address) === null || _a === void 0 ? void 0 : _a.line1).to.eq('742 Evergreen Terrace');
+        (0, chai_1.expect)(record.contact.dob).to.be.instanceOf(Date);
+        (0, chai_1.expect)((_b = record.contact.dob) === null || _b === void 0 ? void 0 : _b.toISOString()).to.eq('1956-05-12T00:00:00.000Z');
     });
 });
 //# sourceMappingURL=map.spec.js.map

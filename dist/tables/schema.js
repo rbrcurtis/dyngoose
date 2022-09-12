@@ -194,7 +194,7 @@ class Schema {
         };
     }
     createTableInput(forCloudFormation = false) {
-        return create_table_input_1.createTableInput(this, forCloudFormation);
+        return (0, create_table_input_1.createTableInput)(this, forCloudFormation);
     }
     createCloudFormationResource() {
         return this.createTableInput(true);

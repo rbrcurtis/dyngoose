@@ -70,7 +70,7 @@ class BatchWrite {
         return this;
     }
     async commit() {
-        const limit = async_sema_1.RateLimit(this.options.maxParallelWrites == null ? BatchWrite.MAX_PARALLEL_WRITES : this.options.maxParallelWrites);
+        const limit = (0, async_sema_1.RateLimit)(this.options.maxParallelWrites == null ? BatchWrite.MAX_PARALLEL_WRITES : this.options.maxParallelWrites);
         const chunks = _.chunk(this.list, this.options.maxItemsPerBatch == null ? BatchWrite.MAX_BATCH_ITEMS : this.options.maxItemsPerBatch);
         const exceptions = [];
         const promises = chunks.map(async (chunk) => {

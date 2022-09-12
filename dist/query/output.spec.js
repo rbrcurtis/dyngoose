@@ -14,12 +14,12 @@ describe('Query/Output', () => {
             Count: someItems.length,
             Items: someItems,
         }, false);
-        chai_1.expect(output.count).to.eq(someItems.length);
-        chai_1.expect(output.length).to.eq(someItems.length);
-        chai_1.expect(output[0]).to.not.be.eq(undefined);
-        chai_1.expect(output.map(i => i)[0]).to.be.instanceOf(setup_tests_spec_1.TestableTable);
+        (0, chai_1.expect)(output.count).to.eq(someItems.length);
+        (0, chai_1.expect)(output.length).to.eq(someItems.length);
+        (0, chai_1.expect)(output[0]).to.not.be.eq(undefined);
+        (0, chai_1.expect)(output.map(i => i)[0]).to.be.instanceOf(setup_tests_spec_1.TestableTable);
         for (const item of output) {
-            chai_1.expect(item).to.be.instanceOf(setup_tests_spec_1.TestableTable);
+            (0, chai_1.expect)(item).to.be.instanceOf(setup_tests_spec_1.TestableTable);
         }
     });
     it('should merge several outputs into a combined output', async () => {
@@ -35,12 +35,12 @@ describe('Query/Output', () => {
             output1,
             output2,
         ]);
-        chai_1.expect(output.count).to.eq(someItems.length * 2);
-        chai_1.expect(output.length).to.eq(someItems.length * 2);
-        chai_1.expect(output[0]).to.not.eq(undefined);
-        chai_1.expect(output.map(i => i)[0]).to.be.instanceOf(setup_tests_spec_1.TestableTable);
+        (0, chai_1.expect)(output.count).to.eq(someItems.length * 2);
+        (0, chai_1.expect)(output.length).to.eq(someItems.length * 2);
+        (0, chai_1.expect)(output[0]).to.not.eq(undefined);
+        (0, chai_1.expect)(output.map(i => i)[0]).to.be.instanceOf(setup_tests_spec_1.TestableTable);
         for (const item of output) {
-            chai_1.expect(item).to.be.instanceOf(setup_tests_spec_1.TestableTable);
+            (0, chai_1.expect)(item).to.be.instanceOf(setup_tests_spec_1.TestableTable);
         }
     });
     it('should ignore possible null items', async () => {
@@ -49,12 +49,12 @@ describe('Query/Output', () => {
             Count: 0,
             Items: [null],
         }, false);
-        chai_1.expect(output.count).to.eq(0);
-        chai_1.expect(output.length).to.eq(0);
-        chai_1.expect(output[0]).to.eq(undefined);
-        chai_1.expect(output.map(i => i)[0]).to.eq(undefined);
+        (0, chai_1.expect)(output.count).to.eq(0);
+        (0, chai_1.expect)(output.length).to.eq(0);
+        (0, chai_1.expect)(output[0]).to.eq(undefined);
+        (0, chai_1.expect)(output.map(i => i)[0]).to.eq(undefined);
         for (const item of output) {
-            chai_1.expect(item).to.eq(undefined);
+            (0, chai_1.expect)(item).to.eq(undefined);
         }
     });
     it('should return an empty array when there are no items', async () => {
@@ -65,12 +65,12 @@ describe('Query/Output', () => {
             LastEvaluatedKey: {},
             ConsumedCapacity: {},
         }, false);
-        chai_1.expect(output.count).to.eq(0);
-        chai_1.expect(output.length).to.eq(0);
-        chai_1.expect(output[0]).to.eq(undefined);
-        chai_1.expect(output.map(i => i)[0]).to.eq(undefined);
+        (0, chai_1.expect)(output.count).to.eq(0);
+        (0, chai_1.expect)(output.length).to.eq(0);
+        (0, chai_1.expect)(output[0]).to.eq(undefined);
+        (0, chai_1.expect)(output.map(i => i)[0]).to.eq(undefined);
         for (const item of output) {
-            chai_1.expect(item).to.eq(undefined);
+            (0, chai_1.expect)(item).to.eq(undefined);
         }
     });
     it('should merge several empty outputs into a single combined empty output', async () => {
@@ -86,12 +86,12 @@ describe('Query/Output', () => {
             output1,
             output2,
         ]);
-        chai_1.expect(output.count).to.eq(0);
-        chai_1.expect(output.length).to.eq(0);
-        chai_1.expect(output[0]).to.eq(undefined);
-        chai_1.expect(output.map(i => i)[0]).to.eq(undefined);
+        (0, chai_1.expect)(output.count).to.eq(0);
+        (0, chai_1.expect)(output.length).to.eq(0);
+        (0, chai_1.expect)(output[0]).to.eq(undefined);
+        (0, chai_1.expect)(output.map(i => i)[0]).to.eq(undefined);
         for (const item of output) {
-            chai_1.expect(item).to.eq(undefined);
+            (0, chai_1.expect)(item).to.eq(undefined);
         }
     });
 });

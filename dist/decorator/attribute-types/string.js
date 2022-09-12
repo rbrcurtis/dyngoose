@@ -7,7 +7,7 @@ const attribute_type_1 = require("../../tables/attribute-type");
 class StringAttributeType extends attribute_type_1.AttributeType {
     constructor() {
         super(...arguments);
-        this.type = "S" /* String */;
+        this.type = "S" /* DynamoAttributeType.String */;
     }
     toDynamo(value) {
         var _a, _b, _c;
@@ -15,7 +15,7 @@ class StringAttributeType extends attribute_type_1.AttributeType {
             throw new errors_1.ValidationError(`Expected ${this.propertyName} to be a string, but was given a ${typeof value}`);
         }
         if (((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.trim) === true) {
-            value = lodash_1.trim(value);
+            value = (0, lodash_1.trim)(value);
             if (value === '') {
                 return {
                     NULL: true,

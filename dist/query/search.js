@@ -243,7 +243,7 @@ class MagicSearch {
             // if no index was specified, look to see if there is an available index given the query
             indexMetadata = this.findAvailableIndex();
         }
-        const query = expression_1.buildQueryExpression(this.tableClass.schema, this.filters, indexMetadata);
+        const query = (0, expression_1.buildQueryExpression)(this.tableClass.schema, this.filters, indexMetadata);
         const input = {
             TableName: this.tableClass.schema.name,
             ConsistentRead: false,
@@ -257,7 +257,7 @@ class MagicSearch {
             input.ProjectionExpression = this.input.projectionExpression;
         }
         else if (this.input.attributes != null) {
-            const expression = projection_expression_1.buildProjectionExpression(this.tableClass, this.input.attributes, input.ExpressionAttributeNames);
+            const expression = (0, projection_expression_1.buildProjectionExpression)(this.tableClass, this.input.attributes, input.ExpressionAttributeNames);
             input.Select = 'SPECIFIC_ATTRIBUTES';
             input.ProjectionExpression = expression.ProjectionExpression;
             input.ExpressionAttributeNames = expression.ExpressionAttributeNames;
@@ -358,14 +358,14 @@ class MagicSearch {
     checkFilters(hash, range) {
         // cannot filter by a key without a value for the hash key
         for (const filters of this.filters) {
-            if (!lodash_1.has(filters, hash.name)) {
+            if (!(0, lodash_1.has)(filters, hash.name)) {
                 continue;
             }
-            const hashFilter = lodash_1.get(filters, hash.name);
+            const hashFilter = (0, lodash_1.get)(filters, hash.name);
             // if there is an operator, ensure it is allowed as a key expression
-            if (lodash_1.isArray(hashFilter)) {
+            if ((0, lodash_1.isArray)(hashFilter)) {
                 const operator = hashFilter[0];
-                if (!lodash_1.includes(expression_1.keyConditionAllowedOperators, operator)) {
+                if (!(0, lodash_1.includes)(expression_1.keyConditionAllowedOperators, operator)) {
                     continue;
                 }
             }
@@ -374,14 +374,14 @@ class MagicSearch {
                 return true;
             }
             // check for the range now
-            if (!lodash_1.has(filters, range.name)) {
+            if (!(0, lodash_1.has)(filters, range.name)) {
                 continue;
             }
-            const rangeFilter = lodash_1.get(filters, range.name);
+            const rangeFilter = (0, lodash_1.get)(filters, range.name);
             // if there is an operator, ensure it is allowed as a key expression
-            if (lodash_1.isArray(rangeFilter)) {
+            if ((0, lodash_1.isArray)(rangeFilter)) {
                 const operator = rangeFilter[0];
-                if (!lodash_1.includes(expression_1.keyConditionAllowedOperators, operator)) {
+                if (!(0, lodash_1.includes)(expression_1.keyConditionAllowedOperators, operator)) {
                     continue;
                 }
             }

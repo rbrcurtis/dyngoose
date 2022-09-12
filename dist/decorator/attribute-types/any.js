@@ -5,7 +5,7 @@ const attribute_type_1 = require("../../tables/attribute-type");
 class AnyAttributeType extends attribute_type_1.AttributeType {
     constructor() {
         super(...arguments);
-        this.type = "S" /* String */;
+        this.type = "S" /* DynamoAttributeType.String */;
     }
     toDynamo(value) {
         return {

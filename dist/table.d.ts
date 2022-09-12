@@ -111,7 +111,7 @@ export declare class Table {
      * Converts the current attribute values into a DynamoDB.AttributeMap which
      * can be sent directly to DynamoDB within a PutItem, UpdateItem, or similar
      * request.
-    */
+     */
     toDynamo(): DynamoDB.AttributeMap;
     /**
      * Get the DynamoDB.Key for this record.
@@ -175,7 +175,7 @@ export declare class Table {
      * Sets the DynamoDB.AttributeValue for an attribute.
      *
      * To set the value from a JavaScript object, use {@link Table.setAttribute}
-    */
+     */
     setAttributeDynamoValue(attributeName: string, attributeValue: DynamoDB.AttributeValue): this;
     /**
      * Sets the value of an attribute by attribute name from a JavaScript object.
@@ -192,7 +192,7 @@ export declare class Table {
      *
      * @param {object} values An object, where the keys are the attribute names,
      *                        and the values are the values you'd like to set.
-    */
+     */
     setAttributes(values: {
         [name: string]: any;
     }): this;
@@ -290,9 +290,9 @@ export declare class Table {
      *
      * Automatically determines if the the save should use a PutItem or UpdateItem request.
      */
-    save(event?: undefined | {
+    save(event?: undefined | ({
         returnOutput?: false;
-    } & Events.SaveEvent<this>): Promise<void>;
+    } & Events.SaveEvent<this>)): Promise<void>;
     save(event: {
         returnOutput: true;
         operator?: undefined;

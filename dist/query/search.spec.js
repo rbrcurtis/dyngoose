@@ -19,31 +19,31 @@ describe('Query/Search', () => {
     it('should search using an available index', async () => {
         const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable, { title: 'Table.search 0' });
         const input = search.getInput();
-        chai_1.expect(input.IndexName).to.eq('titleIndex');
+        (0, chai_1.expect)(input.IndexName).to.eq('titleIndex');
         const result = await search.exec();
-        chai_1.expect(result.count).to.eq(1);
-        chai_1.expect(result.records[0].title).to.eq('Table.search 0');
-        chai_1.expect(result.records[0].lowercaseString).to.eq('table search 0');
+        (0, chai_1.expect)(result.count).to.eq(1);
+        (0, chai_1.expect)(result.records[0].title).to.eq('Table.search 0');
+        (0, chai_1.expect)(result.records[0].lowercaseString).to.eq('table search 0');
     });
     it('should ignore index if you are using a special condition', async () => {
         const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable, {
             title: ['contains', 'Table.search'],
         });
         const input = search.getInput();
-        chai_1.expect(input.IndexName).to.be.a('undefined');
-        chai_1.expect(input.KeyConditionExpression).to.be.a('undefined');
+        (0, chai_1.expect)(input.IndexName).to.be.a('undefined');
+        (0, chai_1.expect)(input.KeyConditionExpression).to.be.a('undefined');
         const result = await search.exec();
-        chai_1.expect(result.count).to.eq(8);
+        (0, chai_1.expect)(result.count).to.eq(8);
     });
     it('should ignore indexes if none are available', async () => {
         const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable, {
             lowercaseString: ['contains', 'table search'],
         });
         const input = search.getInput();
-        chai_1.expect(input.IndexName).to.be.a('undefined');
-        chai_1.expect(input.KeyConditionExpression).to.be.a('undefined');
+        (0, chai_1.expect)(input.IndexName).to.be.a('undefined');
+        (0, chai_1.expect)(input.KeyConditionExpression).to.be.a('undefined');
         const result = await search.exec();
-        chai_1.expect(result.count).to.eq(4);
+        (0, chai_1.expect)(result.count).to.eq(4);
     });
     it('should support AND operators', async () => {
         const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable)
@@ -51,13 +51,13 @@ describe('Query/Search', () => {
             .and()
             .filter('lowercaseString').eq('magic');
         const input = search.getInput();
-        chai_1.expect(input.IndexName).to.be.a('undefined');
-        chai_1.expect(input.FilterExpression).to.eq('#a0 = :v0 AND #a0 = :v1');
+        (0, chai_1.expect)(input.IndexName).to.be.a('undefined');
+        (0, chai_1.expect)(input.FilterExpression).to.eq('#a0 = :v0 AND #a0 = :v1');
         const result = await search.exec();
-        chai_1.expect(result.count).to.eq(0);
-        chai_1.expect(result.length).to.eq(0);
-        chai_1.expect(result[0]).to.eq(undefined);
-        chai_1.expect(result.map(i => i)[0]).to.eq(undefined);
+        (0, chai_1.expect)(result.count).to.eq(0);
+        (0, chai_1.expect)(result.length).to.eq(0);
+        (0, chai_1.expect)(result[0]).to.eq(undefined);
+        (0, chai_1.expect)(result.map(i => i)[0]).to.eq(undefined);
     });
     it('should support OR operators', async () => {
         const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable)
@@ -65,10 +65,10 @@ describe('Query/Search', () => {
             .or()
             .filter('lowercaseString').eq('magic');
         const input = search.getInput();
-        chai_1.expect(input.IndexName).to.be.a('undefined');
-        chai_1.expect(input.FilterExpression).to.eq('#a0 = :v0 OR #a0 = :v1');
+        (0, chai_1.expect)(input.IndexName).to.be.a('undefined');
+        (0, chai_1.expect)(input.FilterExpression).to.eq('#a0 = :v0 OR #a0 = :v1');
         const result = await search.exec();
-        chai_1.expect(result.count).to.eq(3);
+        (0, chai_1.expect)(result.count).to.eq(3);
     });
     it('should support AND and OR operators together', async () => {
         const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable)
@@ -80,75 +80,75 @@ describe('Query/Search', () => {
                 .filter('lowercaseString').eq('magic');
         });
         const input = search.getInput();
-        chai_1.expect(input.IndexName).to.be.a('undefined');
-        chai_1.expect(input.FilterExpression).to.eq('contains(#a0, :v0) AND (#a1 = :v1 OR #a1 = :v2)');
+        (0, chai_1.expect)(input.IndexName).to.be.a('undefined');
+        (0, chai_1.expect)(input.FilterExpression).to.eq('contains(#a0, :v0) AND (#a1 = :v1 OR #a1 = :v2)');
         const result = await search.exec();
-        chai_1.expect(result.count).to.eq(3);
+        (0, chai_1.expect)(result.count).to.eq(3);
     });
     it('ConsistentRead defaults to false', async () => {
         const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable);
         const input = search.getInput();
-        chai_1.expect(input.ConsistentRead).to.eq(false);
+        (0, chai_1.expect)(input.ConsistentRead).to.eq(false);
     });
     it('.consistent sets ConsistentRead on input', async () => {
         const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable);
         search.consistent(true);
         const input = search.getInput();
-        chai_1.expect(input.ConsistentRead).to.eq(true);
+        (0, chai_1.expect)(input.ConsistentRead).to.eq(true);
     });
     it('.using sets IndexName on input', async () => {
         const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable);
         // try using the GSI instance
         search.using(setup_tests_spec_1.TestableTable.titleIndex);
         let input = search.getInput();
-        chai_1.expect(input.IndexName).to.eq('titleIndex');
+        (0, chai_1.expect)(input.IndexName).to.eq('titleIndex');
         // try using the index name
         search.using('titleIndex');
         input = search.getInput();
-        chai_1.expect(input.IndexName).to.eq('titleIndex');
+        (0, chai_1.expect)(input.IndexName).to.eq('titleIndex');
         // try using the primary key
         search.using(setup_tests_spec_1.TestableTable.primaryKey);
         input = search.getInput();
-        chai_1.expect(input.IndexName).to.eq(undefined);
+        (0, chai_1.expect)(input.IndexName).to.eq(undefined);
     });
     describe('.sort', () => {
         it('.sort sets ScanIndexForward on input', async () => {
             const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable);
             search.sort('descending');
             const input = search.getInput();
-            chai_1.expect(input.ScanIndexForward).to.eq(false);
+            (0, chai_1.expect)(input.ScanIndexForward).to.eq(false);
         });
         it('.ascending sets ScanIndexForward on input', async () => {
             const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable);
             search.ascending();
             const input = search.getInput();
-            chai_1.expect(input.ScanIndexForward).to.eq(undefined);
+            (0, chai_1.expect)(input.ScanIndexForward).to.eq(undefined);
         });
         it('.descending sets ScanIndexForward on input', async () => {
             const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable);
             search.descending();
             const input = search.getInput();
-            chai_1.expect(input.ScanIndexForward).to.eq(false);
+            (0, chai_1.expect)(input.ScanIndexForward).to.eq(false);
         });
     });
     it('.limit sets Limit on input', async () => {
         const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable);
         search.limit(5);
         const input = search.getInput();
-        chai_1.expect(input.Limit).to.eq(5);
+        (0, chai_1.expect)(input.Limit).to.eq(5);
     });
     it('.startAt sets ExclusiveStartKey on input', async () => {
         const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable);
         search.startAt({ id: { S: 'test' } });
         const input = search.getInput();
-        chai_1.expect(input.ExclusiveStartKey).to.deep.eq({ id: { S: 'test' } });
+        (0, chai_1.expect)(input.ExclusiveStartKey).to.deep.eq({ id: { S: 'test' } });
     });
     it('.attributes sets ProjectionExpression on input', async () => {
         const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable);
         search.attributes('id', 'name');
         const input = search.getInput();
-        chai_1.expect(input.ProjectionExpression).to.eq('id,#p0');
-        chai_1.expect(input.ExpressionAttributeNames).to.deep.eq({
+        (0, chai_1.expect)(input.ProjectionExpression).to.eq('id,#p0');
+        (0, chai_1.expect)(input.ExpressionAttributeNames).to.deep.eq({
             '#p0': 'name',
         });
     });
@@ -156,7 +156,7 @@ describe('Query/Search', () => {
         const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable);
         search.properties('id', 'title', 'testAttributeNaming');
         const input = search.getInput();
-        chai_1.expect(input.ProjectionExpression).to.eq('id,title,testAttributeNameNotMatchingPropertyName');
+        (0, chai_1.expect)(input.ProjectionExpression).to.eq('id,title,testAttributeNameNotMatchingPropertyName');
     });
     it('merges ExpressionAttributeNames correctly', async () => {
         const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable);
@@ -164,30 +164,30 @@ describe('Query/Search', () => {
         search.attributes('name');
         search.properties('id', 'createdAt', 'title', 'testAttributeNaming');
         const input = search.getInput();
-        chai_1.expect(input.ExpressionAttributeNames).to.deep.eq({
+        (0, chai_1.expect)(input.ExpressionAttributeNames).to.deep.eq({
             '#a0': 'createdAt',
             '#p0': 'name',
         });
-        chai_1.expect(input.ProjectionExpression).to.eq('#p0,id,#a0,title,testAttributeNameNotMatchingPropertyName');
+        (0, chai_1.expect)(input.ProjectionExpression).to.eq('#p0,id,#a0,title,testAttributeNameNotMatchingPropertyName');
     });
     describe('#exec', () => {
         it('should execute the search query', async () => {
             const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable)
                 .filter('title').contains('Table.search');
             const output = await search.exec();
-            chai_1.expect(output.length).to.eq(8);
+            (0, chai_1.expect)(output.length).to.eq(8);
         });
         it('honor a limited search', async () => {
             const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable)
                 .filter('title').contains('Table.search')
                 .limit(2);
             const output = await search.exec();
-            chai_1.expect(output.length).to.eq(2);
+            (0, chai_1.expect)(output.length).to.eq(2);
         });
         it('allowing paging the entire table when no filters are specified', async () => {
             const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable);
             const output = await search.exec();
-            chai_1.expect(output.length).to.be.at.least(8);
+            (0, chai_1.expect)(output.length).to.be.at.least(8);
         });
     });
     describe('#all', () => {
@@ -198,7 +198,7 @@ describe('Query/Search', () => {
             // we set a limit and then called .all(), so it should page automatically until all results are found
             // this is stupid and slow, it would be faster to remove the limit, but we are testing the paging logic of .all
             const output = await search.all();
-            chai_1.expect(output.length).to.eq(8);
+            (0, chai_1.expect)(output.length).to.eq(8);
         });
     });
     describe('#minimum', () => {
@@ -208,7 +208,7 @@ describe('Query/Search', () => {
                 .limit(2);
             // we set a limit and then called .all(), so it should page automatically until all results are found
             const output = await search.minimum(5);
-            chai_1.expect(output.length).to.be.at.least(5);
+            (0, chai_1.expect)(output.length).to.be.at.least(5);
         });
     });
 });

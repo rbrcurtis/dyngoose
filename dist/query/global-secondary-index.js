@@ -28,10 +28,10 @@ class GlobalSecondaryIndex {
      * Avoid use whenever you do not have uniqueness for the GlobalSecondaryIndex's HASH + RANGE.
      */
     async get(filters, input = {}) {
-        if (!lodash_1.has(filters, this.metadata.hash.propertyName)) {
+        if (!(0, lodash_1.has)(filters, this.metadata.hash.propertyName)) {
             throw new errors_1.QueryError('Cannot perform .get() on a GlobalSecondaryIndex without specifying a hash key value');
         }
-        else if (this.metadata.range != null && !lodash_1.has(filters, this.metadata.range.propertyName)) {
+        else if (this.metadata.range != null && !(0, lodash_1.has)(filters, this.metadata.range.propertyName)) {
             throw new errors_1.QueryError('Cannot perform .get() on a GlobalSecondaryIndex without specifying a range key value');
         }
         else if (Object.keys(filters).length > 2) {
@@ -59,12 +59,18 @@ class GlobalSecondaryIndex {
             ScanIndexForward,
             ExclusiveStartKey: input.exclusiveStartKey,
             ReturnConsumedCapacity: 'TOTAL',
+            /**
+             * Global secondary indexes support eventually consistent reads only,
+             * so do not specify ConsistentRead when querying a global secondary index.
+             * @see {@link https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#query-property}
+             */
+            // ConsistentRead: input.consistent,
         };
         if (input.select === 'COUNT') {
             queryInput.Select = 'COUNT';
         }
         if (input.attributes != null && input.projectionExpression == null) {
-            const expression = projection_expression_1.buildProjectionExpression(this.tableClass, input.attributes);
+            const expression = (0, projection_expression_1.buildProjectionExpression)(this.tableClass, input.attributes);
             queryInput.Select = 'SPECIFIC_ATTRIBUTES';
             queryInput.ProjectionExpression = expression.ProjectionExpression;
             queryInput.ExpressionAttributeNames = expression.ExpressionAttributeNames;
@@ -75,7 +81,7 @@ class GlobalSecondaryIndex {
             queryInput.ExpressionAttributeNames = input.expressionAttributeNames;
         }
         if (filters != null && Object.keys(filters).length > 0) {
-            const expression = expression_1.buildQueryExpression(this.tableClass.schema, filters, this.metadata);
+            const expression = (0, expression_1.buildQueryExpression)(this.tableClass.schema, filters, this.metadata);
             queryInput.FilterExpression = expression.FilterExpression;
             queryInput.KeyConditionExpression = expression.KeyConditionExpression;
             queryInput.ExpressionAttributeValues = expression.ExpressionAttributeValues;
@@ -89,10 +95,10 @@ class GlobalSecondaryIndex {
         return queryInput;
     }
     async query(filters, input) {
-        if (!lodash_1.has(filters, this.metadata.hash.propertyName)) {
+        if (!(0, lodash_1.has)(filters, this.metadata.hash.propertyName)) {
             throw new errors_1.QueryError('Cannot perform a query on a GlobalSecondaryIndex without specifying a hash key value');
         }
-        else if (lodash_1.isArray(lodash_1.get(filters, this.metadata.hash.propertyName)) && lodash_1.get(filters, this.metadata.hash.propertyName)[0] !== '=') {
+        else if ((0, lodash_1.isArray)((0, lodash_1.get)(filters, this.metadata.hash.propertyName)) && (0, lodash_1.get)(filters, this.metadata.hash.propertyName)[0] !== '=') {
             throw new errors_1.QueryError('DynamoDB only supports using equal operator for the HASH key');
         }
         const queryInput = this.getQueryInput(input, filters);
@@ -119,7 +125,7 @@ class GlobalSecondaryIndex {
             ConsistentRead: input.consistent,
         };
         if (input.attributes != null && input.projectionExpression == null) {
-            const expression = projection_expression_1.buildProjectionExpression(this.tableClass, input.attributes);
+            const expression = (0, projection_expression_1.buildProjectionExpression)(this.tableClass, input.attributes);
             scanInput.ProjectionExpression = expression.ProjectionExpression;
             scanInput.ExpressionAttributeNames = expression.ExpressionAttributeNames;
         }
@@ -129,7 +135,7 @@ class GlobalSecondaryIndex {
         }
         if (filters != null && Object.keys(filters).length > 0) {
             // don't pass the index metadata, avoids KeyConditionExpression
-            const expression = expression_1.buildQueryExpression(this.tableClass.schema, filters);
+            const expression = (0, expression_1.buildQueryExpression)(this.tableClass.schema, filters);
             scanInput.FilterExpression = expression.FilterExpression;
             scanInput.ExpressionAttributeValues = expression.ExpressionAttributeValues;
             if (scanInput.ExpressionAttributeNames == null) {

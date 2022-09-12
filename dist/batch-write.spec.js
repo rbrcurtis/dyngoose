@@ -31,11 +31,11 @@ describe('BatchWrite', () => {
         __metadata("design:type", Number)
     ], Card.prototype, "count", void 0);
     __decorate([
-        decorator_1.PrimaryKey('id', 'title'),
+        (0, decorator_1.PrimaryKey)('id', 'title'),
         __metadata("design:type", primary_key_1.PrimaryKey)
     ], Card, "primaryKey", void 0);
     Card = __decorate([
-        decorator_1.Table({ name: 'BatchWriteTestCardTable' })
+        (0, decorator_1.Table)({ name: 'BatchWriteTestCardTable' })
     ], Card);
     before(async () => {
         await Card.createTable();
@@ -64,11 +64,11 @@ describe('BatchWrite', () => {
         await batch.commit();
         // now verify the results
         const results1 = await Card.primaryKey.query({ id: 42 }, { select: 'COUNT' });
-        chai_1.expect(results1.count).eq(250);
+        (0, chai_1.expect)(results1.count).eq(250);
         const results2 = await Card.primaryKey.query({ id: 10 });
-        chai_1.expect(results2.count).eq(1);
-        chai_1.expect(results2[0].id).eq(10);
-        chai_1.expect(results2[0].title).eq('a');
+        (0, chai_1.expect)(results2.count).eq(1);
+        (0, chai_1.expect)(results2[0].id).eq(10);
+        (0, chai_1.expect)(results2[0].title).eq('a');
     });
     it('should fail with a BatchError', async () => {
         const batch = new batch_write_1.BatchWrite();
@@ -83,7 +83,7 @@ describe('BatchWrite', () => {
         catch (ex) {
             exception = ex;
         }
-        chai_1.expect(exception).to.be.instanceOf(errors_1.BatchError);
+        (0, chai_1.expect)(exception).to.be.instanceOf(errors_1.BatchError);
     });
 });
 //# sourceMappingURL=batch-write.spec.js.map

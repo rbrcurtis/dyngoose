@@ -75,18 +75,18 @@ describe('Query/GlobalSecondaryIndex', () => {
                 catch (ex) {
                     exception = ex;
                 }
-                chai_1.should().exist(exception);
+                (0, chai_1.should)().exist(exception);
             });
             it('should find item', async () => {
                 await Card.new({ id: 10, title: 'abc', count: 1 }).save();
                 // this .get() will perform a query with a limit of 1,
                 // so it will get the first matching record
                 const card = await Card.filterableTitleIndex.get({ id: 10, title: 'abc' });
-                chai_1.should().exist(card);
+                (0, chai_1.should)().exist(card);
                 if (card != null) {
-                    chai_1.expect(card.id).to.eq(10);
-                    chai_1.expect(card.title).to.eq('abc');
-                    chai_1.expect(card.count).to.eq(1);
+                    (0, chai_1.expect)(card.id).to.eq(10);
+                    (0, chai_1.expect)(card.title).to.eq('abc');
+                    (0, chai_1.expect)(card.count).to.eq(1);
                 }
             });
         });
@@ -96,38 +96,38 @@ describe('Query/GlobalSecondaryIndex', () => {
                 await Card.new({ id: 11, title: 'abd' }).save();
                 await Card.new({ id: 12, title: 'abd' }).save();
                 const res = await Card.hashTitleIndex.query({ title: 'abd' });
-                chai_1.expect(res.records.length).to.eq(2);
-                chai_1.expect(res.records[0].id).to.eq(12);
-                chai_1.expect(res.records[1].id).to.eq(11);
+                (0, chai_1.expect)(res.records.length).to.eq(2);
+                (0, chai_1.expect)(res.records[0].id).to.eq(12);
+                (0, chai_1.expect)(res.records[1].id).to.eq(11);
             });
             it('should return an empty array when no items match', async () => {
                 const res = await Card.hashTitleIndex.query({ title: '404' });
-                chai_1.expect(res[0]).to.not.eq(null);
-                chai_1.expect(res.records.length).to.eq(0);
-                chai_1.expect(res.length).to.eq(0);
-                chai_1.expect(res.count).to.eq(0);
-                chai_1.expect(res.map(i => i)[0]).to.eq(undefined);
+                (0, chai_1.expect)(res[0]).to.not.eq(null);
+                (0, chai_1.expect)(res.records.length).to.eq(0);
+                (0, chai_1.expect)(res.length).to.eq(0);
+                (0, chai_1.expect)(res.count).to.eq(0);
+                (0, chai_1.expect)(res.map(i => i)[0]).to.eq(undefined);
                 for (const card of res.records) {
-                    chai_1.expect(card).to.eq('does not exist');
+                    (0, chai_1.expect)(card).to.eq('does not exist');
                 }
                 for (const card of res) {
-                    chai_1.expect(card).to.eq('does not exist');
+                    (0, chai_1.expect)(card).to.eq('does not exist');
                 }
             });
             it('should complain when HASH key is not provided', async () => {
                 await Card.hashTitleIndex.query({ id: 10 }).then(() => {
-                    chai_1.expect(true).to.be.eq('false');
+                    (0, chai_1.expect)(true).to.be.eq('false');
                 }, (err) => {
-                    chai_1.expect(err).to.be.instanceOf(errors_1.QueryError);
-                    chai_1.expect(err.message).to.contain('Cannot perform');
+                    (0, chai_1.expect)(err).to.be.instanceOf(errors_1.QueryError);
+                    (0, chai_1.expect)(err.message).to.contain('Cannot perform');
                 });
             });
             it('should complain when HASH key attempts to use unsupported operator', async () => {
                 await Card.hashTitleIndex.query({ title: ['<>', 'abd'] }).then(() => {
-                    chai_1.expect(true).to.be.eq('false');
+                    (0, chai_1.expect)(true).to.be.eq('false');
                 }, (err) => {
-                    chai_1.expect(err).to.be.instanceOf(errors_1.QueryError);
-                    chai_1.expect(err.message).to.contain('DynamoDB only supports');
+                    (0, chai_1.expect)(err).to.be.instanceOf(errors_1.QueryError);
+                    (0, chai_1.expect)(err.message).to.contain('DynamoDB only supports');
                 });
             });
             it('should allow use of query operators for RANGE', async () => {
@@ -135,17 +135,17 @@ describe('Query/GlobalSecondaryIndex', () => {
                 await Card.new({ id: 10, title: 'prefix/123' }).save();
                 await Card.new({ id: 10, title: 'prefix/xyz' }).save();
                 const res = await Card.filterableTitleIndex.query({ id: 10, title: ['beginsWith', 'prefix/'] });
-                chai_1.expect(res.records.length).to.eq(3);
-                chai_1.expect(res.records[0].id).to.eq(10);
-                chai_1.expect(res.records[1].id).to.eq(10);
-                chai_1.expect(res.records[2].id).to.eq(10);
+                (0, chai_1.expect)(res.records.length).to.eq(3);
+                (0, chai_1.expect)(res.records[0].id).to.eq(10);
+                (0, chai_1.expect)(res.records[1].id).to.eq(10);
+                (0, chai_1.expect)(res.records[2].id).to.eq(10);
             });
             it('should complain when using unsupported query operators for RANGE', async () => {
                 await Card.filterableTitleIndex.query({ id: 10, title: ['contains', 'prefix/'] }).then(() => {
-                    chai_1.expect(true).to.be.eq('false');
+                    (0, chai_1.expect)(true).to.be.eq('false');
                 }, (err) => {
-                    chai_1.expect(err).to.be.instanceOf(errors_1.QueryError);
-                    chai_1.expect(err.message).to.contain('Cannot use');
+                    (0, chai_1.expect)(err).to.be.instanceOf(errors_1.QueryError);
+                    (0, chai_1.expect)(err.message).to.contain('Cannot use');
                 });
             });
         });
@@ -160,9 +160,9 @@ describe('Query/GlobalSecondaryIndex', () => {
                 const res1 = await Card.hashTitleIndex.scan();
                 const res2 = await Card.hashTitleIndex.scan(null, { limit: 2 });
                 const res3 = await Card.hashTitleIndex.scan(null, { limit: 2, exclusiveStartKey: res2.lastEvaluatedKey });
-                chai_1.expect(res1.records.map((r) => r.id)).to.have.all.members(cardIds);
-                chai_1.expect(cardIds).to.include.members(res2.records.map((r) => r.id));
-                chai_1.expect(cardIds).to.include.members(res3.records.map((r) => r.id));
+                (0, chai_1.expect)(res1.records.map((r) => r.id)).to.have.all.members(cardIds);
+                (0, chai_1.expect)(cardIds).to.include.members(res2.records.map((r) => r.id));
+                (0, chai_1.expect)(cardIds).to.include.members(res3.records.map((r) => r.id));
             });
         });
     });
@@ -179,9 +179,9 @@ describe('Query/GlobalSecondaryIndex', () => {
                 }, {
                     rangeOrder: 'DESC',
                 });
-                chai_1.expect(res.records.length).to.eq(2);
-                chai_1.expect(res.records[0].id).to.eq(13);
-                chai_1.expect(res.records[1].id).to.eq(12);
+                (0, chai_1.expect)(res.records.length).to.eq(2);
+                (0, chai_1.expect)(res.records[0].id).to.eq(13);
+                (0, chai_1.expect)(res.records[1].id).to.eq(12);
             });
         });
         describe('#scan', () => {
@@ -195,15 +195,15 @@ describe('Query/GlobalSecondaryIndex', () => {
                 const search = await Card.fullTitleIndex.scan({
                     id: ['includes', cardIds],
                 });
-                chai_1.expect(search.records.map((r) => r.id)).to.have.all.members(cardIds);
+                (0, chai_1.expect)(search.records.map((r) => r.id)).to.have.all.members(cardIds);
             });
             it('should work without filters', async () => {
                 const res1 = await Card.fullTitleIndex.scan();
                 const res2 = await Card.fullTitleIndex.scan(null, { limit: 2 });
                 const res3 = await Card.fullTitleIndex.scan(null, { limit: 2, exclusiveStartKey: res2.lastEvaluatedKey });
-                chai_1.expect(res1.records.map((r) => r.id)).to.have.all.members(cardIds);
-                chai_1.expect(cardIds).to.include.members(res2.records.map((r) => r.id));
-                chai_1.expect(cardIds).to.include.members(res3.records.map((r) => r.id));
+                (0, chai_1.expect)(res1.records.map((r) => r.id)).to.have.all.members(cardIds);
+                (0, chai_1.expect)(cardIds).to.include.members(res2.records.map((r) => r.id));
+                (0, chai_1.expect)(cardIds).to.include.members(res3.records.map((r) => r.id));
             });
         });
     });
@@ -213,11 +213,11 @@ describe('Query/GlobalSecondaryIndex', () => {
             newCard.count = 10;
             await newCard.save();
             const card = await Card.includeTestIndex.get({ id: 10 });
-            chai_1.should().exist(card);
+            (0, chai_1.should)().exist(card);
             if (card != null) {
-                chai_1.expect(card.id).to.eq(10);
-                chai_1.expect(card.title).to.eq('abc');
-                chai_1.should().not.exist(card.count);
+                (0, chai_1.expect)(card.id).to.eq(10);
+                (0, chai_1.expect)(card.title).to.eq('abc');
+                (0, chai_1.should)().not.exist(card.count);
             }
         });
     });

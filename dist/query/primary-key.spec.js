@@ -29,11 +29,11 @@ describe('Query/PrimaryKey', () => {
         __metadata("design:type", Number)
     ], Card.prototype, "count", void 0);
     __decorate([
-        decorator_1.PrimaryKey('id', 'title'),
+        (0, decorator_1.PrimaryKey)('id', 'title'),
         __metadata("design:type", primary_key_1.PrimaryKey)
     ], Card, "primaryKey", void 0);
     Card = __decorate([
-        decorator_1.Table({ name: 'QueryPrimaryKeyCardTable' })
+        (0, decorator_1.Table)({ name: 'QueryPrimaryKeyCardTable' })
     ], Card);
     let TableWithDateRange = class TableWithDateRange extends table_1.Table {
     };
@@ -46,11 +46,11 @@ describe('Query/PrimaryKey', () => {
         __metadata("design:type", Date)
     ], TableWithDateRange.prototype, "date", void 0);
     __decorate([
-        decorator_1.PrimaryKey('id', 'date'),
+        (0, decorator_1.PrimaryKey)('id', 'date'),
         __metadata("design:type", primary_key_1.PrimaryKey)
     ], TableWithDateRange, "primaryKey", void 0);
     TableWithDateRange = __decorate([
-        decorator_1.Table({ name: 'QueryPrimaryKeyTableWithDateRange' })
+        (0, decorator_1.Table)({ name: 'QueryPrimaryKeyTableWithDateRange' })
     ], TableWithDateRange);
     let primaryKey;
     before(async () => {
@@ -70,42 +70,42 @@ describe('Query/PrimaryKey', () => {
         it('should delete item if exist', async () => {
             await Card.new({ id: 10, title: 'abc' }).save();
             await primaryKey.delete(10, 'abc');
-            chai_1.expect(await primaryKey.get(10, 'abc')).to.eq(undefined);
+            (0, chai_1.expect)(await primaryKey.get(10, 'abc')).to.eq(undefined);
         });
     });
     describe('#get', () => {
         it('should find nothing when nothing exists', async () => {
             let item = await primaryKey.get({ id: 10, title: 'abc' });
-            chai_1.expect(item).to.eq(undefined);
+            (0, chai_1.expect)(item).to.eq(undefined);
             item = await primaryKey.get(10, 'abc');
-            chai_1.expect(item).to.eq(undefined);
+            (0, chai_1.expect)(item).to.eq(undefined);
         });
         it('should find item using a query filter object', async () => {
             await Card.new({ id: 10, title: 'abc' }).save();
             const item = await primaryKey.get({ id: 10, title: 'abc' });
-            chai_1.expect(item).to.be.instanceof(Card);
+            (0, chai_1.expect)(item).to.be.instanceof(Card);
             if (item != null) {
-                chai_1.expect(item.id).to.eq(10);
-                chai_1.expect(item.title).to.eq('abc');
+                (0, chai_1.expect)(item.id).to.eq(10);
+                (0, chai_1.expect)(item.title).to.eq('abc');
             }
         });
         it('should find item using hash and range arguments', async () => {
             await Card.new({ id: 10, title: 'abc' }).save();
             const item = await primaryKey.get(10, 'abc');
-            chai_1.expect(item).to.be.instanceof(Card);
+            (0, chai_1.expect)(item).to.be.instanceof(Card);
             if (item != null) {
-                chai_1.expect(item.id).to.eq(10);
-                chai_1.expect(item.title).to.eq('abc');
+                (0, chai_1.expect)(item.id).to.eq(10);
+                (0, chai_1.expect)(item.title).to.eq('abc');
             }
         });
         it('should allow date type to be the range', async () => {
             const now = new Date();
             await TableWithDateRange.new({ id: 1, date: now }).save();
             const item = await TableWithDateRange.primaryKey.get(1, now);
-            chai_1.expect(item).to.be.instanceof(TableWithDateRange);
+            (0, chai_1.expect)(item).to.be.instanceof(TableWithDateRange);
             if (item != null) {
-                chai_1.expect(item.id).to.eq(1);
-                chai_1.expect(item.date.toISOString()).to.eq(now.toISOString());
+                (0, chai_1.expect)(item.id).to.eq(1);
+                (0, chai_1.expect)(item.date.toISOString()).to.eq(now.toISOString());
             }
         });
     });
@@ -118,19 +118,19 @@ describe('Query/PrimaryKey', () => {
                 [10, 'abc'],
                 [11, 'abc'],
             ]);
-            chai_1.expect(items1.length).to.eq(2);
-            chai_1.expect(items1[0].id).to.eq(10);
-            chai_1.expect(items1[1].id).to.eq(11);
+            (0, chai_1.expect)(items1.length).to.eq(2);
+            (0, chai_1.expect)(items1[0].id).to.eq(10);
+            (0, chai_1.expect)(items1[1].id).to.eq(11);
             const items2 = await primaryKey.batchGet([
                 [10, 'abc'],
                 [10000, 'asdgasdgs'],
                 [11, 'abc'],
             ]);
-            chai_1.expect(items2.length).to.eq(2);
-            chai_1.expect(items2[0].id).to.eq(10);
-            chai_1.expect(items2[0].title).to.eq('abc');
-            chai_1.expect(items2[1].id).to.eq(11);
-            chai_1.expect(items2[1].title).to.eq('abc');
+            (0, chai_1.expect)(items2.length).to.eq(2);
+            (0, chai_1.expect)(items2[0].id).to.eq(10);
+            (0, chai_1.expect)(items2[0].title).to.eq('abc');
+            (0, chai_1.expect)(items2[1].id).to.eq(11);
+            (0, chai_1.expect)(items2[1].title).to.eq('abc');
         });
     });
     describe('#query', () => {
@@ -142,28 +142,28 @@ describe('Query/PrimaryKey', () => {
                 id: 10,
                 title: ['between', 'abc', 'abf'],
             });
-            chai_1.expect(res.records.length).to.eq(2);
-            chai_1.expect(res.records[0].title).to.eq('abc');
-            chai_1.expect(res.records[1].title).to.eq('abd');
+            (0, chai_1.expect)(res.records.length).to.eq(2);
+            (0, chai_1.expect)(res.records[0].title).to.eq('abc');
+            (0, chai_1.expect)(res.records[1].title).to.eq('abd');
             res = await primaryKey.query({
                 id: 10,
                 title: ['between', 'abc', 'abf'],
             }, {
                 rangeOrder: 'DESC',
             });
-            chai_1.expect(res.records.length).to.eq(2);
-            chai_1.expect(res.records[0].title).to.eq('abd');
-            chai_1.expect(res.records[1].title).to.eq('abc');
+            (0, chai_1.expect)(res.records.length).to.eq(2);
+            (0, chai_1.expect)(res.records[0].title).to.eq('abd');
+            (0, chai_1.expect)(res.records[1].title).to.eq('abc');
         });
         it('should return an empty array when no results match', async () => {
             const res = await primaryKey.query({
                 id: 420,
             });
-            chai_1.expect(res[0]).to.not.eq(null);
-            chai_1.expect(res.length).to.eq(0);
-            chai_1.expect(res.count).to.eq(0);
-            chai_1.expect(res.records.length).to.eq(0);
-            chai_1.expect(res.map(i => i)[0]).to.eq(undefined);
+            (0, chai_1.expect)(res[0]).to.not.eq(null);
+            (0, chai_1.expect)(res.length).to.eq(0);
+            (0, chai_1.expect)(res.count).to.eq(0);
+            (0, chai_1.expect)(res.records.length).to.eq(0);
+            (0, chai_1.expect)(res.map(i => i)[0]).to.eq(undefined);
         });
     });
     describe('#scan', () => {
@@ -174,10 +174,10 @@ describe('Query/PrimaryKey', () => {
             const res = await primaryKey.scan(null, {
                 limit: 2,
             });
-            chai_1.expect(res.records.length).to.eq(2);
+            (0, chai_1.expect)(res.records.length).to.eq(2);
             // Ordered by range key since it's "scan"
-            chai_1.expect(res.records[0].title).to.eq('aba');
-            chai_1.expect(res.records[1].title).to.eq('abc');
+            (0, chai_1.expect)(res.records[0].title).to.eq('aba');
+            (0, chai_1.expect)(res.records[1].title).to.eq('abc');
         });
     });
     describe('#update', () => {
@@ -190,9 +190,9 @@ describe('Query/PrimaryKey', () => {
                 },
             });
             let card = await primaryKey.get(10, 'abc');
-            chai_1.expect(card).to.be.instanceOf(Card);
+            (0, chai_1.expect)(card).to.be.instanceOf(Card);
             if (card != null) {
-                chai_1.expect(card.count).to.eq(1);
+                (0, chai_1.expect)(card.count).to.eq(1);
             }
             await primaryKey.update({
                 hash: 10,
@@ -202,9 +202,9 @@ describe('Query/PrimaryKey', () => {
                 },
             });
             card = await primaryKey.get(10, 'abc');
-            chai_1.expect(card).to.be.instanceOf(Card);
+            (0, chai_1.expect)(card).to.be.instanceOf(Card);
             if (card != null) {
-                chai_1.expect(card.count).to.eq(2);
+                (0, chai_1.expect)(card.count).to.eq(2);
             }
         });
     });

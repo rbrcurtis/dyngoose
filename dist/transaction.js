@@ -54,7 +54,7 @@ class Transaction {
             Item: record.toDynamo(),
         };
         if (conditions != null) {
-            const conditionExpression = expression_1.buildQueryExpression(tableClass.schema, conditions);
+            const conditionExpression = (0, expression_1.buildQueryExpression)(tableClass.schema, conditions);
             put.ConditionExpression = conditionExpression.FilterExpression;
             put.ExpressionAttributeNames = conditionExpression.ExpressionAttributeNames;
             put.ExpressionAttributeValues = conditionExpression.ExpressionAttributeValues;
@@ -66,7 +66,7 @@ class Transaction {
     }
     update(record, conditions) {
         const tableClass = record.constructor;
-        const updateInput = update_item_input_1.getUpdateItemInput(record, conditions);
+        const updateInput = (0, update_item_input_1.getUpdateItemInput)(record, conditions);
         this.list.push({
             Update: {
                 TableName: tableClass.schema.name,
@@ -86,7 +86,7 @@ class Transaction {
             Key: record.getDynamoKey(),
         };
         if (conditions != null) {
-            const conditionExpression = expression_1.buildQueryExpression(tableClass.schema, conditions);
+            const conditionExpression = (0, expression_1.buildQueryExpression)(tableClass.schema, conditions);
             del.ConditionExpression = conditionExpression.FilterExpression;
             del.ExpressionAttributeNames = conditionExpression.ExpressionAttributeNames;
             del.ExpressionAttributeValues = conditionExpression.ExpressionAttributeValues;
@@ -98,7 +98,7 @@ class Transaction {
     }
     conditionCheck(record, conditions) {
         const tableClass = record.constructor;
-        const conditionExpression = expression_1.buildQueryExpression(tableClass.schema, conditions);
+        const conditionExpression = (0, expression_1.buildQueryExpression)(tableClass.schema, conditions);
         this.list.push({
             ConditionCheck: {
                 TableName: tableClass.schema.name,
@@ -111,7 +111,7 @@ class Transaction {
         return this;
     }
     async commit() {
-        return await transact_write_1.transactWrite(this.dynamo, this.list);
+        return await (0, transact_write_1.transactWrite)(this.dynamo, this.list);
     }
 }
 exports.Transaction = Transaction;

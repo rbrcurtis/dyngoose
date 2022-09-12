@@ -83,7 +83,7 @@ describe('query/expression', () => {
     const schema = DummyTable.schema;
     describe('buildQueryExpression', () => {
         it('works with single simple values', () => {
-            chai_1.expect(expression_1.buildQueryExpression(schema, { someBool: true })).to.deep.equal({
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, { someBool: true })).to.deep.equal({
                 FilterExpression: '#a0 = :v0',
                 ExpressionAttributeNames: {
                     '#a0': 'someBool',
@@ -92,7 +92,7 @@ describe('query/expression', () => {
                     ':v0': { BOOL: true },
                 },
             });
-            chai_1.expect(expression_1.buildQueryExpression(schema, { customer: 'tiny twig' }, DummyTable.customerIndex.metadata)).to.deep.equal({
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, { customer: 'tiny twig' }, DummyTable.customerIndex.metadata)).to.deep.equal({
                 KeyConditionExpression: '#a0 = :v0',
                 ExpressionAttributeNames: {
                     '#a0': 'customer',
@@ -103,7 +103,7 @@ describe('query/expression', () => {
             });
         });
         it('works with complex filters', () => {
-            chai_1.expect(expression_1.buildQueryExpression(schema, [{ customer: 'tiny twig' }], DummyTable.customerIndex.metadata)).to.deep.equal({
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, [{ customer: 'tiny twig' }], DummyTable.customerIndex.metadata)).to.deep.equal({
                 KeyConditionExpression: '#a0 = :v0',
                 ExpressionAttributeNames: {
                     '#a0': 'customer',
@@ -114,7 +114,7 @@ describe('query/expression', () => {
             });
         });
         it('works with compound keys', () => {
-            chai_1.expect(expression_1.buildQueryExpression(schema, {
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, {
                 'someMap.first': 'bobby',
             })).to.deep.equal({
                 FilterExpression: '#a00.#a01 = :v0',
@@ -128,7 +128,7 @@ describe('query/expression', () => {
             });
         });
         it('works with deep compound keys', () => {
-            chai_1.expect(expression_1.buildQueryExpression(schema, {
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, {
                 'someDeepMap.map.first': 'bobby',
             })).to.deep.equal({
                 FilterExpression: '#a00.#a01.#a02 = :v0',
@@ -143,7 +143,7 @@ describe('query/expression', () => {
             });
         });
         it('works with multiple simple values', () => {
-            chai_1.expect(expression_1.buildQueryExpression(schema, {
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, {
                 id: 'someUniqueValue',
                 someNumber: 10,
                 someBool: true,
@@ -163,7 +163,7 @@ describe('query/expression', () => {
             });
         });
         it('works with special operators', () => {
-            chai_1.expect(expression_1.buildQueryExpression(schema, {
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, {
                 id: ['<>', 'someValue'],
                 customer: 'tiny twig',
                 someNumber: ['>', 100],
@@ -183,7 +183,7 @@ describe('query/expression', () => {
                     ':v3': { BOOL: true },
                 },
             });
-            chai_1.expect(expression_1.buildQueryExpression(schema, {
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, {
                 customer: 'tiny twig',
                 someNumber: ['<', 100],
                 someBool: true,
@@ -202,7 +202,7 @@ describe('query/expression', () => {
             });
         });
         it('you can include or exclude an array of values', () => {
-            chai_1.expect(expression_1.buildQueryExpression(schema, {
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, {
                 someString: ['excludes', ['Apples', 'Carrots']],
             })).to.deep.equal({
                 FilterExpression: 'NOT (#a0 IN (:v00, :v01))',
@@ -216,7 +216,7 @@ describe('query/expression', () => {
             });
         });
         it('works with between operator', () => {
-            chai_1.expect(expression_1.buildQueryExpression(schema, {
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, {
                 someNumber: ['between', 100, 200],
             })).to.deep.equal({
                 FilterExpression: '#a0 BETWEEN :vl0 AND :vu0',
@@ -230,7 +230,7 @@ describe('query/expression', () => {
             });
         });
         it('works with contains operator', () => {
-            chai_1.expect(expression_1.buildQueryExpression(schema, {
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, {
                 someString: ['contains', 'hello world'],
                 someBool: true,
             })).to.deep.equal({
@@ -244,7 +244,7 @@ describe('query/expression', () => {
                     ':v1': { BOOL: true },
                 },
             });
-            chai_1.expect(expression_1.buildQueryExpression(schema, {
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, {
                 someStrings: ['contains', 'hello world'],
                 someBool: true,
             })).to.deep.equal({
@@ -260,7 +260,7 @@ describe('query/expression', () => {
             });
         });
         it('works with includes/IN operator', () => {
-            chai_1.expect(expression_1.buildQueryExpression(schema, {
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, {
                 someString: ['includes', ['opt1', 'opt2']],
                 someNumber: ['<=', -100],
                 someBool: true,
@@ -280,7 +280,7 @@ describe('query/expression', () => {
             });
         });
         it('does not allow includes/IN operator in key conditions', () => {
-            chai_1.expect(expression_1.buildQueryExpression(schema, {
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, {
                 id: ['includes', ['opt1', 'opt2']],
                 someNumber: ['<=', -100],
                 someBool: true,
@@ -300,7 +300,7 @@ describe('query/expression', () => {
             });
         });
         it('works with excludes/NOT IN operator', () => {
-            chai_1.expect(expression_1.buildQueryExpression(schema, {
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, {
                 someString: ['excludes', ['opt1', 'opt2']],
                 someNumber: ['<=', -100],
                 someBool: true,
@@ -346,7 +346,7 @@ describe('query/expression', () => {
         //   })
         // })
         it('works with OR operator', () => {
-            chai_1.expect(expression_1.buildQueryExpression(schema, [
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, [
                 { someNumber: 10 },
                 'OR',
                 { someNumber: 11 },
@@ -360,7 +360,7 @@ describe('query/expression', () => {
                     ':v1': { N: '11' },
                 },
             });
-            chai_1.expect(expression_1.buildQueryExpression(schema, [
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, [
                 {
                     id: ['includes', ['opt1', 'opt2']],
                 },
@@ -391,7 +391,7 @@ describe('query/expression', () => {
             });
         });
         it('works with attribute_not_exists operator', () => {
-            chai_1.expect(expression_1.buildQueryExpression(schema, {
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, {
                 someNonExistAttr: ['not exists'],
                 someNumber: ['>', 100],
                 someBool: true,
@@ -409,7 +409,7 @@ describe('query/expression', () => {
             });
         });
         it('builds key conditions when an index is provided', () => {
-            chai_1.expect(expression_1.buildQueryExpression(schema, {
+            (0, chai_1.expect)((0, expression_1.buildQueryExpression)(schema, {
                 id: 'some id',
                 someNumber: ['>', 100],
                 someBool: true,

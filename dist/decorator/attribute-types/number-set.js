@@ -8,15 +8,15 @@ const utils_1 = require("./utils");
 class NumberSetAttributeType extends attribute_type_1.AttributeType {
     constructor() {
         super(...arguments);
-        this.type = "NS" /* NumberSet */;
+        this.type = "NS" /* DynamoAttributeType.NumberSet */;
     }
     toDynamo(values) {
-        if (!lodash_1.isArray(values) || !lodash_1.every(values, utils_1.isNumber)) {
+        if (!(0, lodash_1.isArray)(values) || !(0, lodash_1.every)(values, utils_1.isNumber)) {
             throw new errors_1.ValidationError(`Expected ${this.propertyName} to be an array of numbers`);
         }
         // dynamodb does not allow sets to contain duplicate values, so ensure uniqueness here
         return {
-            NS: lodash_1.uniq(values.map((value) => utils_1.numberToString(value))),
+            NS: (0, lodash_1.uniq)(values.map((value) => (0, utils_1.numberToString)(value))),
         };
     }
     fromDynamo(value) {
@@ -26,7 +26,7 @@ class NumberSetAttributeType extends attribute_type_1.AttributeType {
             return null;
         }
         else {
-            return value.NS.map((item) => utils_1.stringToNumber(item));
+            return value.NS.map((item) => (0, utils_1.stringToNumber)(item));
         }
     }
 }

@@ -19,7 +19,7 @@ class DocumentClient {
             input.ReturnValues = params.returnValues;
         }
         if ((params === null || params === void 0 ? void 0 : params.conditions) != null) {
-            const conditionExpression = expression_1.buildQueryExpression(this.tableClass.schema, params.conditions);
+            const conditionExpression = (0, expression_1.buildQueryExpression)(this.tableClass.schema, params.conditions);
             input.ConditionExpression = conditionExpression.FilterExpression;
             input.ExpressionAttributeNames = conditionExpression.ExpressionAttributeNames;
             input.ExpressionAttributeValues = conditionExpression.ExpressionAttributeValues;
@@ -36,7 +36,7 @@ class DocumentClient {
         }
     }
     getUpdateInput(record, params) {
-        return update_item_input_1.getUpdateItemInput(record, params);
+        return (0, update_item_input_1.getUpdateItemInput)(record, params);
     }
     async update(record, params) {
         const input = this.getUpdateInput(record, params);
@@ -48,7 +48,7 @@ class DocumentClient {
         }
     }
     async batchPut(records) {
-        return await batch_write_1.batchWrite(this.tableClass.schema.dynamo, records.map((record) => {
+        return await (0, batch_write_1.batchWrite)(this.tableClass.schema.dynamo, records.map((record) => {
             const request = {
                 [this.tableClass.schema.name]: [
                     {
@@ -67,7 +67,7 @@ class DocumentClient {
             Key: record.getDynamoKey(),
         };
         if (conditions != null) {
-            const conditionExpression = expression_1.buildQueryExpression(this.tableClass.schema, conditions);
+            const conditionExpression = (0, expression_1.buildQueryExpression)(this.tableClass.schema, conditions);
             input.ConditionExpression = conditionExpression.FilterExpression;
             input.ExpressionAttributeNames = conditionExpression.ExpressionAttributeNames;
             input.ExpressionAttributeValues = conditionExpression.ExpressionAttributeValues;
@@ -75,7 +75,7 @@ class DocumentClient {
         return input;
     }
     async transactPut(records) {
-        return await transact_write_1.transactWrite(this.tableClass.schema.dynamo, records.map((record) => {
+        return await (0, transact_write_1.transactWrite)(this.tableClass.schema.dynamo, records.map((record) => {
             const writeRequest = {
                 Put: {
                     TableName: this.tableClass.schema.name,

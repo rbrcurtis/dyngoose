@@ -8,11 +8,11 @@ const describe_table_1 = require("./describe-table");
 async function migrateTable(schema, waitForReady = false) {
     let description;
     try {
-        description = await describe_table_1.describeTable(schema);
+        description = await (0, describe_table_1.describeTable)(schema);
     }
     catch (err) {
         if (err.name === 'ResourceNotFoundException') {
-            return await create_table_1.createTable(schema, waitForReady);
+            return await (0, create_table_1.createTable)(schema, waitForReady);
         }
         else {
             throw err;

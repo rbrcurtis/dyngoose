@@ -15,7 +15,7 @@ const search_1 = require("./search");
  */
 function isKeyValue(range) {
     const type = typeof range;
-    return type === 'string' || type === 'boolean' || type === 'number' || type === 'bigint' || lodash_1.isDate(range);
+    return type === 'string' || type === 'boolean' || type === 'number' || type === 'bigint' || (0, lodash_1.isDate)(range);
 }
 class PrimaryKey {
     constructor(table, metadata) {
@@ -65,10 +65,10 @@ class PrimaryKey {
     }
     async get(hash, range, input) {
         let record;
-        if (is_1.isDyngooseTableInstance(hash)) {
+        if ((0, is_1.isDyngooseTableInstance)(hash)) {
             record = hash;
         }
-        else if (lodash_1.isObject(hash) && !isKeyValue(hash)) {
+        else if ((0, lodash_1.isObject)(hash) && !isKeyValue(hash)) {
             record = this.fromKey(hash);
         }
         else if (hash != null && (range == null || isKeyValue(range))) {
@@ -119,7 +119,7 @@ class PrimaryKey {
      * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchWriteItem.html
      */
     async batchDelete(inputs) {
-        return await batch_write_1.batchWrite(this.table.schema.dynamo, inputs.map((input) => {
+        return await (0, batch_write_1.batchWrite)(this.table.schema.dynamo, inputs.map((input) => {
             const deleteRequest = {
                 Key: {
                     [this.metadata.hash.name]: this.metadata.hash.toDynamoAssert(input[0]),
@@ -154,15 +154,15 @@ class PrimaryKey {
         return queryInput;
     }
     async query(filters, input) {
-        if (!lodash_1.has(filters, this.metadata.hash.propertyName)) {
+        if (!(0, lodash_1.has)(filters, this.metadata.hash.propertyName)) {
             throw new errors_1.QueryError('Cannot perform a query on the PrimaryKey index without specifying a hash key value');
         }
-        else if (lodash_1.isArray(lodash_1.get(filters, this.metadata.hash.propertyName)) && lodash_1.get(filters, this.metadata.hash.propertyName)[0] !== '=') {
+        else if ((0, lodash_1.isArray)((0, lodash_1.get)(filters, this.metadata.hash.propertyName)) && (0, lodash_1.get)(filters, this.metadata.hash.propertyName)[0] !== '=') {
             throw new errors_1.QueryError('DynamoDB only supports using equal operator for the HASH key');
         }
         const queryInput = this.getQueryInput(input);
         const hasProjection = queryInput.ProjectionExpression == null;
-        const expression = expression_1.buildQueryExpression(this.table.schema, filters, this.metadata);
+        const expression = (0, expression_1.buildQueryExpression)(this.table.schema, filters, this.metadata);
         queryInput.FilterExpression = expression.FilterExpression;
         queryInput.KeyConditionExpression = expression.KeyConditionExpression;
         queryInput.ExpressionAttributeNames = expression.ExpressionAttributeNames;
@@ -186,7 +186,7 @@ class PrimaryKey {
             Segment: input.segment,
         };
         if (input.attributes != null && input.projectionExpression == null) {
-            const expression = projection_expression_1.buildProjectionExpression(this.table, input.attributes);
+            const expression = (0, projection_expression_1.buildProjectionExpression)(this.table, input.attributes);
             scanInput.ProjectionExpression = expression.ProjectionExpression;
             scanInput.ExpressionAttributeNames = expression.ExpressionAttributeNames;
         }
@@ -196,7 +196,7 @@ class PrimaryKey {
         }
         if (filters != null && Object.keys(filters).length > 0) {
             // don't pass the index metadata, avoids KeyConditionExpression
-            const expression = expression_1.buildQueryExpression(this.table.schema, filters);
+            const expression = (0, expression_1.buildQueryExpression)(this.table.schema, filters);
             scanInput.FilterExpression = expression.FilterExpression;
             scanInput.ExpressionAttributeValues = expression.ExpressionAttributeValues;
             if (scanInput.ExpressionAttributeNames == null) {
@@ -230,19 +230,19 @@ class PrimaryKey {
     }
     fromKey(hash, range) {
         // if the hash was passed a query filters, then extract the hash and range
-        if (lodash_1.isObject(hash) && !lodash_1.isDate(hash)) {
+        if ((0, lodash_1.isObject)(hash) && !(0, lodash_1.isDate)(hash)) {
             const filters = hash;
-            if (!lodash_1.has(filters, this.metadata.hash.propertyName)) {
+            if (!(0, lodash_1.has)(filters, this.metadata.hash.propertyName)) {
                 throw new errors_1.QueryError('Cannot perform .get() on a PrimaryKey without specifying a hash key value');
             }
-            else if (this.metadata.range != null && !lodash_1.has(filters, this.metadata.range.propertyName)) {
+            else if (this.metadata.range != null && !(0, lodash_1.has)(filters, this.metadata.range.propertyName)) {
                 throw new errors_1.QueryError('Cannot perform .get() on a PrimaryKey with a range key without specifying a range value');
             }
             else if (Object.keys(filters).length > 2) {
                 throw new errors_1.QueryError('Cannot perform a .get() on a PrimaryKey with additional filters, use .query() instead');
             }
-            hash = lodash_1.get(filters, this.metadata.hash.propertyName);
-            if (lodash_1.isArray(hash)) {
+            hash = (0, lodash_1.get)(filters, this.metadata.hash.propertyName);
+            if ((0, lodash_1.isArray)(hash)) {
                 if (hash[0] === '=') {
                     hash = hash[1];
                 }
@@ -251,8 +251,8 @@ class PrimaryKey {
                 }
             }
             if (this.metadata.range != null) {
-                range = lodash_1.get(filters, this.metadata.range.propertyName);
-                if (lodash_1.isArray(hash)) {
+                range = (0, lodash_1.get)(filters, this.metadata.range.propertyName);
+                if ((0, lodash_1.isArray)(hash)) {
                     if (hash[0] === '=') {
                         hash = hash[1];
                     }

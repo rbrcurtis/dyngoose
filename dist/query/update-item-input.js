@@ -69,7 +69,7 @@ function getUpdateItemInput(record, params) {
         updateExpression += 'REMOVE ' + removes.join(', ');
     }
     if ((params === null || params === void 0 ? void 0 : params.conditions) != null) {
-        const conditionExpression = expression_1.buildQueryExpression(tableClass.schema, params.conditions);
+        const conditionExpression = (0, expression_1.buildQueryExpression)(tableClass.schema, params.conditions);
         input.ConditionExpression = conditionExpression.FilterExpression;
         Object.assign(attributeNameMap, conditionExpression.ExpressionAttributeNames);
         Object.assign(attributeValueMap, conditionExpression.ExpressionAttributeValues);

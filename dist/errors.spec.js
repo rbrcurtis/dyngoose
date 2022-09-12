@@ -45,9 +45,9 @@ describe('DyngooseError', () => {
         catch (ex) {
             error = ex;
         }
-        chai_1.expect(error).to.be.instanceOf(Error)
+        (0, chai_1.expect)(error).to.be.instanceOf(Error)
             .with.property('name', 'ResourceNotFoundException');
-        chai_1.expect(error).to.have.property('message', 'Cannot do operations on a non-existent table');
+        (0, chai_1.expect)(error).to.have.property('message', 'Cannot do operations on a non-existent table');
     });
 });
 //# sourceMappingURL=errors.spec.js.map

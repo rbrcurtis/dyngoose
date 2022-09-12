@@ -31,8 +31,8 @@ Object.defineProperty(exports, "Transaction", { enumerable: true, get: function 
 const output_1 = require("./query/output");
 Object.defineProperty(exports, "QueryOutput", { enumerable: true, get: function () { return output_1.QueryOutput; } });
 exports.TableOperations = {
-    createTable: async (table) => await create_table_1.createTable(table.schema),
-    deleteTable: async (table) => await delete_table_1.deleteTable(table.schema),
+    createTable: async (table) => await (0, create_table_1.createTable)(table.schema),
+    deleteTable: async (table) => await (0, delete_table_1.deleteTable)(table.schema),
 };
 var document_client_1 = require("./decorator/document-client");
 Object.defineProperty(exports, "$DocumentClient", { enumerable: true, get: function () { return document_client_1.DocumentClient; } });

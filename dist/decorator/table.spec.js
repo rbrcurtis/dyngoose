@@ -42,22 +42,22 @@ Card = __decorate([
 ], Card);
 describe('Table Decorator', () => {
     it('should build table metadata', () => {
-        chai_1.expect(Card.schema.name).eq('prod-Card1');
+        (0, chai_1.expect)(Card.schema.name).eq('prod-Card1');
     });
     it('should create primaryKey', () => {
-        chai_1.expect(Card.primaryKey).to.be.instanceof(Dyngoose.Query.PrimaryKey);
+        (0, chai_1.expect)(Card.primaryKey).to.be.instanceof(Dyngoose.Query.PrimaryKey);
     });
     it('should have writer', () => {
-        chai_1.expect(Card.documentClient).to.be.instanceof(Dyngoose.DocumentClient);
+        (0, chai_1.expect)(Card.documentClient).to.be.instanceof(Dyngoose.DocumentClient);
     });
     it('should have attributes properties', () => {
         const card = new Card();
         card.id = 10;
         card.title = '100';
         card.complicatedField = 'data';
-        chai_1.expect(card.getAttribute('complicated_field')).to.eq('data');
+        (0, chai_1.expect)(card.getAttribute('complicated_field')).to.eq('data');
         card.setAttribute('complicated_field', 'data2');
-        chai_1.expect(card.complicatedField).to.eq('data2');
+        (0, chai_1.expect)(card.complicatedField).to.eq('data2');
     });
 });
 //# sourceMappingURL=table.spec.js.map

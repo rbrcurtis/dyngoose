@@ -31,11 +31,11 @@ describe('Transaction', () => {
         __metadata("design:type", Number)
     ], Card.prototype, "count", void 0);
     __decorate([
-        decorator_1.PrimaryKey('id', 'title'),
+        (0, decorator_1.PrimaryKey)('id', 'title'),
         __metadata("design:type", primary_key_1.PrimaryKey)
     ], Card, "primaryKey", void 0);
     Card = __decorate([
-        decorator_1.Table({ name: 'TransactionTestCardTable' })
+        (0, decorator_1.Table)({ name: 'TransactionTestCardTable' })
     ], Card);
     before(async () => {
         await Card.createTable();
@@ -66,11 +66,11 @@ describe('Transaction', () => {
         await transaction.commit();
         // now verify the results
         const results = await Card.primaryKey.scan();
-        const records = lodash_1.sortBy(results.records, 'id');
-        chai_1.expect(results.count).eq(3);
-        chai_1.expect(records[0].id).eq(10);
-        chai_1.expect(records[1].id).eq(11);
-        chai_1.expect(records[2].id).eq(42);
+        const records = (0, lodash_1.sortBy)(results.records, 'id');
+        (0, chai_1.expect)(results.count).eq(3);
+        (0, chai_1.expect)(records[0].id).eq(10);
+        (0, chai_1.expect)(records[1].id).eq(11);
+        (0, chai_1.expect)(records[2].id).eq(42);
     });
     it('should fail with a ConditionalCheckFailed error', async () => {
         const transaction = new transaction_1.Transaction();
@@ -85,9 +85,9 @@ describe('Transaction', () => {
         catch (ex) {
             error = ex;
         }
-        chai_1.expect(error).to.be.instanceOf(Error)
+        (0, chai_1.expect)(error).to.be.instanceOf(Error)
             .with.property('name', 'TransactionCanceledException');
-        chai_1.should().exist(error.cancellationReasons);
+        (0, chai_1.should)().exist(error.cancellationReasons);
     });
 });
 //# sourceMappingURL=transaction.spec.js.map

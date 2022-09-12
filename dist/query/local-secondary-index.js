@@ -28,7 +28,7 @@ class LocalSecondaryIndex {
         return queryInput;
     }
     async query(filters, input = {}) {
-        if (!lodash_1.has(filters, this.tableClass.schema.primaryKey.hash.propertyName)) {
+        if (!(0, lodash_1.has)(filters, this.tableClass.schema.primaryKey.hash.propertyName)) {
             throw new errors_1.QueryError('Cannot perform a query on a LocalSecondaryIndex without specifying a hash key value');
         }
         const queryInput = this.getQueryInput(input);
@@ -36,7 +36,7 @@ class LocalSecondaryIndex {
         const metadata = Object.assign({
             hash: this.tableClass.schema.primaryKey.hash,
         }, this.metadata);
-        const expression = expression_1.buildQueryExpression(this.tableClass.schema, filters, metadata);
+        const expression = (0, expression_1.buildQueryExpression)(this.tableClass.schema, filters, metadata);
         queryInput.FilterExpression = expression.FilterExpression;
         queryInput.KeyConditionExpression = expression.KeyConditionExpression;
         queryInput.ExpressionAttributeNames = expression.ExpressionAttributeNames;
@@ -67,7 +67,7 @@ class LocalSecondaryIndex {
         const scanInput = this.getScanInput(input);
         if (filters != null && Object.keys(filters).length > 0) {
             // don't pass the index metadata, avoids KeyConditionExpression
-            const expression = expression_1.buildQueryExpression(this.tableClass.schema, filters);
+            const expression = (0, expression_1.buildQueryExpression)(this.tableClass.schema, filters);
             scanInput.FilterExpression = expression.FilterExpression;
             scanInput.ExpressionAttributeNames = expression.ExpressionAttributeNames;
             scanInput.ExpressionAttributeValues = expression.ExpressionAttributeValues;

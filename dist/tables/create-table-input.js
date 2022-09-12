@@ -96,6 +96,7 @@ function createTableInput(schema, forCloudFormation = false) {
                 Projection: {
                     ProjectionType: indexMetadata.projection == null ? 'ALL' : indexMetadata.projection,
                 },
+                // Projection: indexMetadata.projection,
             };
             if (indexMetadata.nonKeyAttributes != null && indexMetadata.nonKeyAttributes.length > 0) {
                 if (indexMetadata.projection !== 'INCLUDE') {
@@ -162,7 +163,7 @@ function createTableInput(schema, forCloudFormation = false) {
             Enabled: true,
         };
     }
-    params.AttributeDefinitions = lodash_1.uniqBy(params.AttributeDefinitions, (attr) => attr.AttributeName);
+    params.AttributeDefinitions = (0, lodash_1.uniqBy)(params.AttributeDefinitions, (attr) => attr.AttributeName);
     return params;
 }
 exports.createTableInput = createTableInput;

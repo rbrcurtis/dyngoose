@@ -27,11 +27,11 @@ describe('BatchGet', () => {
         __metadata("design:type", String)
     ], TestTable1.prototype, "status", void 0);
     __decorate([
-        decorator_1.PrimaryKey('id'),
+        (0, decorator_1.PrimaryKey)('id'),
         __metadata("design:type", primary_key_1.PrimaryKey)
     ], TestTable1, "primaryKey", void 0);
     TestTable1 = __decorate([
-        decorator_1.Table({ name: 'BatchGetTestCardTable1' })
+        (0, decorator_1.Table)({ name: 'BatchGetTestCardTable1' })
     ], TestTable1);
     let TestTable2 = class TestTable2 extends table_1.Table {
     };
@@ -44,11 +44,11 @@ describe('BatchGet', () => {
         __metadata("design:type", String)
     ], TestTable2.prototype, "status", void 0);
     __decorate([
-        decorator_1.PrimaryKey('id'),
+        (0, decorator_1.PrimaryKey)('id'),
         __metadata("design:type", primary_key_1.PrimaryKey)
     ], TestTable2, "primaryKey", void 0);
     TestTable2 = __decorate([
-        decorator_1.Table({ name: 'BatchGetTestCardTable2' })
+        (0, decorator_1.Table)({ name: 'BatchGetTestCardTable2' })
     ], TestTable2);
     before(async () => {
         await TestTable1.createTable();
@@ -79,22 +79,22 @@ describe('BatchGet', () => {
         batch.get(TestTable1.primaryKey.fromKey(2));
         batch.get(TestTable2.primaryKey.fromKey(3));
         batch.get(TestTable2.primaryKey.fromKey(4));
-        chai_1.expect(item.status).to.eq(null);
+        (0, chai_1.expect)(item.status).to.eq(null);
         // execute the retrieval
         const results = await batch.retrieve();
         // now verify the results
-        const records = lodash_1.sortBy(results, 'id');
-        chai_1.expect(results.length).eq(4);
-        chai_1.expect(records[0].id).eq(1);
-        chai_1.expect(records[0]).to.be.instanceOf(TestTable1);
-        chai_1.expect(records[1].id).eq(2);
-        chai_1.expect(records[1]).to.be.instanceOf(TestTable1);
-        chai_1.expect(records[2].id).eq(3);
-        chai_1.expect(records[2]).to.be.instanceOf(TestTable2);
-        chai_1.expect(records[3].id).eq(4);
-        chai_1.expect(records[3]).to.be.instanceOf(TestTable2);
+        const records = (0, lodash_1.sortBy)(results, 'id');
+        (0, chai_1.expect)(results.length).eq(4);
+        (0, chai_1.expect)(records[0].id).eq(1);
+        (0, chai_1.expect)(records[0]).to.be.instanceOf(TestTable1);
+        (0, chai_1.expect)(records[1].id).eq(2);
+        (0, chai_1.expect)(records[1]).to.be.instanceOf(TestTable1);
+        (0, chai_1.expect)(records[2].id).eq(3);
+        (0, chai_1.expect)(records[2]).to.be.instanceOf(TestTable2);
+        (0, chai_1.expect)(records[3].id).eq(4);
+        (0, chai_1.expect)(records[3]).to.be.instanceOf(TestTable2);
         // verify the original items are mutated
-        chai_1.expect(item.status).to.eq('a');
+        (0, chai_1.expect)(item.status).to.eq('a');
     });
     it('should operate a successful atomic batch operation', async () => {
         const batch = new batch_get_1.BatchGet().atomic();
@@ -103,28 +103,28 @@ describe('BatchGet', () => {
         batch.get(TestTable1.primaryKey.fromKey(2));
         batch.get(TestTable2.primaryKey.fromKey(3));
         batch.get(TestTable2.primaryKey.fromKey(4));
-        chai_1.expect(item.status).to.eq(null);
+        (0, chai_1.expect)(item.status).to.eq(null);
         // execute the retrieval
         const results = await batch.retrieve();
         // now verify the results
-        const records = lodash_1.sortBy(results, 'id');
-        chai_1.expect(results.length).eq(4);
-        chai_1.expect(records[0].id).eq(1);
-        chai_1.expect(records[0]).to.be.instanceOf(TestTable1);
-        chai_1.expect(records[1].id).eq(2);
-        chai_1.expect(records[1]).to.be.instanceOf(TestTable1);
-        chai_1.expect(records[2].id).eq(3);
-        chai_1.expect(records[2]).to.be.instanceOf(TestTable2);
-        chai_1.expect(records[3].id).eq(4);
-        chai_1.expect(records[3]).to.be.instanceOf(TestTable2);
+        const records = (0, lodash_1.sortBy)(results, 'id');
+        (0, chai_1.expect)(results.length).eq(4);
+        (0, chai_1.expect)(records[0].id).eq(1);
+        (0, chai_1.expect)(records[0]).to.be.instanceOf(TestTable1);
+        (0, chai_1.expect)(records[1].id).eq(2);
+        (0, chai_1.expect)(records[1]).to.be.instanceOf(TestTable1);
+        (0, chai_1.expect)(records[2].id).eq(3);
+        (0, chai_1.expect)(records[2]).to.be.instanceOf(TestTable2);
+        (0, chai_1.expect)(records[3].id).eq(4);
+        (0, chai_1.expect)(records[3]).to.be.instanceOf(TestTable2);
         // verify the original items are mutated
-        chai_1.expect(item.status).to.eq('a');
+        (0, chai_1.expect)(item.status).to.eq('a');
     });
     it('should return an empty array when nothing matches', async () => {
         const batch = new batch_get_1.BatchGet();
         batch.get(TestTable1.primaryKey.fromKey(420));
         const results = await batch.retrieve();
-        chai_1.expect(results.length).eq(0);
+        (0, chai_1.expect)(results.length).eq(0);
     });
     it('should not return records that were missing', async () => {
         const batch = new batch_get_1.BatchGet();
@@ -133,8 +133,8 @@ describe('BatchGet', () => {
         // execute the retrieval
         const results = await batch.retrieve();
         // now verify the results
-        chai_1.expect(results.length).eq(1);
-        chai_1.expect(results[0].id).eq(1);
+        (0, chai_1.expect)(results.length).eq(1);
+        (0, chai_1.expect)(results[0].id).eq(1);
     });
     it('should accept projection expressions', async () => {
         const batch = new batch_get_1.BatchGet();
@@ -143,10 +143,10 @@ describe('BatchGet', () => {
         batch.get(item);
         // execute the retrieval
         const results = await batch.retrieve();
-        chai_1.expect(results.length).eq(1);
-        chai_1.expect(results[0].status).eq(null);
-        chai_1.expect(item.status).to.eq(null);
-        chai_1.expect(item.toJSON()).to.deep.eq({
+        (0, chai_1.expect)(results.length).eq(1);
+        (0, chai_1.expect)(results[0].status).eq(null);
+        (0, chai_1.expect)(item.status).to.eq(null);
+        (0, chai_1.expect)(item.toJSON()).to.deep.eq({
             id: 1,
         });
     });
@@ -157,9 +157,9 @@ describe('BatchGet', () => {
         batch.get(item);
         // execute the retrieval
         const results = await batch.retrieve();
-        chai_1.expect(results.length).eq(1);
-        chai_1.expect(results[0].status).eq('a');
-        chai_1.expect(item.status).to.eq('a');
+        (0, chai_1.expect)(results.length).eq(1);
+        (0, chai_1.expect)(results[0].status).eq('a');
+        (0, chai_1.expect)(item.status).to.eq('a');
     });
 });
 //# sourceMappingURL=batch-get.spec.js.map

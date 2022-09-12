@@ -115,7 +115,7 @@ class Table {
      * migrate and indexes that need changes.
      */
     static async createTable(waitForReady = true) {
-        return await create_table_1.createTable(this.schema, waitForReady);
+        return await (0, create_table_1.createTable)(this.schema, waitForReady);
     }
     /**
      * Migrates the table to match updated specifications.
@@ -123,7 +123,7 @@ class Table {
      * This will create new indexes and delete legacy indexes.
      */
     static async migrateTable() {
-        return await migrate_table_1.migrateTable(this.schema);
+        return await (0, migrate_table_1.migrateTable)(this.schema);
     }
     /**
      * Deletes the table from DynamoDB.
@@ -131,10 +131,10 @@ class Table {
      * Be a bit careful with this in production.
      */
     static async deleteTable() {
-        return await delete_table_1.deleteTable(this.schema);
+        return await (0, delete_table_1.deleteTable)(this.schema);
     }
     static async describeTable() {
-        return await describe_table_1.describeTable(this.schema);
+        return await (0, describe_table_1.describeTable)(this.schema);
     }
     // #endregion static methods
     // #endregion static
@@ -176,7 +176,7 @@ class Table {
      * Converts the current attribute values into a DynamoDB.AttributeMap which
      * can be sent directly to DynamoDB within a PutItem, UpdateItem, or similar
      * request.
-    */
+     */
     toDynamo() {
         // anytime toDynamo is called, it can generate new default values or manipulate values
         // this keeps the record in sync, so the instance can be used after the record is saved
@@ -252,13 +252,13 @@ class Table {
             }
             if (!_.includes(blacklist, attribute.name)) {
                 // allow the attribute to transform the value via a custom fromJSON method
-                if (!truly_empty_1.isTrulyEmpty(value) && typeof attribute.type.fromJSON === 'function') {
+                if (!(0, truly_empty_1.isTrulyEmpty)(value) && typeof attribute.type.fromJSON === 'function') {
                     value = attribute.type.fromJSON(value);
                 }
                 const currentValue = this.getAttribute(attribute.name);
                 // compare to current value, to avoid unnecessarily marking attributes as needing to be saved
                 if (!_.isEqual(currentValue, value)) {
-                    if (truly_empty_1.isTrulyEmpty(value)) {
+                    if ((0, truly_empty_1.isTrulyEmpty)(value)) {
                         this.removeAttribute(attribute.name);
                     }
                     else {
@@ -307,7 +307,7 @@ class Table {
      * Sets the DynamoDB.AttributeValue for an attribute.
      *
      * To set the value from a JavaScript object, use {@link Table.setAttribute}
-    */
+     */
     setAttributeDynamoValue(attributeName, attributeValue) {
         // save the original value before we update the attributes value
         if (!_.isUndefined(this.__attributes[attributeName]) && _.isUndefined(this.__original[attributeName])) {
@@ -339,7 +339,7 @@ class Table {
      *
      * @param {object} values An object, where the keys are the attribute names,
      *                        and the values are the values you'd like to set.
-    */
+     */
     setAttributes(values) {
         _.forEach(values, (value, attributeName) => {
             this.setAttribute(attributeName, value);
@@ -563,7 +563,7 @@ class Table {
         for (const [attributeName, attribute] of this.table.schema.getAttributes()) {
             const propertyName = attribute.propertyName;
             const value = this.getAttribute(attributeName);
-            if (!truly_empty_1.isTrulyEmpty(value)) {
+            if (!(0, truly_empty_1.isTrulyEmpty)(value)) {
                 if (_.isFunction(attribute.type.toJSON)) {
                     json[propertyName] = attribute.type.toJSON(value, attribute);
                 }
@@ -602,7 +602,9 @@ class Table {
         var _a;
         const attributeValue = attribute.toDynamo(value);
         // avoid recording the value if it is unchanged, so we do not send it as an updated value during a save
-        if (params.force !== true && !_.isUndefined(this.__attributes[attribute.name]) && _.isEqual(this.__attributes[attribute.name], attributeValue)) {
+        if (params.force !== true &&
+            !_.isUndefined(this.__attributes[attribute.name]) &&
+            _.isEqual(this.__attributes[attribute.name], attributeValue)) {
             return this;
         }
         if (attributeValue == null) {
@@ -623,9 +625,7 @@ class Table {
      * Returns a list of attributes that should not be allowed when Table.fromJSON is used.
      */
     static getBlacklist() {
-        const blacklist = [
-            this.schema.primaryKey.hash.name,
-        ];
+        const blacklist = [this.schema.primaryKey.hash.name];
         if (this.schema.primaryKey.range != null) {
             blacklist.push(this.schema.primaryKey.range.name);
         }

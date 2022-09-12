@@ -10,7 +10,7 @@ class MapAttributeType extends attribute_type_1.AttributeType {
         var _a;
         super(record, propertyName, metadata);
         this.metadata = metadata;
-        this.type = "M" /* Map */;
+        this.type = "M" /* DynamoAttributeType.Map */;
         this.attributes = {};
         // convert attributes from ChildAttributeMetadata types to
         for (const childAttributePropertyName of Object.keys(this.metadata.attributes)) {
@@ -77,11 +77,12 @@ class MapAttributeType extends attribute_type_1.AttributeType {
     }
     toJSON(mapValue) {
         const json = {};
+        // @ts-ignore
         for (const propertyName of Object.keys(mapValue)) {
             const attribute = _.find(this.attributes, (attr) => attr.propertyName === propertyName);
             const value = _.get(mapValue, propertyName);
             if (attribute != null) {
-                if (!truly_empty_1.isTrulyEmpty(value)) {
+                if (!(0, truly_empty_1.isTrulyEmpty)(value)) {
                     if (_.isFunction(attribute.type.toJSON)) {
                         json[propertyName] = attribute.type.toJSON(value, attribute);
                     }

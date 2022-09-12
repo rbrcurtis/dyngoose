@@ -5,7 +5,7 @@ const attribute_type_1 = require("../../tables/attribute-type");
 class BooleanAttributeType extends attribute_type_1.AttributeType {
     constructor() {
         super(...arguments);
-        this.type = "BOOL" /* Boolean */;
+        this.type = "BOOL" /* DynamoAttributeType.Boolean */;
     }
 }
 exports.BooleanAttributeType = BooleanAttributeType;

@@ -22,7 +22,7 @@ function GlobalSecondaryIndex(options) {
             // 1. verify each attribute specified in nonKeyAttributes exists on the table
             // 2. remove the key attributes from nonKeyAttributes, as that causes problems
             // 3. remove duplicates as well
-            options.nonKeyAttributes = lodash_1.uniq(options.nonKeyAttributes.filter((attributeName) => {
+            options.nonKeyAttributes = (0, lodash_1.uniq)(options.nonKeyAttributes.filter((attributeName) => {
                 // throws a SchemaError if the attribute does not exist
                 table.schema.getAttributeByName(attributeName);
                 // remove the attribute if it is a key attribute, as it is not necessary to be specified

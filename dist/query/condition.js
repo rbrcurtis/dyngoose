@@ -203,7 +203,7 @@ class Condition {
         const key = this.key;
         this.search.addFilterGroup([
             {
-                [key]: this.filter,
+                [key]: this.filter, // any is because of the Exclude on beginsWith
             },
         ]);
         return this.search;

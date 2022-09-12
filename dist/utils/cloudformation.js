@@ -6,7 +6,7 @@ const _ = require("lodash");
 const path_1 = require("path");
 const table_1 = require("../table");
 async function createCloudFormationResources(input) {
-    const tableFiles = fs_1.readdirSync(input.tablesDirectory);
+    const tableFiles = (0, fs_1.readdirSync)(input.tablesDirectory);
     const tables = [];
     const resources = {};
     const log = input.log == null ? console.log : input.log;
@@ -15,7 +15,7 @@ async function createCloudFormationResources(input) {
     log('Running Dyngoose CloudFormation template generation utility…');
     for (const file of tableFiles) {
         if (file.endsWith(input.tableFileSuffix)) {
-            const tableFile = path_1.join(input.tablesDirectory, file);
+            const tableFile = (0, path_1.join)(input.tablesDirectory, file);
             const tableFileExports = require(tableFile);
             for (const exportedProperty of _.values(tableFileExports)) {
                 if (exportedProperty.prototype instanceof table_1.Table) {

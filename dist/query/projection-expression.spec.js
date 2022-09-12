@@ -6,9 +6,9 @@ const projection_expression_1 = require("./projection-expression");
 describe('Query/ProjectionExpression', () => {
     describe('buildProjectionExpression', () => {
         it('transformed reserved keywords', () => {
-            const expression = projection_expression_1.buildProjectionExpression(setup_tests_spec_1.TestableTable, ['id', 'status']);
-            chai_1.expect(expression.ProjectionExpression).to.eq('id,#p0');
-            chai_1.expect(expression.ExpressionAttributeNames).to.deep.eq({
+            const expression = (0, projection_expression_1.buildProjectionExpression)(setup_tests_spec_1.TestableTable, ['id', 'status']);
+            (0, chai_1.expect)(expression.ProjectionExpression).to.eq('id,#p0');
+            (0, chai_1.expect)(expression.ExpressionAttributeNames).to.deep.eq({
                 '#p0': 'status',
             });
         });

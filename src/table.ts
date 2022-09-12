@@ -14,7 +14,7 @@ import { SetTableProperty, SetValue, TableProperties, TableProperty } from './ta
 import { Schema } from './tables/schema'
 import { isTrulyEmpty } from './utils/truly-empty'
 
-type StaticThis<T> = new() => T
+type StaticThis<T> = new () => T
 
 export class Table {
   // #region static
@@ -68,7 +68,11 @@ export class Table {
    * default to using an `UpdateItem` operation rather than a `PutItem` operation
    * upon being saved.
    */
-  public static fromDynamo<T extends Table>(this: StaticThis<T>, attributes: DynamoDB.AttributeMap, entireDocument = true): T {
+  public static fromDynamo<T extends Table>(
+    this: StaticThis<T>,
+    attributes: DynamoDB.AttributeMap,
+    entireDocument = true,
+  ): T {
     return new this().fromDynamo(attributes, entireDocument)
   }
 
@@ -102,7 +106,11 @@ export class Table {
    * results (be cautious as that can easily cause timeouts for Lambda), specify `{ all: true }` as an
    * input argument for the second argument.
    */
-  public static search<T extends Table>(this: StaticThis<T>, filters?: Filters<T>, input: MagicSearchInput<T> = {}): MagicSearch<T> {
+  public static search<T extends Table>(
+    this: StaticThis<T>,
+    filters?: Filters<T>,
+    input: MagicSearchInput<T> = {},
+  ): MagicSearch<T> {
     return new MagicSearch<T>(this as any, filters, input)
   }
 
@@ -208,7 +216,7 @@ export class Table {
    * Converts the current attribute values into a DynamoDB.AttributeMap which
    * can be sent directly to DynamoDB within a PutItem, UpdateItem, or similar
    * request.
-  */
+   */
   public toDynamo(): DynamoDB.AttributeMap {
     // anytime toDynamo is called, it can generate new default values or manipulate values
     // this keeps the record in sync, so the instance can be used after the record is saved
@@ -354,7 +362,7 @@ export class Table {
    * Sets the DynamoDB.AttributeValue for an attribute.
    *
    * To set the value from a JavaScript object, use {@link Table.setAttribute}
-  */
+   */
   public setAttributeDynamoValue(attributeName: string, attributeValue: DynamoDB.AttributeValue): this {
     // save the original value before we update the attributes value
     if (!_.isUndefined(this.__attributes[attributeName]) && _.isUndefined(this.__original[attributeName])) {
@@ -392,7 +400,7 @@ export class Table {
    *
    * @param {object} values An object, where the keys are the attribute names,
    *                        and the values are the values you'd like to set.
-  */
+   */
   public setAttributes(values: { [name: string]: any }): this {
     _.forEach(values, (value, attributeName) => {
       this.setAttribute(attributeName, value)
@@ -562,10 +570,16 @@ export class Table {
    *
    * Automatically determines if the the save should use a PutItem or UpdateItem request.
    */
-  public async save(event?: undefined | { returnOutput?: false } & Events.SaveEvent<this>): Promise<void>
-  public async save(event: { returnOutput: true, operator?: undefined } & Events.SaveEvent<this>): Promise<DynamoDB.PutItemOutput | DynamoDB.UpdateItemOutput>
-  public async save(event: { returnOutput: true, operator: 'put' } & Events.SaveEvent<this>): Promise<DynamoDB.PutItemOutput>
-  public async save(event: { returnOutput: true, operator: 'update' } & Events.SaveEvent<this>): Promise<DynamoDB.UpdateItemOutput>
+  public async save(event?: undefined | ({ returnOutput?: false } & Events.SaveEvent<this>)): Promise<void>
+  public async save(
+    event: { returnOutput: true; operator?: undefined } & Events.SaveEvent<this>,
+  ): Promise<DynamoDB.PutItemOutput | DynamoDB.UpdateItemOutput>
+  public async save(
+    event: { returnOutput: true; operator: 'put' } & Events.SaveEvent<this>,
+  ): Promise<DynamoDB.PutItemOutput>
+  public async save(
+    event: { returnOutput: true; operator: 'update' } & Events.SaveEvent<this>,
+  ): Promise<DynamoDB.UpdateItemOutput>
   public async save(event?: Events.SaveEvent<this>): Promise<any> {
     const operator = event?.operator ?? this.getSaveOperation()
     const beforeSaveEvent: Events.BeforeSaveEvent<this> = {
@@ -714,7 +728,11 @@ export class Table {
     const attributeValue = attribute.toDynamo(value)
 
     // avoid recording the value if it is unchanged, so we do not send it as an updated value during a save
-    if (params.force !== true && !_.isUndefined(this.__attributes[attribute.name]) && _.isEqual(this.__attributes[attribute.name], attributeValue)) {
+    if (
+      params.force !== true &&
+      !_.isUndefined(this.__attributes[attribute.name]) &&
+      _.isEqual(this.__attributes[attribute.name], attributeValue)
+    ) {
       return this
     }
 
@@ -738,9 +756,7 @@ export class Table {
    * Returns a list of attributes that should not be allowed when Table.fromJSON is used.
    */
   protected static getBlacklist(): string[] {
-    const blacklist: string[] = [
-      this.schema.primaryKey.hash.name,
-    ]
+    const blacklist: string[] = [this.schema.primaryKey.hash.name]
 
     if (this.schema.primaryKey.range != null) {
       blacklist.push(this.schema.primaryKey.range.name)
@@ -754,6 +770,6 @@ export class Table {
 export interface ITable<T extends Table> {
   schema: Schema
   documentClient: DocumentClient<T>
-  new(): T
+  new (): T
   fromDynamo: (attributes: DynamoDB.AttributeMap, entireDocument?: boolean) => T
 }

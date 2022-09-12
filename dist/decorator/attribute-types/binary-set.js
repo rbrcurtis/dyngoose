@@ -5,7 +5,7 @@ const attribute_type_1 = require("../../tables/attribute-type");
 class BinarySetAttributeType extends attribute_type_1.AttributeType {
     constructor() {
         super(...arguments);
-        this.type = "BS" /* BinarySet */;
+        this.type = "BS" /* DynamoAttributeType.BinarySet */;
     }
 }
 exports.BinarySetAttributeType = BinarySetAttributeType;

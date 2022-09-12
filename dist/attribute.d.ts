@@ -14,7 +14,7 @@ export declare class Attribute<Value> {
     /**
      * Convert the given value for this attribute to a DynamoDB AttributeValue
      */
-    toDynamo(value: Value | null): DynamoDB.AttributeValue | null;
+    toDynamo(value: Value | null, enforceRequired?: boolean): DynamoDB.AttributeValue | null;
     toDynamoAssert(value: any): DynamoDB.AttributeValue;
     /**
      * Convert DynamoDB raw response to understandable data
