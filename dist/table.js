@@ -625,11 +625,7 @@ class Table {
      * Returns a list of attributes that should not be allowed when Table.fromJSON is used.
      */
     static getBlacklist() {
-        const blacklist = [this.schema.primaryKey.hash.name];
-        if (this.schema.primaryKey.range != null) {
-            blacklist.push(this.schema.primaryKey.range.name);
-        }
-        return blacklist;
+        return [];
     }
 }
 exports.Table = Table;

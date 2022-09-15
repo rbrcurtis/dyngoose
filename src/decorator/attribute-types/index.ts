@@ -51,7 +51,10 @@ export interface AttributeDefinition {
   getAttribute: (record: Table, propertyName: string) => any
 }
 
-export function Attribute<T extends keyof AttributeTypeMap>(type: T, metadata?: AttributeMetadataMap[T]): AttributeDefinition {
+export function Attribute<T extends keyof AttributeTypeMap>(
+  type: T,
+  metadata?: AttributeMetadataMap[T],
+): AttributeDefinition {
   const define = function (record: Table, propertyName: string): void {
     const AttributeTypeClass: any = AttributeTypes[type]
     const decorator = new AttributeTypeClass(record, propertyName, metadata)
