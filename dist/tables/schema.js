@@ -23,15 +23,17 @@ class Schema {
     }
     setMetadata(metadata) {
         this.options = metadata;
-        this.setThroughput(this.options.throughput != null ? this.options.throughput : {
-            read: 5,
-            write: 5,
-            autoScaling: {
-                targetUtilization: 70,
-                minCapacity: 5,
-                maxCapacity: 40000,
-            },
-        });
+        this.setThroughput(this.options.throughput != null
+            ? this.options.throughput
+            : {
+                read: 5,
+                write: 5,
+                autoScaling: {
+                    targetUtilization: 70,
+                    minCapacity: 5,
+                    maxCapacity: 40000,
+                },
+            });
     }
     defineAttributeProperties() {
         // for each attribute, add the get and set property handlers
@@ -199,13 +201,13 @@ class Schema {
     createCloudFormationResource() {
         return this.createTableInput(true);
     }
-    toDynamo(record) {
+    toDynamo(record, enforceRequired = true) {
         const attributeMap = {};
         for (const [attributeName, attribute] of this.attributes.entries()) {
             // there is a quirk with the typing of Table.get, where we exclude all the default Table properties and therefore
             // on the Table class itself, no property name is possible, so we pass 'as never' below to fix a linter warning
             // but this actually works as expected
-            const attributeValue = attribute.toDynamo(record.get(attribute.propertyName));
+            const attributeValue = attribute.toDynamo(record.get(attribute.propertyName), enforceRequired);
             if (attributeValue != null) {
                 attributeMap[attributeName] = attributeValue;
             }

@@ -38,5 +38,5 @@ export declare class Schema {
     setPrimaryKey(hashKey: string, rangeKey: string | undefined, propertyName: string): void;
     createTableInput(forCloudFormation?: boolean): DynamoDB.CreateTableInput;
     createCloudFormationResource(): any;
-    toDynamo(record: Table | Map<string, any>): DynamoDB.AttributeMap;
+    toDynamo(record: Table | Map<string, any>, enforceRequired?: boolean): DynamoDB.AttributeMap;
 }

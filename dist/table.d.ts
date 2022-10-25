@@ -112,7 +112,7 @@ export declare class Table {
      * can be sent directly to DynamoDB within a PutItem, UpdateItem, or similar
      * request.
      */
-    toDynamo(): DynamoDB.AttributeMap;
+    toDynamo(enforceRequired?: boolean): DynamoDB.AttributeMap;
     /**
      * Get the DynamoDB.Key for this record.
      */

@@ -18,6 +18,8 @@ module.exports = {
     'no-labels': 'off',
     '@typescript-eslint/prefer-ts-expect-error': 0,
     '@typescript-eslint/brace-style': 0,
+    '@typescript-eslint/indent': 0,
+    '@typescript-eslint/member-delimiter-style': 0,
   },
   // "env": {
   //   "browser": true,
@@ -33,7 +35,6 @@ module.exports = {
   //   "eslint-plugin-import",
   //   "@typescript-eslint"
   // ],
-  // "rules": {
   //   "@typescript-eslint/consistent-type-definitions": "error",
   //   "@typescript-eslint/dot-notation": "off",
   //   "@typescript-eslint/explicit-member-accessibility": [
@@ -42,10 +43,7 @@ module.exports = {
   //       "accessibility": "explicit"
   //     }
   //   ],
-  //   "@typescript-eslint/indent": [
-  //     "error",
-  //     2
-  //   ],
+
   //   "@typescript-eslint/member-delimiter-style": [
   //     "error",
   //     {
@@ -200,6 +198,6 @@ module.exports = {
   //   //       ]
   //   //     }
   //   //   }
-  //   // ]
-  // }
+  // ]
+  // },
 }

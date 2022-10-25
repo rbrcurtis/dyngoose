@@ -177,10 +177,10 @@ class Table {
      * can be sent directly to DynamoDB within a PutItem, UpdateItem, or similar
      * request.
      */
-    toDynamo() {
+    toDynamo(enforceRequired = true) {
         // anytime toDynamo is called, it can generate new default values or manipulate values
         // this keeps the record in sync, so the instance can be used after the record is saved
-        const attributeMap = this.table.schema.toDynamo(this);
+        const attributeMap = this.table.schema.toDynamo(this, enforceRequired);
         for (const attributeName of Object.keys(attributeMap)) {
             if (!_.isEqual(this.__attributes[attributeName], attributeMap[attributeName])) {
                 this.__updatedAttributes.push(attributeName);

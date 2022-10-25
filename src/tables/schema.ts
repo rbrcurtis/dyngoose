@@ -45,15 +45,19 @@ export class Schema {
   public setMetadata(metadata: Metadata.Table): void {
     this.options = metadata
 
-    this.setThroughput(this.options.throughput != null ? this.options.throughput : {
-      read: 5,
-      write: 5,
-      autoScaling: {
-        targetUtilization: 70,
-        minCapacity: 5,
-        maxCapacity: 40000,
-      },
-    })
+    this.setThroughput(
+      this.options.throughput != null
+        ? this.options.throughput
+        : {
+            read: 5,
+            write: 5,
+            autoScaling: {
+              targetUtilization: 70,
+              minCapacity: 5,
+              maxCapacity: 40000,
+            },
+          },
+    )
   }
 
   public defineAttributeProperties(): void {
@@ -66,20 +70,16 @@ export class Schema {
         // … I know, a weird exception
         attribute.propertyName === 'name'
       ) {
-        Object.defineProperty(
-          this.table.prototype,
-          attribute.propertyName,
-          {
-            configurable: true,
-            enumerable: true,
-            get(this: Table) {
-              return this.getAttribute(attribute.name)
-            },
-            set(this: Table, value: any) {
-              this.setAttribute(attribute.name, value)
-            },
+        Object.defineProperty(this.table.prototype, attribute.propertyName, {
+          configurable: true,
+          enumerable: true,
+          get(this: Table) {
+            return this.getAttribute(attribute.name)
           },
-        )
+          set(this: Table, value: any) {
+            this.setAttribute(attribute.name, value)
+          },
+        })
       }
     }
   }
@@ -87,14 +87,10 @@ export class Schema {
   public defineGlobalSecondaryIndexes(): void {
     for (const indexMetadata of this.globalSecondaryIndexes) {
       if (Object.prototype.hasOwnProperty.call(this.table, indexMetadata.propertyName) === false) {
-        Object.defineProperty(
-          this.table,
-          indexMetadata.propertyName,
-          {
-            value: new Query.GlobalSecondaryIndex(this.table, indexMetadata),
-            writable: false,
-          },
-        )
+        Object.defineProperty(this.table, indexMetadata.propertyName, {
+          value: new Query.GlobalSecondaryIndex(this.table, indexMetadata),
+          writable: false,
+        })
       }
     }
   }
@@ -102,28 +98,20 @@ export class Schema {
   public defineLocalSecondaryIndexes(): void {
     for (const indexMetadata of this.localSecondaryIndexes) {
       if (Object.prototype.hasOwnProperty.call(this.table, indexMetadata.propertyName) === false) {
-        Object.defineProperty(
-          this.table,
-          indexMetadata.propertyName,
-          {
-            value: new Query.LocalSecondaryIndex(this.table, indexMetadata),
-            writable: false,
-          },
-        )
+        Object.defineProperty(this.table, indexMetadata.propertyName, {
+          value: new Query.LocalSecondaryIndex(this.table, indexMetadata),
+          writable: false,
+        })
       }
     }
   }
 
   public definePrimaryKeyProperty(): void {
     if (Object.prototype.hasOwnProperty.call(this.table, this.primaryKey.propertyName) === false) {
-      Object.defineProperty(
-        this.table,
-        this.primaryKey.propertyName,
-        {
-          value: new Query.PrimaryKey(this.table, this.primaryKey),
-          writable: false,
-        },
-      )
+      Object.defineProperty(this.table, this.primaryKey.propertyName, {
+        value: new Query.PrimaryKey(this.table, this.primaryKey),
+        writable: false,
+      })
     }
   }
 
@@ -234,7 +222,9 @@ export class Schema {
   public setPrimaryKey(hashKey: string, rangeKey: string | undefined, propertyName: string): void {
     const hash = this.getAttributeByName(hashKey)
     if (hash == null) {
-      throw new SchemaError(`Specified hashKey ${hashKey} attribute for the PrimaryKey for table ${this.name} does not exist`)
+      throw new SchemaError(
+        `Specified hashKey ${hashKey} attribute for the PrimaryKey for table ${this.name} does not exist`,
+      )
     }
 
     let range: Attribute<any> | undefined
@@ -243,7 +233,9 @@ export class Schema {
       range = this.getAttributeByName(rangeKey)
 
       if (range == null) {
-        throw new SchemaError(`Specified rangeKey ${rangeKey} attribute for the PrimaryKey for table ${this.name} does not exist`)
+        throw new SchemaError(
+          `Specified rangeKey ${rangeKey} attribute for the PrimaryKey for table ${this.name} does not exist`,
+        )
       }
     }
 
@@ -262,14 +254,14 @@ export class Schema {
     return this.createTableInput(true)
   }
 
-  public toDynamo(record: Table | Map<string, any>): DynamoDB.AttributeMap {
+  public toDynamo(record: Table | Map<string, any>, enforceRequired = true): DynamoDB.AttributeMap {
     const attributeMap: DynamoDB.AttributeMap = {}
 
     for (const [attributeName, attribute] of this.attributes.entries()) {
       // there is a quirk with the typing of Table.get, where we exclude all the default Table properties and therefore
       // on the Table class itself, no property name is possible, so we pass 'as never' below to fix a linter warning
       // but this actually works as expected
-      const attributeValue = attribute.toDynamo(record.get(attribute.propertyName as never))
+      const attributeValue = attribute.toDynamo(record.get(attribute.propertyName as never), enforceRequired)
 
       if (attributeValue != null) {
         attributeMap[attributeName] = attributeValue
