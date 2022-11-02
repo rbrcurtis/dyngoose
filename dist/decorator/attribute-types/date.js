@@ -11,7 +11,9 @@ class DateAttributeType extends attribute_type_1.AttributeType {
         var _a, _b, _c;
         super(record, propertyName, metadata);
         this.type = "S" /* DynamoAttributeType.String */;
-        if (((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.unixTimestamp) === true || ((_b = this.metadata) === null || _b === void 0 ? void 0 : _b.millisecondTimestamp) === true || ((_c = this.metadata) === null || _c === void 0 ? void 0 : _c.timeToLive) === true) {
+        if (((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.unixTimestamp) === true ||
+            ((_b = this.metadata) === null || _b === void 0 ? void 0 : _b.millisecondTimestamp) === true ||
+            ((_c = this.metadata) === null || _c === void 0 ? void 0 : _c.timeToLive) === true) {
             this.type = "N" /* DynamoAttributeType.Number */;
         }
     }
@@ -39,7 +41,9 @@ class DateAttributeType extends attribute_type_1.AttributeType {
         if (((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.nowOnUpdate) === true) {
             dt = new Date();
         }
-        if (((_b = this.metadata) === null || _b === void 0 ? void 0 : _b.unixTimestamp) === true || ((_c = this.metadata) === null || _c === void 0 ? void 0 : _c.millisecondTimestamp) === true || ((_d = this.metadata) === null || _d === void 0 ? void 0 : _d.timeToLive) === true) {
+        if (((_b = this.metadata) === null || _b === void 0 ? void 0 : _b.unixTimestamp) === true ||
+            ((_c = this.metadata) === null || _c === void 0 ? void 0 : _c.millisecondTimestamp) === true ||
+            ((_d = this.metadata) === null || _d === void 0 ? void 0 : _d.timeToLive) === true) {
             return {
                 N: this.parseDate(dt).toString(),
             };
@@ -87,7 +91,10 @@ class DateAttributeType extends attribute_type_1.AttributeType {
     toJSON(dt) {
         var _a, _b, _c, _d;
         if (!(dt instanceof Date)) {
-            throw new Error('Attempting to pass a non-Date value to DateAttributeType.toJSON is not supported');
+            dt = new Date(dt);
+            if (isNaN(dt.getTime())) {
+                throw new Error('Attempting to pass a non-Date value to DateAttributeType.toJSON is not supported');
+            }
         }
         if (((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.unixTimestamp) === true || ((_b = this.metadata) === null || _b === void 0 ? void 0 : _b.timeToLive) === true) {
             // the Math.floor gets rid of the decimal places, which would corrupt the value when being saved
