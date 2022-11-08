@@ -91,9 +91,10 @@ class DateAttributeType extends attribute_type_1.AttributeType {
     toJSON(dt) {
         var _a, _b, _c, _d;
         if (!(dt instanceof Date)) {
+            const orig = dt;
             dt = new Date(dt);
             if (isNaN(dt.getTime())) {
-                throw new Error('Attempting to pass a non-Date value to DateAttributeType.toJSON is not supported');
+                throw new Error(`Attempting to pass a non-Date value to DateAttributeType.toJSON is not supported for value '${String(orig)}'`);
             }
         }
         if (((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.unixTimestamp) === true || ((_b = this.metadata) === null || _b === void 0 ? void 0 : _b.timeToLive) === true) {
