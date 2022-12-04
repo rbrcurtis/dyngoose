@@ -89,22 +89,21 @@ class DateAttributeType extends attribute_type_1.AttributeType {
         }
     }
     toJSON(dt) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e, _f;
         if (!(dt instanceof Date)) {
-            const orig = dt;
             dt = new Date(dt);
             if (isNaN(dt.getTime())) {
-                throw new Error(`Attempting to pass a non-Date value to DateAttributeType.toJSON is not supported for value '${String(orig)}'`);
+                return ((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.unixTimestamp) === true || ((_b = this.metadata) === null || _b === void 0 ? void 0 : _b.timeToLive) === true ? -1 : 'NaN';
             }
         }
-        if (((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.unixTimestamp) === true || ((_b = this.metadata) === null || _b === void 0 ? void 0 : _b.timeToLive) === true) {
+        if (((_c = this.metadata) === null || _c === void 0 ? void 0 : _c.unixTimestamp) === true || ((_d = this.metadata) === null || _d === void 0 ? void 0 : _d.timeToLive) === true) {
             // the Math.floor gets rid of the decimal places, which would corrupt the value when being saved
             return Math.floor(dt.valueOf() / 1000);
         }
-        else if (((_c = this.metadata) === null || _c === void 0 ? void 0 : _c.millisecondTimestamp) === true) {
+        else if (((_e = this.metadata) === null || _e === void 0 ? void 0 : _e.millisecondTimestamp) === true) {
             return dt.valueOf();
         }
-        else if (((_d = this.metadata) === null || _d === void 0 ? void 0 : _d.dateOnly) === true) {
+        else if (((_f = this.metadata) === null || _f === void 0 ? void 0 : _f.dateOnly) === true) {
             // grab the ISO string, then split at the time (T) separator and grab only the date
             return dt.toISOString().split('T')[0];
         }

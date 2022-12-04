@@ -98,14 +98,9 @@ export class DateAttributeType extends AttributeType<Value, Metadata> implements
 
   toJSON(dt: Value): string | number {
     if (!(dt instanceof Date)) {
-      const orig = dt
       dt = new Date(dt)
       if (isNaN(dt.getTime())) {
-        throw new Error(
-          `Attempting to pass a non-Date value to DateAttributeType.toJSON is not supported for value '${String(
-            orig,
-          )}'`,
-        )
+        return this.metadata?.unixTimestamp === true || this.metadata?.timeToLive === true ? -1 : 'NaN'
       }
     }
 
