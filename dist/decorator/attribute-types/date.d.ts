@@ -14,7 +14,7 @@ export declare class DateAttributeType extends AttributeType<Value, Metadata> im
     toDynamo(dt: Value): DynamoDB.AttributeValue;
     fromDynamo(attributeValue: DynamoDB.AttributeValue): Value | null;
     fromJSON(dt: string | number): Value;
-    toJSON(dt: Value): string | number;
-    parseDate(dt: Value | string | number): string | number;
+    toJSON(dt: Value): string | number | undefined;
+    parseDate(dt: Value | string | number): string | number | undefined;
 }
 export {};

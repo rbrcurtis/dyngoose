@@ -20,6 +20,8 @@ module.exports = {
     '@typescript-eslint/brace-style': 0,
     '@typescript-eslint/indent': 0,
     '@typescript-eslint/member-delimiter-style': 0,
+    '@typescript-eslint/no-non-null-assertion': 0,
+    '@typescript-eslint/strict-boolean-expressions': 0,
   },
   // "env": {
   //   "browser": true,

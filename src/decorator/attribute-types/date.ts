@@ -53,17 +53,19 @@ export class DateAttributeType extends AttributeType<Value, Metadata> implements
       dt = new Date()
     }
 
+    if (!this.parseDate(dt)) return {}
+
     if (
       this.metadata?.unixTimestamp === true ||
       this.metadata?.millisecondTimestamp === true ||
       this.metadata?.timeToLive === true
     ) {
       return {
-        N: this.parseDate(dt).toString(),
+        N: this.parseDate(dt)!.toString(),
       }
     } else {
       return {
-        S: this.parseDate(dt).toString(),
+        S: this.parseDate(dt)!.toString(),
       }
     }
   }
@@ -96,12 +98,12 @@ export class DateAttributeType extends AttributeType<Value, Metadata> implements
     }
   }
 
-  toJSON(dt: Value): string | number {
+  toJSON(dt: Value): string | number | undefined {
     if (!(dt instanceof Date)) {
       dt = new Date(dt)
     }
     if (isNaN(dt.getTime())) {
-      return this.metadata?.unixTimestamp === true || this.metadata?.timeToLive === true ? -1 : 'NaN'
+      return undefined
     }
 
     if (this.metadata?.unixTimestamp === true || this.metadata?.timeToLive === true) {
@@ -122,7 +124,7 @@ export class DateAttributeType extends AttributeType<Value, Metadata> implements
     }
   }
 
-  parseDate(dt: Value | string | number): string | number {
+  parseDate(dt: Value | string | number): string | number | undefined {
     // support ISO formatted date strings
     if (typeof dt === 'string') {
       // if date only, support YYYY-MM-DD
