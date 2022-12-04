@@ -92,9 +92,9 @@ class DateAttributeType extends attribute_type_1.AttributeType {
         var _a, _b, _c, _d, _e, _f;
         if (!(dt instanceof Date)) {
             dt = new Date(dt);
-            if (isNaN(dt.getTime())) {
-                return ((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.unixTimestamp) === true || ((_b = this.metadata) === null || _b === void 0 ? void 0 : _b.timeToLive) === true ? -1 : 'NaN';
-            }
+        }
+        if (isNaN(dt.getTime())) {
+            return ((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.unixTimestamp) === true || ((_b = this.metadata) === null || _b === void 0 ? void 0 : _b.timeToLive) === true ? -1 : 'NaN';
         }
         if (((_c = this.metadata) === null || _c === void 0 ? void 0 : _c.unixTimestamp) === true || ((_d = this.metadata) === null || _d === void 0 ? void 0 : _d.timeToLive) === true) {
             // the Math.floor gets rid of the decimal places, which would corrupt the value when being saved
@@ -108,7 +108,13 @@ class DateAttributeType extends attribute_type_1.AttributeType {
             return dt.toISOString().split('T')[0];
         }
         else {
-            return dt.toISOString();
+            try {
+                return dt.toISOString();
+            }
+            catch (err) {
+                console.error('what is this?', dt);
+                throw err;
+            }
         }
     }
     parseDate(dt) {

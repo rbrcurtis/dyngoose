@@ -99,9 +99,9 @@ export class DateAttributeType extends AttributeType<Value, Metadata> implements
   toJSON(dt: Value): string | number {
     if (!(dt instanceof Date)) {
       dt = new Date(dt)
-      if (isNaN(dt.getTime())) {
-        return this.metadata?.unixTimestamp === true || this.metadata?.timeToLive === true ? -1 : 'NaN'
-      }
+    }
+    if (isNaN(dt.getTime())) {
+      return this.metadata?.unixTimestamp === true || this.metadata?.timeToLive === true ? -1 : 'NaN'
     }
 
     if (this.metadata?.unixTimestamp === true || this.metadata?.timeToLive === true) {
@@ -113,7 +113,12 @@ export class DateAttributeType extends AttributeType<Value, Metadata> implements
       // grab the ISO string, then split at the time (T) separator and grab only the date
       return dt.toISOString().split('T')[0]
     } else {
-      return dt.toISOString()
+      try {
+        return dt.toISOString()
+      } catch (err) {
+        console.error('what is this?', dt)
+        throw err
+      }
     }
   }
 
