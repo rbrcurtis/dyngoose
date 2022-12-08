@@ -36,9 +36,9 @@ class DateAttributeType extends attribute_type_1.AttributeType {
         }
         return null;
     }
-    toDynamo(dt) {
+    toDynamo(dt, attribute, enforceRequired = true) {
         var _a, _b, _c, _d;
-        if (((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.nowOnUpdate) === true) {
+        if (enforceRequired && ((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.nowOnUpdate) === true) {
             dt = new Date();
         }
         if (!this.parseDate(dt))

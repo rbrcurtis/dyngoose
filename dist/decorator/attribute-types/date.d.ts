@@ -1,6 +1,7 @@
 import { DynamoDB } from 'aws-sdk';
 import { DynamoAttributeType } from '../../dynamo-attribute-types';
 import { IAttributeType } from '../../interfaces';
+import { Attribute } from '../../metadata';
 import { DateAttributeMetadata } from '../../metadata/attribute-types/date.metadata';
 import { Table } from '../../table';
 import { AttributeType } from '../../tables/attribute-type';
@@ -11,7 +12,7 @@ export declare class DateAttributeType extends AttributeType<Value, Metadata> im
     constructor(record: Table, propertyName: string, metadata?: Metadata);
     decorate(): void;
     getDefault(): Value | null;
-    toDynamo(dt: Value): DynamoDB.AttributeValue;
+    toDynamo(dt: Value, attribute: Attribute<Value>, enforceRequired?: boolean): DynamoDB.AttributeValue;
     fromDynamo(attributeValue: DynamoDB.AttributeValue): Value | null;
     fromJSON(dt: string | number): Value;
     toJSON(dt: Value): string | number | undefined;

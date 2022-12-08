@@ -45,7 +45,7 @@ class Attribute {
         if (typeof this.metadata.validate === 'function' && !this.metadata.validate(value)) {
             throw new errors_1.ValidationError('Validation failed: ' + this.name);
         }
-        const attributeValue = this.type.toDynamo(value, this);
+        const attributeValue = this.type.toDynamo(value, this, enforceRequired);
         if (typeof this.metadata.manipulateWrite === 'function') {
             return this.metadata.manipulateWrite(attributeValue, value, this);
         }

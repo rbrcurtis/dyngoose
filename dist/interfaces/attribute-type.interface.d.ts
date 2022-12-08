@@ -10,7 +10,7 @@ export interface IAttributeType<Value> {
     /**
      * Convert this attribute from the desired Value into a saveable value DynamoDB will accept.
      */
-    toDynamo: (value: Value | null, attribute: Attribute<Value>) => AttributeValue;
+    toDynamo: (value: Value | null, attribute: Attribute<Value>, enforceRequired: boolean) => AttributeValue;
     /**
      * Apply the default
      */

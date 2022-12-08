@@ -7,5 +7,6 @@ declare type Value = DynamoDB.StringSetAttributeValue;
 declare type Metadata = StringSetAttributeMetadata;
 export declare class StringSetAttributeType extends AttributeType<Value, Metadata> implements IAttributeType<Value> {
     type: DynamoAttributeType;
+    toDynamo(values: Value): DynamoDB.AttributeValue;
 }
 export {};

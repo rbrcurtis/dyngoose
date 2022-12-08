@@ -2,6 +2,7 @@ import { DynamoDB } from 'aws-sdk'
 import { DynamoAttributeType } from '../../dynamo-attribute-types'
 import { SchemaError } from '../../errors'
 import { IAttributeType } from '../../interfaces'
+import { Attribute } from '../../metadata'
 import { DateAttributeMetadata } from '../../metadata/attribute-types/date.metadata'
 import { Table } from '../../table'
 import { AttributeType } from '../../tables/attribute-type'
@@ -48,8 +49,8 @@ export class DateAttributeType extends AttributeType<Value, Metadata> implements
     return null
   }
 
-  toDynamo(dt: Value): DynamoDB.AttributeValue {
-    if (this.metadata?.nowOnUpdate === true) {
+  toDynamo(dt: Value, attribute: Attribute<Value>, enforceRequired = true): DynamoDB.AttributeValue {
+    if (enforceRequired && this.metadata?.nowOnUpdate === true) {
       dt = new Date()
     }
 

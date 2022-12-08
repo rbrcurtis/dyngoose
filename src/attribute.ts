@@ -51,7 +51,7 @@ export class Attribute<Value> {
       throw new ValidationError('Validation failed: ' + this.name)
     }
 
-    const attributeValue = this.type.toDynamo(value, this)
+    const attributeValue = this.type.toDynamo(value, this, enforceRequired)
 
     if (typeof this.metadata.manipulateWrite === 'function') {
       return this.metadata.manipulateWrite(attributeValue, value, this)
