@@ -89,7 +89,7 @@ class Table {
      * of the user input, @see {@link https://github.com/benhutchins/dyngoose/blob/master/docs/Attributes}.
      */
     static fromJSON(json) {
-        return new this().applyDefaults().fromJSON(json);
+        return new this().fromJSON(json);
     }
     /**
      * Query DynamoDB for what you need.
@@ -187,6 +187,7 @@ class Table {
             }
         }
         this.__attributes = attributeMap;
+        this.afterLoad();
         return this.__attributes;
     }
     /**
@@ -267,6 +268,7 @@ class Table {
                 }
             }
         });
+        this.afterLoad();
         return this;
     }
     /**
@@ -591,6 +593,12 @@ class Table {
      */
     async beforeDelete(event) {
         return true;
+    }
+    /**
+     * After record is loaded from the db or fromJson, this handler is called.
+     */
+    afterLoad() {
+        return undefined;
     }
     /**
      * After a record is deleted, this handler is called.

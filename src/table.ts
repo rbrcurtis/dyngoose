@@ -229,6 +229,9 @@ export class Table {
     }
 
     this.__attributes = attributeMap
+
+    this.afterLoad()
+
     return this.__attributes
   }
 
@@ -317,6 +320,8 @@ export class Table {
         }
       }
     })
+
+    this.afterLoad()
 
     return this
   }
@@ -715,6 +720,13 @@ export class Table {
    */
   protected async beforeDelete(event: Events.BeforeDeleteEvent<this>): Promise<boolean> {
     return true
+  }
+
+  /**
+   * After record is loaded from the db or fromJson, this handler is called.
+   */
+  protected afterLoad(): void {
+    return undefined
   }
 
   /**

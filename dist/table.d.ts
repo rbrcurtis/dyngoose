@@ -354,6 +354,10 @@ export declare class Table {
      */
     protected beforeDelete(event: Events.BeforeDeleteEvent<this>): Promise<boolean>;
     /**
+     * After record is loaded from the db or fromJson, this handler is called.
+     */
+    protected afterLoad(): void;
+    /**
      * After a record is deleted, this handler is called.
      */
     protected afterDelete(event: Events.AfterDeleteEvent<this>): Promise<void>;
