@@ -10,7 +10,8 @@ class NumberAttributeType extends attribute_type_1.AttributeType {
         this.type = "N" /* DynamoAttributeType.Number */;
     }
     toDynamo(value) {
-        if (!(0, utils_1.isNumber)(value)) {
+        value = Number(value);
+        if (!(0, utils_1.isNumber)(value) || isNaN(value)) {
             throw new errors_1.ValidationError(`Expected ${this.propertyName} to be a number`);
         }
         return {

@@ -7,7 +7,7 @@ declare type Value = number | BigInt;
 declare type Metadata = NumberAttributeMetadata;
 export declare class NumberAttributeType extends AttributeType<Value, Metadata> implements IAttributeType<Value> {
     type: DynamoAttributeType;
-    toDynamo(value: Value): DynamoDB.AttributeValue;
+    toDynamo(value: Value | null): DynamoDB.AttributeValue;
     fromDynamo(value: DynamoDB.AttributeValue): Value | null;
 }
 export {};
