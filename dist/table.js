@@ -268,6 +268,7 @@ class Table {
                 }
             }
         });
+        this.__updatedAttributes = [];
         this.afterLoad();
         return this;
     }
