@@ -89,7 +89,7 @@ export class Table {
    * of the user input, @see {@link https://github.com/benhutchins/dyngoose/blob/master/docs/Attributes}.
    */
   public static fromJSON<T extends Table>(this: StaticThis<T>, json: { [attribute: string]: any }): T {
-    return new this().applyDefaults().fromJSON(json)
+    return new this().fromJSON(json)
   }
 
   /**
