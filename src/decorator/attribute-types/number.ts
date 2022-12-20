@@ -12,7 +12,7 @@ type Metadata = NumberAttributeMetadata
 export class NumberAttributeType extends AttributeType<Value, Metadata> implements IAttributeType<Value> {
   type = DynamoAttributeType.Number
 
-  toDynamo(value: Value  | null): DynamoDB.AttributeValue {
+  toDynamo(value: Value | null): DynamoDB.AttributeValue {
     value = Number(value)
     if (!isNumber(value) || isNaN(value)) {
       throw new ValidationError(`Expected ${this.propertyName} to be a number`)
