@@ -66,6 +66,12 @@ class Table {
         }
         return record;
     }
+    static async create(values) {
+        // @ts-ignore
+        const record = this.new(values);
+        await record.save();
+        return record;
+    }
     /**
      * Creates a new instance of Table with values from a given `DynamoDB.AttributeMap`.
      *

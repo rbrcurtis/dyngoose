@@ -61,6 +61,13 @@ export class Table {
     return record
   }
 
+  public static async create<T extends Table>(this: StaticThis<T>, values?: TableProperties<T>): Promise<T> {
+    // @ts-ignore
+    const record = this.new(values)
+    await record.save()
+    return record
+  }
+
   /**
    * Creates a new instance of Table with values from a given `DynamoDB.AttributeMap`.
    *
