@@ -11,10 +11,7 @@ class StringSetAttributeType extends attribute_type_1.AttributeType {
     }
     toDynamo(values) {
         if (!Array.isArray(values) || !(0, lodash_1.every)(values, lodash_1.isString)) {
-            throw new errors_1.ValidationError(`Expected ${this.propertyName} to be an array of strings`);
-        }
-        if (!values.length) {
-            return {};
+            throw new errors_1.ValidationError(`Expected ${this.propertyName} to be an array of strings, got ${String(values)}`);
         }
         // dynamodb does not allow sets to contain duplicate values, so ensure uniqueness here
         return {

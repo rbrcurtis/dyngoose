@@ -495,6 +495,12 @@ class Table {
             operator,
         };
         const allowSave = await this.beforeSave(beforeSaveEvent);
+        Object.entries(this.__attributes).forEach(([key, val]) => {
+            if (val.SS && (0, truly_empty_1.isTrulyEmpty)(val.SS)) {
+                // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+                delete this.__attributes[key];
+            }
+        });
         if (beforeSaveEvent.force === true || (allowSave !== false && this.hasChanges())) {
             let output;
             if (beforeSaveEvent.operator === 'put') {
@@ -616,6 +622,7 @@ class Table {
     setByAttribute(attribute, value, params = {}) {
         var _a;
         const attributeValue = attribute.toDynamo(value);
+        console.log('setByAttribute', value, attributeValue);
         // avoid recording the value if it is unchanged, so we do not send it as an updated value during a save
         if (params.force !== true &&
             !_.isUndefined(this.__attributes[attribute.name]) &&

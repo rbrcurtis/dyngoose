@@ -14,11 +14,7 @@ export class StringSetAttributeType extends AttributeType<Value, Metadata> imple
 
   toDynamo(values: Value): DynamoDB.AttributeValue {
     if (!Array.isArray(values) || !every(values, isString)) {
-      throw new ValidationError(`Expected ${this.propertyName} to be an array of strings`)
-    }
-
-    if (!values.length) {
-      return {}
+      throw new ValidationError(`Expected ${this.propertyName} to be an array of strings, got ${String(values)}`)
     }
 
     // dynamodb does not allow sets to contain duplicate values, so ensure uniqueness here

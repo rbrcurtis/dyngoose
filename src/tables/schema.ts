@@ -77,6 +77,7 @@ export class Schema {
             return this.getAttribute(attribute.name)
           },
           set(this: Table, value: any) {
+            console.log('set', value)
             this.setAttribute(attribute.name, value)
           },
         })

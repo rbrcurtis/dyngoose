@@ -602,6 +602,13 @@ export class Table {
     }
     const allowSave = await this.beforeSave(beforeSaveEvent)
 
+    Object.entries(this.__attributes).forEach(([key, val]) => {
+      if (val.SS && isTrulyEmpty(val.SS)) {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        delete this.__attributes[key]
+      }
+    })
+
     if (beforeSaveEvent.force === true || (allowSave !== false && this.hasChanges())) {
       let output: DynamoDB.PutItemOutput | DynamoDB.UpdateItemOutput
       if (beforeSaveEvent.operator === 'put') {
@@ -747,6 +754,7 @@ export class Table {
 
   protected setByAttribute(attribute: Attribute<any>, value: any, params: SetPropParams = {}): this {
     const attributeValue = attribute.toDynamo(value)
+    console.log('setByAttribute', value, attributeValue)
 
     // avoid recording the value if it is unchanged, so we do not send it as an updated value during a save
     if (
