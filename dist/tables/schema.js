@@ -50,7 +50,6 @@ class Schema {
                         return this.getAttribute(attribute.name);
                     },
                     set(value) {
-                        console.log('set', value);
                         this.setAttribute(attribute.name, value);
                     },
                 });

@@ -622,7 +622,6 @@ class Table {
     setByAttribute(attribute, value, params = {}) {
         var _a;
         const attributeValue = attribute.toDynamo(value);
-        console.log('setByAttribute', value, attributeValue);
         // avoid recording the value if it is unchanged, so we do not send it as an updated value during a save
         if (params.force !== true &&
             !_.isUndefined(this.__attributes[attribute.name]) &&

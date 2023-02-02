@@ -754,7 +754,6 @@ export class Table {
 
   protected setByAttribute(attribute: Attribute<any>, value: any, params: SetPropParams = {}): this {
     const attributeValue = attribute.toDynamo(value)
-    console.log('setByAttribute', value, attributeValue)
 
     // avoid recording the value if it is unchanged, so we do not send it as an updated value during a save
     if (
