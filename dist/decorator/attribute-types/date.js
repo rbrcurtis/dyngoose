@@ -91,7 +91,7 @@ class DateAttributeType extends attribute_type_1.AttributeType {
         }
     }
     toJSON(dt) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c;
         if (!(dt instanceof Date)) {
             dt = new Date(dt);
         }
@@ -102,10 +102,7 @@ class DateAttributeType extends attribute_type_1.AttributeType {
             // the Math.floor gets rid of the decimal places, which would corrupt the value when being saved
             return Math.floor(dt.valueOf() / 1000);
         }
-        else if (((_c = this.metadata) === null || _c === void 0 ? void 0 : _c.millisecondTimestamp) === true) {
-            return dt.valueOf();
-        }
-        else if (((_d = this.metadata) === null || _d === void 0 ? void 0 : _d.dateOnly) === true) {
+        else if (((_c = this.metadata) === null || _c === void 0 ? void 0 : _c.dateOnly) === true) {
             // grab the ISO string, then split at the time (T) separator and grab only the date
             return dt.toISOString().split('T')[0];
         }
