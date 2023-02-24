@@ -110,6 +110,8 @@ export class DateAttributeType extends AttributeType<Value, Metadata> implements
     if (this.metadata?.unixTimestamp === true || this.metadata?.timeToLive === true) {
       // the Math.floor gets rid of the decimal places, which would corrupt the value when being saved
       return Math.floor(dt.valueOf() / 1000)
+    } else if (this.metadata?.millisecondTimestamp === true) {
+      return dt.valueOf()
     } else if (this.metadata?.dateOnly === true) {
       // grab the ISO string, then split at the time (T) separator and grab only the date
       return dt.toISOString().split('T')[0]
