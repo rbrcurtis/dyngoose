@@ -44,7 +44,7 @@ export declare class Table {
      */
     static fromJSON<T extends Table>(this: StaticThis<T>, json: {
         [attribute: string]: any;
-    }): T;
+    }, ignoreArbitrary?: boolean): T;
     /**
      * Query DynamoDB for what you need.
      *

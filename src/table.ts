@@ -95,8 +95,12 @@ export class Table {
    * Each attribute can optionally define additional validation logic or sanitization
    * of the user input, @see {@link https://github.com/benhutchins/dyngoose/blob/master/docs/Attributes}.
    */
-  public static fromJSON<T extends Table>(this: StaticThis<T>, json: { [attribute: string]: any }): T {
-    return new this().fromJSON(json)
+  public static fromJSON<T extends Table>(
+    this: StaticThis<T>,
+    json: { [attribute: string]: any },
+    ignoreArbitrary = true,
+  ): T {
+    return new this().fromJSON(json, ignoreArbitrary)
   }
 
   /**
@@ -293,7 +297,7 @@ export class Table {
    *        passing in raw request body objects or dealing with user input.
    *        Defaults to false.
    */
-  public fromJSON(json: { [attribute: string]: any }, ignoreArbitrary = false): this {
+  public fromJSON(json: { [attribute: string]: any }, ignoreArbitrary = true): this {
     const blacklist: string[] = this.table.getBlacklist()
 
     _.each(json, (value: any, propertyName: string) => {

@@ -94,8 +94,8 @@ class Table {
      * Each attribute can optionally define additional validation logic or sanitization
      * of the user input, @see {@link https://github.com/benhutchins/dyngoose/blob/master/docs/Attributes}.
      */
-    static fromJSON(json) {
-        return new this().fromJSON(json);
+    static fromJSON(json, ignoreArbitrary = true) {
+        return new this().fromJSON(json, ignoreArbitrary);
     }
     /**
      * Query DynamoDB for what you need.
@@ -242,7 +242,7 @@ class Table {
      *        passing in raw request body objects or dealing with user input.
      *        Defaults to false.
      */
-    fromJSON(json, ignoreArbitrary = false) {
+    fromJSON(json, ignoreArbitrary = true) {
         const blacklist = this.table.getBlacklist();
         _.each(json, (value, propertyName) => {
             let attribute;
