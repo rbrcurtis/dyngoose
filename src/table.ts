@@ -61,10 +61,14 @@ export class Table {
     return record
   }
 
-  public static async create<T extends Table>(this: StaticThis<T>, values?: TableProperties<T>): Promise<T> {
+  public static async create<T extends Table>(
+    this: StaticThis<T>,
+    values?: TableProperties<T>,
+    event?: Events.SaveEvent<T>,
+  ): Promise<T> {
     // @ts-ignore
     const record = this.new(values)
-    await record.save()
+    await record.save(event)
     return record
   }
 

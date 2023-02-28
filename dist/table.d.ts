@@ -21,7 +21,7 @@ export declare class Table {
      * This method is strongly typed and it is recommended you use over `new Table(…)`
      */
     static new<T extends Table>(this: StaticThis<T>, values?: TableProperties<T>): T;
-    static create<T extends Table>(this: StaticThis<T>, values?: TableProperties<T>): Promise<T>;
+    static create<T extends Table>(this: StaticThis<T>, values?: TableProperties<T>, event?: Events.SaveEvent<T>): Promise<T>;
     /**
      * Creates a new instance of Table with values from a given `DynamoDB.AttributeMap`.
      *

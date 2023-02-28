@@ -66,10 +66,10 @@ class Table {
         }
         return record;
     }
-    static async create(values) {
+    static async create(values, event) {
         // @ts-ignore
         const record = this.new(values);
-        await record.save();
+        await record.save(event);
         return record;
     }
     /**
