@@ -16,7 +16,7 @@ class HelpfulError extends DyngooseError {
         this.tableClass = tableClass;
         this.queryInput = queryInput;
         Object.assign(this, error);
-        Error.captureStackTrace(this, this.constructor);
+        // Error.captureStackTrace(this, this.constructor)
         this.name = error.name;
         if (tableClass != null) {
             this.tableName = tableClass.schema.name;
