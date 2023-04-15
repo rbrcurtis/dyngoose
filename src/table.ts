@@ -336,7 +336,11 @@ export class Table {
       }
     })
 
+    // this is an existing record, so when we save it, we need to update
     this.__updatedAttributes = []
+    this.__removedAttributes = []
+    this.__putRequired = false
+    this.__entireDocumentIsKnown = true
 
     this.afterLoad()
 
