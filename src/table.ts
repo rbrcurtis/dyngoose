@@ -67,7 +67,6 @@ export class Table {
     values?: TableProperties<T>,
     event?: Events.SaveEvent<T>,
   ): Promise<T> {
-    console.log('create!!')
     // @ts-ignore
     const record = this.fromJSON(values)
     await record.save(extend(event, { force: true, operator: 'put' }))
