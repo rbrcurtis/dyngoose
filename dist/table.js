@@ -68,8 +68,8 @@ class Table {
     }
     static async create(values, event) {
         // @ts-ignore
-        const record = this.new(values);
-        await record.save(event);
+        const record = this.fromJSON(values);
+        await record.save(event, { force: true });
         return record;
     }
     /**
@@ -274,7 +274,11 @@ class Table {
                 }
             }
         });
+        // this is an existing record, so when we save it, we need to update
         this.__updatedAttributes = [];
+        this.__removedAttributes = [];
+        this.__putRequired = false;
+        this.__entireDocumentIsKnown = true;
         this.afterLoad();
         return this;
     }

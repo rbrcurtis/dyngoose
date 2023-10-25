@@ -67,8 +67,8 @@ export class Table {
     event?: Events.SaveEvent<T>,
   ): Promise<T> {
     // @ts-ignore
-    const record = this.new(values)
-    await record.save(event)
+    const record = this.fromJSON(values)
+    await record.save(event, { force: true })
     return record
   }
 
