@@ -68,7 +68,6 @@ class Table {
         return record;
     }
     static async create(values, event) {
-        console.log('create!!');
         // @ts-ignore
         const record = this.fromJSON(values);
         await record.save((0, lodash_1.extend)(event, { force: true, operator: 'put' }));
