@@ -13,7 +13,7 @@ import { migrateTable } from './tables/migrate-table'
 import { SetTableProperty, SetValue, TableProperties, TableProperty } from './tables/properties'
 import { Schema } from './tables/schema'
 import { isTrulyEmpty } from './utils/truly-empty'
-import { extend } from 'lodash'
+import { compact, extend, keys } from 'lodash'
 
 type StaticThis<T> = new () => T
 
@@ -69,6 +69,14 @@ export class Table {
   ): Promise<T> {
     // @ts-ignore
     const record = this.fromJSON(values)
+    let updates = compact(keys(values).map((k) => {
+      try {
+        return record.table.schema.getAttributeByPropertyName(k)?.name
+      } catch (e) {
+        return null
+      }
+    }))
+    record.__updatedAttributes = updates
     await record.save(extend(event, { force: true, operator: 'put' }))
     return record
   }
@@ -805,6 +813,6 @@ export class Table {
 export interface ITable<T extends Table> {
   schema: Schema
   documentClient: DocumentClient<T>
-  new (): T
+  new(): T
   fromDynamo: (attributes: DynamoDB.AttributeMap, entireDocument?: boolean) => T
 }
