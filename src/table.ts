@@ -13,6 +13,7 @@ import { migrateTable } from './tables/migrate-table'
 import { SetTableProperty, SetValue, TableProperties, TableProperty } from './tables/properties'
 import { Schema } from './tables/schema'
 import { isTrulyEmpty } from './utils/truly-empty'
+import { extend } from 'lodash'
 
 type StaticThis<T> = new () => T
 
@@ -66,9 +67,10 @@ export class Table {
     values?: TableProperties<T>,
     event?: Events.SaveEvent<T>,
   ): Promise<T> {
+    console.log('create!!')
     // @ts-ignore
     const record = this.fromJSON(values)
-    await record.save(event, { force: true })
+    await record.save(extend(event, { force: true, operator: 'put' }))
     return record
   }
 

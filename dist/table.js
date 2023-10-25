@@ -10,6 +10,7 @@ const describe_table_1 = require("./tables/describe-table");
 const migrate_table_1 = require("./tables/migrate-table");
 const schema_1 = require("./tables/schema");
 const truly_empty_1 = require("./utils/truly-empty");
+const lodash_1 = require("lodash");
 class Table {
     // #endregion properties
     /**
@@ -67,9 +68,10 @@ class Table {
         return record;
     }
     static async create(values, event) {
+        console.log('create!!');
         // @ts-ignore
         const record = this.fromJSON(values);
-        await record.save(event, { force: true });
+        await record.save((0, lodash_1.extend)(event, { force: true, operator: 'put' }));
         return record;
     }
     /**
