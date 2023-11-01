@@ -29,9 +29,6 @@ class Attribute {
      * Convert the given value for this attribute to a DynamoDB AttributeValue
      */
     toDynamo(value, enforceRequired = true) {
-        if (!enforceRequired) {
-            console.trace(this.name, 'not enforcing required');
-        }
         // if there is no value, inject the default value for this attribute
         if (value == null || (0, truly_empty_1.isTrulyEmpty)(value)) {
             // if we have no value, allow the manipulateWrite a chance to provide a value
