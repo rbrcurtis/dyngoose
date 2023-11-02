@@ -69,7 +69,6 @@ export class Table {
   ): Promise<T> {
     // @ts-ignore
     const record = this.fromJSON(values)
-    record.applyDefaults()
     const updates = compact(keys(values).map((k) => {
       try {
         return record.table.schema.getAttributeByPropertyName(k)?.name
@@ -78,6 +77,7 @@ export class Table {
       }
     }))
     record.__updatedAttributes = updates
+    record.applyDefaults()
     await record.save(extend(event, { operator: 'put' }))
     return record
   }

@@ -70,7 +70,6 @@ class Table {
     static async create(values, event) {
         // @ts-ignore
         const record = this.fromJSON(values);
-        record.applyDefaults();
         const updates = (0, lodash_1.compact)((0, lodash_1.keys)(values).map((k) => {
             var _a;
             try {
@@ -81,6 +80,7 @@ class Table {
             }
         }));
         record.__updatedAttributes = updates;
+        record.applyDefaults();
         await record.save((0, lodash_1.extend)(event, { operator: 'put' }));
         return record;
     }
