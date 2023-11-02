@@ -69,18 +69,15 @@ class Table {
     }
     static async create(values, event) {
         // @ts-ignore
-        const record = this.fromJSON(values);
-        const updates = (0, lodash_1.compact)((0, lodash_1.keys)(values).map((k) => {
-            var _a;
+        const record = this.new();
+        Object.entries(values !== null && values !== void 0 ? values : {}).forEach(([key, val]) => {
             try {
-                return (_a = record.table.schema.getAttributeByPropertyName(k)) === null || _a === void 0 ? void 0 : _a.name;
+                record[key] = val;
             }
             catch (e) {
-                return null;
+                //
             }
-        }));
-        record.__updatedAttributes = updates;
-        record.applyDefaults();
+        });
         await record.save((0, lodash_1.extend)(event, { operator: 'put' }));
         return record;
     }

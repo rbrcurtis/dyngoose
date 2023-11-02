@@ -68,16 +68,16 @@ export class Table {
     event?: Events.SaveEvent<T>,
   ): Promise<T> {
     // @ts-ignore
-    const record = this.fromJSON(values)
-    const updates = compact(keys(values).map((k) => {
+    const record = this.new()
+
+    Object.entries(values ?? {}).forEach(([key, val]) => {
       try {
-        return record.table.schema.getAttributeByPropertyName(k)?.name
+        record[key] = val
       } catch (e) {
-        return null
+        //
       }
-    }))
-    record.__updatedAttributes = updates
-    record.applyDefaults()
+    })
+
     await record.save(extend(event, { operator: 'put' }))
     return record
   }
