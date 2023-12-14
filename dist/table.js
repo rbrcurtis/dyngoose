@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Table = void 0;
 const _ = require("lodash");
+const lodash_1 = require("lodash");
 const document_client_1 = require("./document-client");
 const search_1 = require("./query/search");
 const create_table_1 = require("./tables/create-table");
@@ -10,7 +11,6 @@ const describe_table_1 = require("./tables/describe-table");
 const migrate_table_1 = require("./tables/migrate-table");
 const schema_1 = require("./tables/schema");
 const truly_empty_1 = require("./utils/truly-empty");
-const lodash_1 = require("lodash");
 class Table {
     // #endregion properties
     /**
@@ -421,7 +421,13 @@ class Table {
      * @see {@link Table.setAttributes} To set several attribute values by attribute names.
      */
     set(propertyName, value, params) {
-        const attribute = this.table.schema.getAttributeByPropertyName(propertyName);
+        let attribute;
+        try {
+            attribute = this.table.schema.getAttributeByPropertyName(propertyName);
+        }
+        catch (err) {
+            return this;
+        }
         return this.setByAttribute(attribute, value, params);
     }
     /**

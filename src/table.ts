@@ -1,5 +1,6 @@
 import { DynamoDB } from 'aws-sdk'
 import * as _ from 'lodash'
+import { extend } from 'lodash'
 import { Attribute } from './attribute'
 import { DocumentClient } from './document-client'
 import * as Events from './events'
@@ -13,7 +14,6 @@ import { migrateTable } from './tables/migrate-table'
 import { SetTableProperty, SetValue, TableProperties, TableProperty } from './tables/properties'
 import { Schema } from './tables/schema'
 import { isTrulyEmpty } from './utils/truly-empty'
-import { compact, extend, keys } from 'lodash'
 
 type StaticThis<T> = new () => T
 
@@ -502,7 +502,12 @@ export class Table {
    * @see {@link Table.setAttributes} To set several attribute values by attribute names.
    */
   public set<P extends TableProperty<this>>(propertyName: P | string, value: this[P], params?: SetPropParams): this {
-    const attribute = this.table.schema.getAttributeByPropertyName(propertyName as string)
+    let attribute: Attribute<any>
+    try {
+      attribute = this.table.schema.getAttributeByPropertyName(propertyName as string)
+    } catch (err) {
+      return this
+    }
     return this.setByAttribute(attribute, value, params)
   }
 
