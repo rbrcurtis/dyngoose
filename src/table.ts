@@ -401,9 +401,7 @@ export class Table {
    */
   public setAttributeDynamoValue(attributeName: string, attributeValue: DynamoDB.AttributeValue): this {
     // save the original value before we update the attributes value
-    if (!_.isUndefined(this.__attributes[attributeName]) && _.isUndefined(this.__original[attributeName])) {
       this.__original[attributeName] = this.getAttributeDynamoValue(attributeName)
-    }
 
     // store the new value
     this.__attributes[attributeName] = attributeValue
@@ -792,6 +790,7 @@ export class Table {
     }
 
     if (attributeValue == null) {
+      this.__original[attribute.name] = this.getAttributeDynamoValue(attribute.name)
       this.removeAttribute(attribute.name)
     } else {
       this.setAttributeDynamoValue(attribute.name, attributeValue)

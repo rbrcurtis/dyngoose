@@ -332,9 +332,7 @@ class Table {
      */
     setAttributeDynamoValue(attributeName, attributeValue) {
         // save the original value before we update the attributes value
-        if (!_.isUndefined(this.__attributes[attributeName]) && _.isUndefined(this.__original[attributeName])) {
-            this.__original[attributeName] = this.getAttributeDynamoValue(attributeName);
-        }
+        this.__original[attributeName] = this.getAttributeDynamoValue(attributeName);
         // store the new value
         this.__attributes[attributeName] = attributeValue;
         // track that this value was updated
@@ -648,6 +646,7 @@ class Table {
             return this;
         }
         if (attributeValue == null) {
+            this.__original[attribute.name] = this.getAttributeDynamoValue(attribute.name);
             this.removeAttribute(attribute.name);
         }
         else {
