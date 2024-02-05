@@ -59,6 +59,7 @@ export class Table {
     if (values != null) {
       record.setValues(values)
     }
+    record.__putRequired = true
     return record
   }
 
@@ -675,7 +676,6 @@ export class Table {
   public getSaveOperation(): 'put' | 'update' {
     let type: 'put' | 'update'
     if (this.__putRequired || !this.hasChanges()) {
-      this.__putRequired = false
       type = 'put'
     } else {
       type = 'update'

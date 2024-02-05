@@ -65,6 +65,7 @@ class Table {
         if (values != null) {
             record.setValues(values);
         }
+        record.__putRequired = true;
         return record;
     }
     static async create(values, event) {
@@ -555,7 +556,6 @@ class Table {
     getSaveOperation() {
         let type;
         if (this.__putRequired || !this.hasChanges()) {
-            this.__putRequired = false;
             type = 'put';
         }
         else {
