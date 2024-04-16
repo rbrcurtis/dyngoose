@@ -181,7 +181,7 @@ export class Table {
 
   // raw storage for all attributes this record (instance) has
   private __attributes: DynamoDB.AttributeMap = {}
-  private __original: DynamoDB.AttributeMap = {}
+  private readonly __original: DynamoDB.AttributeMap = {}
   private __updatedAttributes: string[] = []
   private __removedAttributes: string[] = []
   private __updateOperators: { [key: string]: UpdateOperator } = {}
@@ -402,7 +402,7 @@ export class Table {
    */
   public setAttributeDynamoValue(attributeName: string, attributeValue: DynamoDB.AttributeValue): this {
     // save the original value before we update the attributes value
-      this.__original[attributeName] = this.getAttributeDynamoValue(attributeName)
+    this.__original[attributeName] ??= this.getAttributeDynamoValue(attributeName)
 
     // store the new value
     this.__attributes[attributeName] = attributeValue
@@ -790,7 +790,7 @@ export class Table {
     }
 
     if (attributeValue == null) {
-      this.__original[attribute.name] = this.getAttributeDynamoValue(attribute.name)
+      this.__original[attribute.name] ??= this.getAttributeDynamoValue(attribute.name)
       this.removeAttribute(attribute.name)
     } else {
       this.setAttributeDynamoValue(attribute.name, attributeValue)
@@ -818,6 +818,6 @@ export class Table {
 export interface ITable<T extends Table> {
   schema: Schema
   documentClient: DocumentClient<T>
-  new(): T
+  new (): T
   fromDynamo: (attributes: DynamoDB.AttributeMap, entireDocument?: boolean) => T
 }

@@ -82,7 +82,7 @@ export declare class Table {
     static describeTable(): Promise<DynamoDB.TableDescription>;
     protected get table(): typeof Table;
     private __attributes;
-    private __original;
+    private readonly __original;
     private __updatedAttributes;
     private __removedAttributes;
     private __updateOperators;

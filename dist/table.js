@@ -332,8 +332,10 @@ class Table {
      * To set the value from a JavaScript object, use {@link Table.setAttribute}
      */
     setAttributeDynamoValue(attributeName, attributeValue) {
+        var _a;
+        var _b;
         // save the original value before we update the attributes value
-        this.__original[attributeName] = this.getAttributeDynamoValue(attributeName);
+        (_a = (_b = this.__original)[attributeName]) !== null && _a !== void 0 ? _a : (_b[attributeName] = this.getAttributeDynamoValue(attributeName));
         // store the new value
         this.__attributes[attributeName] = attributeValue;
         // track that this value was updated
@@ -637,7 +639,8 @@ class Table {
         return undefined;
     }
     setByAttribute(attribute, value, params = {}) {
-        var _a;
+        var _a, _b;
+        var _c, _d;
         const attributeValue = attribute.toDynamo(value);
         // avoid recording the value if it is unchanged, so we do not send it as an updated value during a save
         if (params.force !== true &&
@@ -646,12 +649,12 @@ class Table {
             return this;
         }
         if (attributeValue == null) {
-            this.__original[attribute.name] = this.getAttributeDynamoValue(attribute.name);
+            (_a = (_c = this.__original)[_d = attribute.name]) !== null && _a !== void 0 ? _a : (_c[_d] = this.getAttributeDynamoValue(attribute.name));
             this.removeAttribute(attribute.name);
         }
         else {
             this.setAttributeDynamoValue(attribute.name, attributeValue);
-            this.setAttributeUpdateOperator(attribute.name, (_a = params.operator) !== null && _a !== void 0 ? _a : 'set');
+            this.setAttributeUpdateOperator(attribute.name, (_b = params.operator) !== null && _b !== void 0 ? _b : 'set');
         }
         return this;
     }
