@@ -170,7 +170,7 @@ class Table {
         const attributes = this.table.schema.getAttributes();
         for (const [, attribute] of attributes) {
             const defaultValue = attribute.getDefaultValue();
-            if (defaultValue != null) {
+            if (defaultValue != null && this.getByAttribute(attribute) == null) {
                 this.setByAttribute(attribute, defaultValue);
             }
         }
