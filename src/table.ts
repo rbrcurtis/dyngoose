@@ -96,7 +96,7 @@ export class Table {
     entireDocument = true,
   ): T {
     const item = new this().fromDynamo(attributes, entireDocument)
-    item.applyDefaults()
+    item?.applyDefaults()
     return item
   }
 
@@ -118,7 +118,7 @@ export class Table {
     ignoreArbitrary = true,
   ): T {
     const item = new this().fromJSON(json, ignoreArbitrary)
-    item.applyDefaults()
+    item?.applyDefaults()
     return item
   }
 

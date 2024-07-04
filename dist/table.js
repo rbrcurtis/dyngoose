@@ -91,7 +91,7 @@ class Table {
      */
     static fromDynamo(attributes, entireDocument = true) {
         const item = new this().fromDynamo(attributes, entireDocument);
-        item.applyDefaults();
+        item === null || item === void 0 ? void 0 : item.applyDefaults();
         return item;
     }
     /**
@@ -108,7 +108,7 @@ class Table {
      */
     static fromJSON(json, ignoreArbitrary = true) {
         const item = new this().fromJSON(json, ignoreArbitrary);
-        item.applyDefaults();
+        item === null || item === void 0 ? void 0 : item.applyDefaults();
         return item;
     }
     /**
