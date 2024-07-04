@@ -95,7 +95,9 @@ export class Table {
     attributes: DynamoDB.AttributeMap,
     entireDocument = true,
   ): T {
-    return new this().fromDynamo(attributes, entireDocument)
+    const item = new this().fromDynamo(attributes, entireDocument)
+    item.applyDefaults()
+    return item
   }
 
   /**
@@ -251,6 +253,7 @@ export class Table {
     for (const attributeName of Object.keys(attributeMap)) {
       if (!_.isEqual(this.__attributes[attributeName], attributeMap[attributeName])) {
         this.__updatedAttributes.push(attributeName)
+        this.__updatedAttributes = _.uniq(this.__updatedAttributes)
       }
     }
 
@@ -409,6 +412,7 @@ export class Table {
 
     // track that this value was updated
     this.__updatedAttributes.push(attributeName)
+    this.__updatedAttributes = _.uniq(this.__updatedAttributes)
 
     // ensure the attribute is not marked for being deleted
     _.pull(this.__removedAttributes, attributeName)
@@ -465,6 +469,7 @@ export class Table {
     if (!_.isNil(this.__attributes[attributeName]) || !this.__entireDocumentIsKnown) {
       this.__attributes[attributeName] = { NULL: true }
       this.__removedAttributes.push(attributeName)
+      this.__removedAttributes = _.uniq(this.__removedAttributes)
       _.pull(this.__updatedAttributes, attributeName)
     }
     return this

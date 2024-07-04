@@ -90,7 +90,9 @@ class Table {
      * upon being saved.
      */
     static fromDynamo(attributes, entireDocument = true) {
-        return new this().fromDynamo(attributes, entireDocument);
+        const item = new this().fromDynamo(attributes, entireDocument);
+        item.applyDefaults();
+        return item;
     }
     /**
      * Creates an instance of Table from raw user input. Designs to be used for creating
@@ -200,6 +202,7 @@ class Table {
         for (const attributeName of Object.keys(attributeMap)) {
             if (!_.isEqual(this.__attributes[attributeName], attributeMap[attributeName])) {
                 this.__updatedAttributes.push(attributeName);
+                this.__updatedAttributes = _.uniq(this.__updatedAttributes);
             }
         }
         this.__attributes = attributeMap;
@@ -340,6 +343,7 @@ class Table {
         this.__attributes[attributeName] = attributeValue;
         // track that this value was updated
         this.__updatedAttributes.push(attributeName);
+        this.__updatedAttributes = _.uniq(this.__updatedAttributes);
         // ensure the attribute is not marked for being deleted
         _.pull(this.__removedAttributes, attributeName);
         return this;
@@ -389,6 +393,7 @@ class Table {
         if (!_.isNil(this.__attributes[attributeName]) || !this.__entireDocumentIsKnown) {
             this.__attributes[attributeName] = { NULL: true };
             this.__removedAttributes.push(attributeName);
+            this.__removedAttributes = _.uniq(this.__removedAttributes);
             _.pull(this.__updatedAttributes, attributeName);
         }
         return this;
