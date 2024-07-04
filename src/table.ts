@@ -117,7 +117,9 @@ export class Table {
     json: { [attribute: string]: any },
     ignoreArbitrary = true,
   ): T {
-    return new this().fromJSON(json, ignoreArbitrary)
+    const item = new this().fromJSON(json, ignoreArbitrary)
+    item.applyDefaults()
+    return item
   }
 
   /**

@@ -107,7 +107,9 @@ class Table {
      * of the user input, @see {@link https://github.com/benhutchins/dyngoose/blob/master/docs/Attributes}.
      */
     static fromJSON(json, ignoreArbitrary = true) {
-        return new this().fromJSON(json, ignoreArbitrary);
+        const item = new this().fromJSON(json, ignoreArbitrary);
+        item.applyDefaults();
+        return item;
     }
     /**
      * Query DynamoDB for what you need.
