@@ -356,7 +356,7 @@ export class Table {
     this.__updatedAttributes = []
     this.__removedAttributes = []
     this.__putRequired = true
-    this.__entireDocumentIsKnown = true
+    this.__entireDocumentIsKnown = false
 
     this.afterLoad()
 
