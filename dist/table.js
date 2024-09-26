@@ -257,7 +257,7 @@ class Table {
      *        passing in raw request body objects or dealing with user input.
      *        Defaults to false.
      */
-    fromJSON(json, ignoreArbitrary = true) {
+    fromJSON(json, entireDocument = true) {
         const blacklist = this.table.getBlacklist();
         _.each(json, (value, propertyName) => {
             let attribute;
@@ -265,12 +265,7 @@ class Table {
                 attribute = this.table.schema.getAttributeByPropertyName(propertyName);
             }
             catch (ex) {
-                if (ignoreArbitrary) {
-                    return;
-                }
-                else {
-                    throw ex;
-                }
+                return;
             }
             if (!_.includes(blacklist, attribute.name)) {
                 // allow the attribute to transform the value via a custom fromJSON method
@@ -293,7 +288,7 @@ class Table {
         this.__updatedAttributes = [];
         this.__removedAttributes = [];
         this.__putRequired = true;
-        this.__entireDocumentIsKnown = false;
+        this.__entireDocumentIsKnown = entireDocument;
         this.afterLoad();
         return this;
     }

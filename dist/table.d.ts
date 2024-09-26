@@ -148,7 +148,7 @@ export declare class Table {
      */
     fromJSON(json: {
         [attribute: string]: any;
-    }, ignoreArbitrary?: boolean): this;
+    }, entireDocument?: boolean): this;
     /**
      * Returns the DynamoDB.AttributeValue value for an attribute.
      *
