@@ -145,7 +145,6 @@ export class PrimaryKey<T extends Table, HashKeyType extends PrimaryKeyType, Ran
     getGetInput.key = record.getDynamoKey()
     const getItemInput = this.getGetInput(getGetInput as PrimaryKeyGetGetItemInput)
     const hasProjection = getItemInput.ProjectionExpression != null
-    console.log('getItemInput', getItemInput, { hasProjection })
     let dynamoRecord: DynamoDB.GetItemOutput
 
     try {

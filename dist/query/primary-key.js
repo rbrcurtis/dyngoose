@@ -81,7 +81,6 @@ class PrimaryKey {
         getGetInput.key = record.getDynamoKey();
         const getItemInput = this.getGetInput(getGetInput);
         const hasProjection = getItemInput.ProjectionExpression != null;
-        console.log('getItemInput', getItemInput, { hasProjection });
         let dynamoRecord;
         try {
             dynamoRecord = await this.table.schema.dynamo.getItem(getItemInput).promise();
