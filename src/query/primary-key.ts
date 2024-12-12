@@ -144,7 +144,8 @@ export class PrimaryKey<T extends Table, HashKeyType extends PrimaryKeyType, Ran
     const getGetInput: Partial<PrimaryKeyGetGetItemInput> = input == null ? ((range == null || isKeyValue(range)) ? {} : range as PrimaryKeyGetInput) : input
     getGetInput.key = record.getDynamoKey()
     const getItemInput = this.getGetInput(getGetInput as PrimaryKeyGetGetItemInput)
-    const hasProjection = getItemInput.ProjectionExpression == null
+    const hasProjection = getItemInput.ProjectionExpression != null
+    console.log('getItemInput', getItemInput, { hasProjection })
     let dynamoRecord: DynamoDB.GetItemOutput
 
     try {

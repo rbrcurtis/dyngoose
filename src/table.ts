@@ -465,6 +465,7 @@ export class Table {
   public removeAttribute(attributeName: string): this {
     // delete the attribute as long as it existed and wasn't already null
     if (!_.isNil(this.__attributes[attributeName]) || !this.__entireDocumentIsKnown) {
+      console.log('removing attribute', attributeName, !_.isNil(this.__attributes[attributeName]), !this.__entireDocumentIsKnown)
       this.__attributes[attributeName] = { NULL: true }
       this.__removedAttributes.push(attributeName)
       this.__removedAttributes = _.uniq(this.__removedAttributes)
