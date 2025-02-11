@@ -351,7 +351,7 @@ export class Table {
     // this might be from raw json so when we save, save the entire document
     this.__updatedAttributes = []
     this.__removedAttributes = []
-    this.__putRequired = true
+    this.__putRequired = !entireDocument
     this.__entireDocumentIsKnown = entireDocument
 
     this.afterLoad()
