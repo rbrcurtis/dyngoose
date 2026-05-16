@@ -14,8 +14,8 @@ import { Transaction } from './transaction';
 import { Filters } from './query/filters';
 import { QueryOutput } from './query/output';
 export declare const TableOperations: {
-    createTable: (table: ITable<any>) => Promise<import("aws-sdk/clients/dynamodb").TableDescription>;
-    deleteTable: (table: ITable<any>) => Promise<import("aws-sdk/clients/dynamodb").TableDescription | undefined>;
+    createTable: (table: ITable<any>) => Promise<import("./dynamodb").DynamoDB.TableDescription>;
+    deleteTable: (table: ITable<any>) => Promise<import("./dynamodb").DynamoDB.TableDescription | undefined>;
 };
 export { AttributeType, BatchGet, BatchWrite, Config, Connection, Decorator, DynamoAttributeType, Errors, Events, Filters, Metadata, Query, QueryOutput, Table, Transaction, };
 export { Decorator as $ };

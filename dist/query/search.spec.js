@@ -31,7 +31,7 @@ describe('Query/Search', () => {
         });
         const input = search.getInput();
         (0, chai_1.expect)(input.IndexName).to.be.a('undefined');
-        (0, chai_1.expect)(input.KeyConditionExpression).to.be.a('undefined');
+        (0, chai_1.expect)((input).KeyConditionExpression).to.be.a('undefined');
         const result = await search.exec();
         (0, chai_1.expect)(result.count).to.eq(8);
     });
@@ -41,7 +41,7 @@ describe('Query/Search', () => {
         });
         const input = search.getInput();
         (0, chai_1.expect)(input.IndexName).to.be.a('undefined');
-        (0, chai_1.expect)(input.KeyConditionExpression).to.be.a('undefined');
+        (0, chai_1.expect)((input).KeyConditionExpression).to.be.a('undefined');
         const result = await search.exec();
         (0, chai_1.expect)(result.count).to.eq(4);
     });
@@ -116,19 +116,19 @@ describe('Query/Search', () => {
             const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable);
             search.sort('descending');
             const input = search.getInput();
-            (0, chai_1.expect)(input.ScanIndexForward).to.eq(false);
+            (0, chai_1.expect)((input).ScanIndexForward).to.eq(false);
         });
         it('.ascending sets ScanIndexForward on input', async () => {
             const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable);
             search.ascending();
             const input = search.getInput();
-            (0, chai_1.expect)(input.ScanIndexForward).to.eq(undefined);
+            (0, chai_1.expect)((input).ScanIndexForward).to.eq(undefined);
         });
         it('.descending sets ScanIndexForward on input', async () => {
             const search = new search_1.MagicSearch(setup_tests_spec_1.TestableTable);
             search.descending();
             const input = search.getInput();
-            (0, chai_1.expect)(input.ScanIndexForward).to.eq(false);
+            (0, chai_1.expect)((input).ScanIndexForward).to.eq(false);
         });
     });
     it('.limit sets Limit on input', async () => {

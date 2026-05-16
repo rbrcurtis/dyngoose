@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from '../dynamodb'
 import * as _ from 'lodash'
 
 // this is limit of dynamoDB
@@ -17,10 +17,10 @@ export async function transactWrite(
       // attempt to expose the cancellation reasons, giving the details on why the transaction failed
       // @see https://github.com/aws/aws-sdk-js/issues/2464
       request.on('extractError', (response) => {
-        if (response.error != null) {
+        if (response.error != null && response.error.cancellationReasons == null && response.httpResponse != null) {
           try {
-            const reasons = JSON.parse(response.httpResponse.body.toString()).CancellationReasons;
-            (response.error as any).cancellationReasons = reasons
+            const reasons = JSON.parse(response.httpResponse.body.toString()).CancellationReasons
+            if (reasons != null) response.error.cancellationReasons = reasons
           } catch (ex) {}
         }
       })

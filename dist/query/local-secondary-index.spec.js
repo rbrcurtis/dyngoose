@@ -14,6 +14,7 @@ const Decorator = require("../decorator");
 const document_client_1 = require("../document-client");
 const table_1 = require("../table");
 const Query = require("./index");
+[Decorator.Table, Decorator.PrimaryKey, Decorator.Attribute].forEach(() => undefined);
 let Card = class Card extends table_1.Table {
 };
 __decorate([

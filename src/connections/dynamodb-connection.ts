@@ -1,37 +1,29 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import * as AWS from 'aws-sdk'
+import { NodeHttpHandler } from '@smithy/node-http-handler'
 import { Agent as HTTPAgent } from 'http'
 import { Agent as HTTPSAgent } from 'https'
+import { DynamoDB, type DynamoDBConfig } from '../dynamodb'
 import { Connection } from './connection'
 
-interface DyngooseDynamoDBConnectionOptions extends AWS.DynamoDB.ClientConfiguration {
+interface DyngooseDynamoDBConnectionOptions extends DynamoDBConfig {
   enableAWSXray?: boolean
 }
 
 export class DynamoDBConnection implements Connection {
-  private readonly __client: AWS.DynamoDB
+  private readonly __client: DynamoDB
 
   constructor(options: DyngooseDynamoDBConnectionOptions) {
-    options.httpOptions = {
-      agent: this.httpAgent(options.endpoint),
-    }
+    const { enableAWSXray: _, ...config } = options
+    const httpAgent = this.httpAgent(typeof options.endpoint === 'string' ? options.endpoint : undefined)
+    config.requestHandler = new NodeHttpHandler({
+      httpAgent: httpAgent instanceof HTTPAgent ? httpAgent : undefined,
+      httpsAgent: httpAgent instanceof HTTPSAgent ? httpAgent : undefined,
+    })
 
-    if (options.enableAWSXray === true) {
-      // Since "require" itself does something for this lib, such as logging
-      // importing this only when it's needed
-      const AWSXRay = require('aws-xray-sdk-core')
-      const aws = AWSXRay.captureAWS(AWS)
-      this.__client = new aws.DynamoDB(options)
-    } else {
-      this.__client = new AWS.DynamoDB(options)
-    }
+    this.__client = new DynamoDB(config)
   }
 
-  private httpAgent(endpoint: string | AWS.Endpoint | undefined): HTTPAgent {
-    if (
-      (typeof endpoint === 'string' && endpoint.startsWith('http://')) ||
-      (endpoint instanceof AWS.Endpoint && endpoint.protocol === 'http')
-    ) {
+  private httpAgent(endpoint: string | undefined): HTTPAgent | HTTPSAgent {
+    if (typeof endpoint === 'string' && endpoint.startsWith('http://')) {
       return new HTTPAgent({
         keepAlive: true,
       })
@@ -43,7 +35,7 @@ export class DynamoDBConnection implements Connection {
     }
   }
 
-  public get client(): AWS.DynamoDB {
+  public get client(): DynamoDB {
     return this.__client
   }
 }

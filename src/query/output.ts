@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from '../dynamodb'
 import { Table } from '..'
 import { ITable } from '../table'
 

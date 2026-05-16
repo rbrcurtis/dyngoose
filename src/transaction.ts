@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from './dynamodb'
 import Config from './config'
 import { buildQueryExpression } from './query/expression'
 import { UpdateConditions } from './query/filters'

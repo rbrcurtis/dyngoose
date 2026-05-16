@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from '../dynamodb'
 import { get, has, isArray, isDate, isObject } from 'lodash'
 import { BatchGet } from '../batch-get'
 import { HelpfulError, QueryError } from '../errors'
@@ -380,6 +380,8 @@ export class PrimaryKey<T extends Table, HashKeyType extends PrimaryKeyType, Ran
    * It then has the Table.Schema build the DynamoDB.UpdateItemInput with all the requested changes.
    */
   public async update(input: PrimaryKeyUpdateItem<T, HashKeyType, RangeKeyType>): Promise<void> {
-    return await this.fromKey(input.hash, input.range).fromJSON(input.changes).save(input.conditions)
+    const record = this.fromKey(input.hash, input.range)
+    record.setValues(input.changes)
+    return await record.save(input.conditions)
   }
 }

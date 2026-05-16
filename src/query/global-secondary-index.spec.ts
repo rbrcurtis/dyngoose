@@ -3,6 +3,7 @@ import * as Decorator from '../decorator'
 import { QueryError } from '../errors'
 import { Table } from '../table'
 import * as Query from './index'
+[Decorator.Table, Decorator.PrimaryKey, Decorator.Attribute].forEach(() => undefined)
 
 @Decorator.Table({ name: 'QueryGlobalSecondaryIndexCardTable' })
 class Card extends Table {

@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk';
+import { DynamoDB } from './dynamodb';
 import { Attribute } from './attribute';
 import { DocumentClient } from './document-client';
 import * as Events from './events';

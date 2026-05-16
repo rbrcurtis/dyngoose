@@ -1,12 +1,12 @@
-import * as AWS from 'aws-sdk';
+import { DynamoDB, type DynamoDBConfig } from '../dynamodb';
 import { Connection } from './connection';
-interface DyngooseDynamoDBConnectionOptions extends AWS.DynamoDB.ClientConfiguration {
+interface DyngooseDynamoDBConnectionOptions extends DynamoDBConfig {
     enableAWSXray?: boolean;
 }
 export declare class DynamoDBConnection implements Connection {
     private readonly __client;
     constructor(options: DyngooseDynamoDBConnectionOptions);
     private httpAgent;
-    get client(): AWS.DynamoDB;
+    get client(): DynamoDB;
 }
 export {};

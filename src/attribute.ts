@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from './dynamodb'
 import * as _ from 'lodash'
 import { ValidationError } from './errors'
 import { IAttributeType } from './interfaces'

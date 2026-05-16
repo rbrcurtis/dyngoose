@@ -12,45 +12,46 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const chai_1 = require("chai");
 const table_1 = require("../table");
 const primary_key_1 = require("./primary-key");
-const decorator_1 = require("../decorator");
+const Decorator = require("../decorator");
+[Decorator.Table, Decorator.PrimaryKey, Decorator.Attribute].forEach(() => undefined);
 describe('Query/PrimaryKey', () => {
     let Card = class Card extends table_1.Table {
     };
     __decorate([
-        decorator_1.Attribute.Number(),
+        Decorator.Attribute.Number(),
         __metadata("design:type", Number)
     ], Card.prototype, "id", void 0);
     __decorate([
-        decorator_1.Attribute.String(),
+        Decorator.Attribute.String(),
         __metadata("design:type", String)
     ], Card.prototype, "title", void 0);
     __decorate([
-        decorator_1.Attribute.Number(),
+        Decorator.Attribute.Number(),
         __metadata("design:type", Number)
     ], Card.prototype, "count", void 0);
     __decorate([
-        (0, decorator_1.PrimaryKey)('id', 'title'),
+        Decorator.PrimaryKey('id', 'title'),
         __metadata("design:type", primary_key_1.PrimaryKey)
     ], Card, "primaryKey", void 0);
     Card = __decorate([
-        (0, decorator_1.Table)({ name: 'QueryPrimaryKeyCardTable' })
+        Decorator.Table({ name: 'QueryPrimaryKeyCardTable' })
     ], Card);
     let TableWithDateRange = class TableWithDateRange extends table_1.Table {
     };
     __decorate([
-        decorator_1.Attribute.Number(),
+        Decorator.Attribute.Number(),
         __metadata("design:type", Number)
     ], TableWithDateRange.prototype, "id", void 0);
     __decorate([
-        decorator_1.Attribute.Date(),
+        Decorator.Attribute.Date(),
         __metadata("design:type", Date)
     ], TableWithDateRange.prototype, "date", void 0);
     __decorate([
-        (0, decorator_1.PrimaryKey)('id', 'date'),
+        Decorator.PrimaryKey('id', 'date'),
         __metadata("design:type", primary_key_1.PrimaryKey)
     ], TableWithDateRange, "primaryKey", void 0);
     TableWithDateRange = __decorate([
-        (0, decorator_1.Table)({ name: 'QueryPrimaryKeyTableWithDateRange' })
+        Decorator.Table({ name: 'QueryPrimaryKeyTableWithDateRange' })
     ], TableWithDateRange);
     let primaryKey;
     before(async () => {

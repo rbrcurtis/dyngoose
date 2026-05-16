@@ -32,7 +32,7 @@ describe('Query/Search', () => {
     })
     const input = search.getInput()
     expect(input.IndexName).to.be.a('undefined')
-    expect((input as any).KeyConditionExpression).to.be.a('undefined')
+    expect((input).KeyConditionExpression).to.be.a('undefined')
     const result = await search.exec()
     expect(result.count).to.eq(8)
   })
@@ -43,7 +43,7 @@ describe('Query/Search', () => {
     })
     const input = search.getInput()
     expect(input.IndexName).to.be.a('undefined')
-    expect((input as any).KeyConditionExpression).to.be.a('undefined')
+    expect((input).KeyConditionExpression).to.be.a('undefined')
     const result = await search.exec()
     expect(result.count).to.eq(4)
   })
@@ -128,21 +128,21 @@ describe('Query/Search', () => {
       const search = new MagicSearch<TestableTable>(TestableTable)
       search.sort('descending')
       const input = search.getInput()
-      expect((input as any).ScanIndexForward).to.eq(false)
+      expect((input).ScanIndexForward).to.eq(false)
     })
 
     it('.ascending sets ScanIndexForward on input', async () => {
       const search = new MagicSearch<TestableTable>(TestableTable)
       search.ascending()
       const input = search.getInput()
-      expect((input as any).ScanIndexForward).to.eq(undefined)
+      expect((input).ScanIndexForward).to.eq(undefined)
     })
 
     it('.descending sets ScanIndexForward on input', async () => {
       const search = new MagicSearch<TestableTable>(TestableTable)
       search.descending()
       const input = search.getInput()
-      expect((input as any).ScanIndexForward).to.eq(false)
+      expect((input).ScanIndexForward).to.eq(false)
     })
   })
 

@@ -14,6 +14,7 @@ const Decorator = require("../decorator");
 const errors_1 = require("../errors");
 const table_1 = require("../table");
 const Query = require("./index");
+[Decorator.Table, Decorator.PrimaryKey, Decorator.Attribute].forEach(() => undefined);
 let Card = class Card extends table_1.Table {
     customMethod() {
         return 1;

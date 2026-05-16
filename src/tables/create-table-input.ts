@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from '../dynamodb'
 import { uniqBy } from 'lodash'
 import { Attribute } from '../attribute'
 import { SchemaError } from '../errors'

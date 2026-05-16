@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk';
+import { DynamoDB } from './dynamodb';
 import { Table } from './table';
 export declare class BatchWrite {
     private readonly options;

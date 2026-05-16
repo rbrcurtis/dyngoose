@@ -90,9 +90,7 @@ class Table {
      * upon being saved.
      */
     static fromDynamo(attributes, entireDocument = true) {
-        const item = new this().fromDynamo(attributes, entireDocument);
-        item === null || item === void 0 ? void 0 : item.applyDefaults();
-        return item;
+        return new this().fromDynamo(attributes, entireDocument);
     }
     /**
      * Creates an instance of Table from raw user input. Designs to be used for creating
@@ -643,6 +641,9 @@ class Table {
     setByAttribute(attribute, value, params = {}) {
         var _a, _b;
         var _c, _d;
+        if ((0, truly_empty_1.isTrulyEmpty)(value)) {
+            return this.removeAttribute(attribute.name);
+        }
         const attributeValue = attribute.toDynamo(value);
         // avoid recording the value if it is unchanged, so we do not send it as an updated value during a save
         if (params.force !== true &&

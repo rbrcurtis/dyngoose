@@ -2,37 +2,34 @@ import { expect } from 'chai'
 import { Table } from '../table'
 import { PrimaryKey } from './primary-key'
 
-import {
-  Attribute as AttributeDecorator,
-  PrimaryKey as PrimaryKeyDecorator,
-  Table as TableDecorator,
-} from '../decorator'
+import * as Decorator from '../decorator'
+[Decorator.Table, Decorator.PrimaryKey, Decorator.Attribute].forEach(() => undefined)
 
 describe('Query/PrimaryKey', () => {
-  @TableDecorator({ name: 'QueryPrimaryKeyCardTable' })
+  @Decorator.Table({ name: 'QueryPrimaryKeyCardTable' })
   class Card extends Table {
-    @PrimaryKeyDecorator('id', 'title')
+    @Decorator.PrimaryKey('id', 'title')
     public static readonly primaryKey: PrimaryKey<Card, number, string>
 
-    @AttributeDecorator.Number()
+    @Decorator.Attribute.Number()
     public id: number
 
-    @AttributeDecorator.String()
+    @Decorator.Attribute.String()
     public title: string
 
-    @AttributeDecorator.Number()
+    @Decorator.Attribute.Number()
     public count: number
   }
 
-  @TableDecorator({ name: 'QueryPrimaryKeyTableWithDateRange' })
+  @Decorator.Table({ name: 'QueryPrimaryKeyTableWithDateRange' })
   class TableWithDateRange extends Table {
-    @PrimaryKeyDecorator('id', 'date')
+    @Decorator.PrimaryKey('id', 'date')
     public static readonly primaryKey: PrimaryKey<TableWithDateRange, number, Date>
 
-    @AttributeDecorator.Number()
+    @Decorator.Attribute.Number()
     public id: number
 
-    @AttributeDecorator.Date()
+    @Decorator.Attribute.Date()
     public date: Date
   }
 

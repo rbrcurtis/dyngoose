@@ -1,22 +1,15 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from '../dynamodb'
 import { Connection } from './connection'
 
 export class DAXConnection implements Connection {
-  private readonly __client: DynamoDB
-
   constructor(options: {
     endpoints: string[]
     requestTimeout?: number
   }) {
-    const AmazonDaxClient = require('amazon-dax-client')
-    this.__client = new AmazonDaxClient({
-      endpoints: options.endpoints,
-      requestTimeout: options.requestTimeout,
-    })
+    throw new Error('DAXConnection is not available after migrating dyngoose to AWS SDK v3')
   }
 
   public get client(): DynamoDB {
-    return this.__client
+    throw new Error('DAXConnection is not available after migrating dyngoose to AWS SDK v3')
   }
 }

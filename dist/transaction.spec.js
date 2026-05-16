@@ -14,28 +14,29 @@ const lodash_1 = require("lodash");
 const primary_key_1 = require("./query/primary-key");
 const table_1 = require("./table");
 const transaction_1 = require("./transaction");
-const decorator_1 = require("./decorator");
+const Decorator = require("./decorator");
+[Decorator.Table, Decorator.PrimaryKey, Decorator.Attribute].forEach(() => undefined);
 describe('Transaction', () => {
     let Card = class Card extends table_1.Table {
     };
     __decorate([
-        decorator_1.Attribute.Number(),
+        Decorator.Attribute.Number(),
         __metadata("design:type", Number)
     ], Card.prototype, "id", void 0);
     __decorate([
-        decorator_1.Attribute.String(),
+        Decorator.Attribute.String(),
         __metadata("design:type", String)
     ], Card.prototype, "title", void 0);
     __decorate([
-        decorator_1.Attribute.Number(),
+        Decorator.Attribute.Number(),
         __metadata("design:type", Number)
     ], Card.prototype, "count", void 0);
     __decorate([
-        (0, decorator_1.PrimaryKey)('id', 'title'),
+        Decorator.PrimaryKey('id', 'title'),
         __metadata("design:type", primary_key_1.PrimaryKey)
     ], Card, "primaryKey", void 0);
     Card = __decorate([
-        (0, decorator_1.Table)({ name: 'TransactionTestCardTable' })
+        Decorator.Table({ name: 'TransactionTestCardTable' })
     ], Card);
     before(async () => {
         await Card.createTable();

@@ -3,14 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DAXConnection = void 0;
 class DAXConnection {
     constructor(options) {
-        const AmazonDaxClient = require('amazon-dax-client');
-        this.__client = new AmazonDaxClient({
-            endpoints: options.endpoints,
-            requestTimeout: options.requestTimeout,
-        });
+        throw new Error('DAXConnection is not available after migrating dyngoose to AWS SDK v3');
     }
     get client() {
-        return this.__client;
+        throw new Error('DAXConnection is not available after migrating dyngoose to AWS SDK v3');
     }
 }
 exports.DAXConnection = DAXConnection;

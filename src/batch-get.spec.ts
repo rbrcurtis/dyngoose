@@ -4,34 +4,31 @@ import { BatchGet } from './batch-get'
 import { PrimaryKey } from './query/primary-key'
 import { Table } from './table'
 
-import {
-  Attribute as AttributeDecorator,
-  PrimaryKey as PrimaryKeyDecorator,
-  Table as TableDecorator,
-} from './decorator'
+import * as Decorator from './decorator'
+[Decorator.Table, Decorator.PrimaryKey, Decorator.Attribute].forEach(() => undefined)
 
 describe('BatchGet', () => {
-  @TableDecorator({ name: 'BatchGetTestCardTable1' })
+  @Decorator.Table({ name: 'BatchGetTestCardTable1' })
   class TestTable1 extends Table {
-    @PrimaryKeyDecorator('id')
+    @Decorator.PrimaryKey('id')
     public static readonly primaryKey: PrimaryKey<TestTable1, number, void>
 
-    @AttributeDecorator.Number()
+    @Decorator.Attribute.Number()
     public id: number
 
-    @AttributeDecorator.String()
+    @Decorator.Attribute.String()
     public status: string
   }
 
-  @TableDecorator({ name: 'BatchGetTestCardTable2' })
+  @Decorator.Table({ name: 'BatchGetTestCardTable2' })
   class TestTable2 extends Table {
-    @PrimaryKeyDecorator('id')
+    @Decorator.PrimaryKey('id')
     public static readonly primaryKey: PrimaryKey<TestTable2, number, void>
 
-    @AttributeDecorator.Number()
+    @Decorator.Attribute.Number()
     public id: number
 
-    @AttributeDecorator.String()
+    @Decorator.Attribute.String()
     public status: string
   }
 

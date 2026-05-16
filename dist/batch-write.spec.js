@@ -13,29 +13,30 @@ const chai_1 = require("chai");
 const batch_write_1 = require("./batch-write");
 const primary_key_1 = require("./query/primary-key");
 const table_1 = require("./table");
-const decorator_1 = require("./decorator");
+const Decorator = require("./decorator");
 const errors_1 = require("./errors");
+[Decorator.Table, Decorator.PrimaryKey, Decorator.Attribute].forEach(() => undefined);
 describe('BatchWrite', () => {
     let Card = class Card extends table_1.Table {
     };
     __decorate([
-        decorator_1.Attribute.Number(),
+        Decorator.Attribute.Number(),
         __metadata("design:type", Number)
     ], Card.prototype, "id", void 0);
     __decorate([
-        decorator_1.Attribute.String(),
+        Decorator.Attribute.String(),
         __metadata("design:type", String)
     ], Card.prototype, "title", void 0);
     __decorate([
-        decorator_1.Attribute.Number(),
+        Decorator.Attribute.Number(),
         __metadata("design:type", Number)
     ], Card.prototype, "count", void 0);
     __decorate([
-        (0, decorator_1.PrimaryKey)('id', 'title'),
+        Decorator.PrimaryKey('id', 'title'),
         __metadata("design:type", primary_key_1.PrimaryKey)
     ], Card, "primaryKey", void 0);
     Card = __decorate([
-        (0, decorator_1.Table)({ name: 'BatchWriteTestCardTable' })
+        Decorator.Table({ name: 'BatchWriteTestCardTable' })
     ], Card);
     before(async () => {
         await Card.createTable();

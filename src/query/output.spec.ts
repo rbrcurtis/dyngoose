@@ -1,4 +1,4 @@
-import { ItemList } from 'aws-sdk/clients/dynamodb'
+import { type ItemList } from '../dynamodb'
 import { expect } from 'chai'
 import { TestableTable } from '../setup-tests.spec'
 import { QueryOutput } from './output'

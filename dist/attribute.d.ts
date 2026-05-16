@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk';
+import { DynamoDB } from './dynamodb';
 import { IAttributeType } from './interfaces';
 import { AttributeMetadata } from './metadata/attribute';
 export declare class Attribute<Value> {

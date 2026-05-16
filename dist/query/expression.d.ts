@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk';
+import { DynamoDB } from '../dynamodb';
 import * as Metadata from '../metadata';
 import { Table } from '../table';
 import { Schema } from '../tables/schema';

@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk';
+import { DynamoDB } from './dynamodb';
 import { Table } from './table';
 import { DynamoReturnValues } from './interfaces';
 import { UpdateConditions } from './query/filters';

@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from '../dynamodb'
 import { get, has, includes, isArray } from 'lodash'
 import { Attribute } from '../attribute'
 import { HelpfulError, QueryError } from '../errors'
@@ -361,7 +361,7 @@ export class MagicSearch<T extends Table> {
     }
 
     if (this.input.rangeOrder === 'DESC') {
-      (input as DynamoDB.QueryInput).ScanIndexForward = false
+      input.ScanIndexForward = false
     }
 
     if (this.input.limit != null) {
@@ -390,7 +390,7 @@ export class MagicSearch<T extends Table> {
     }
 
     if (query.KeyConditionExpression != null) {
-      (input as DynamoDB.QueryInput).KeyConditionExpression = query.KeyConditionExpression
+      input.KeyConditionExpression = query.KeyConditionExpression
     }
 
     return input
@@ -408,17 +408,17 @@ export class MagicSearch<T extends Table> {
     let output: DynamoDB.ScanOutput | DynamoDB.QueryOutput
 
     // if we are filtering based on key conditions, run a query instead of a scan
-    if ((input as DynamoDB.QueryInput).KeyConditionExpression != null) {
+    if (input.KeyConditionExpression != null) {
       try {
         output = await this.tableClass.schema.dynamo.query(input).promise()
       } catch (ex) {
         throw new HelpfulError(ex, this.tableClass, input)
       }
     } else {
-      if ((input as DynamoDB.QueryInput).ScanIndexForward === false) {
+      if (input.ScanIndexForward === false) {
         throw new Error('Cannot specify a sort direction, range order, or use ScanIndexForward on a scan operation. Try specifying the index being used.')
       } else {
-        delete (input as DynamoDB.QueryInput).ScanIndexForward
+        delete input.ScanIndexForward
       }
 
       try {

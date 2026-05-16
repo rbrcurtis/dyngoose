@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildQueryExpression = exports.keyConditionAllowedOperators = void 0;
 const _ = require("lodash");
+const attribute_1 = require("../attribute");
 const errors_1 = require("../errors");
 exports.keyConditionAllowedOperators = [
     '=',
@@ -198,7 +199,13 @@ class FilterExpressionQuery {
                 if (operator === 'beginsWith' && attr.type.type === 'N') {
                     throw new errors_1.QueryError('Cannot use beginsWith with number attributes');
                 }
-                const strValue = attr.toDynamoAssert(filter[1]);
+                let strValue;
+                if ((attr.type.type === 'SS' || attr.type.type === 'NS' || attr.type.type === 'BS') && !_.isArray(filter[1])) {
+                    strValue = new attribute_1.Attribute('__query', attr.type, attr.metadata).toDynamoAssert([filter[1]]);
+                }
+                else {
+                    strValue = attr.toDynamoAssert(filter[1]);
+                }
                 // convert sets to single values, since contains and not contains only work on the single value
                 // and sets do not support beginsWith so we don't have to be concerned with that here
                 if (strValue.SS != null) {

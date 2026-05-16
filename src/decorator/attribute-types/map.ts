@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from '../../dynamodb'
 import * as _ from 'lodash'
 import { Attribute } from '../../attribute'
 import { DynamoAttributeType } from '../../dynamo-attribute-types'

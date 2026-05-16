@@ -14,41 +14,42 @@ const lodash_1 = require("lodash");
 const batch_get_1 = require("./batch-get");
 const primary_key_1 = require("./query/primary-key");
 const table_1 = require("./table");
-const decorator_1 = require("./decorator");
+const Decorator = require("./decorator");
+[Decorator.Table, Decorator.PrimaryKey, Decorator.Attribute].forEach(() => undefined);
 describe('BatchGet', () => {
     let TestTable1 = class TestTable1 extends table_1.Table {
     };
     __decorate([
-        decorator_1.Attribute.Number(),
+        Decorator.Attribute.Number(),
         __metadata("design:type", Number)
     ], TestTable1.prototype, "id", void 0);
     __decorate([
-        decorator_1.Attribute.String(),
+        Decorator.Attribute.String(),
         __metadata("design:type", String)
     ], TestTable1.prototype, "status", void 0);
     __decorate([
-        (0, decorator_1.PrimaryKey)('id'),
+        Decorator.PrimaryKey('id'),
         __metadata("design:type", primary_key_1.PrimaryKey)
     ], TestTable1, "primaryKey", void 0);
     TestTable1 = __decorate([
-        (0, decorator_1.Table)({ name: 'BatchGetTestCardTable1' })
+        Decorator.Table({ name: 'BatchGetTestCardTable1' })
     ], TestTable1);
     let TestTable2 = class TestTable2 extends table_1.Table {
     };
     __decorate([
-        decorator_1.Attribute.Number(),
+        Decorator.Attribute.Number(),
         __metadata("design:type", Number)
     ], TestTable2.prototype, "id", void 0);
     __decorate([
-        decorator_1.Attribute.String(),
+        Decorator.Attribute.String(),
         __metadata("design:type", String)
     ], TestTable2.prototype, "status", void 0);
     __decorate([
-        (0, decorator_1.PrimaryKey)('id'),
+        Decorator.PrimaryKey('id'),
         __metadata("design:type", primary_key_1.PrimaryKey)
     ], TestTable2, "primaryKey", void 0);
     TestTable2 = __decorate([
-        (0, decorator_1.Table)({ name: 'BatchGetTestCardTable2' })
+        Decorator.Table({ name: 'BatchGetTestCardTable2' })
     ], TestTable2);
     before(async () => {
         await TestTable1.createTable();

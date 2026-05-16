@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk';
+import { DynamoDB } from '../../dynamodb';
 import { Attribute } from '../../attribute';
 import { DynamoAttributeType } from '../../dynamo-attribute-types';
 import { IAttributeType } from '../../interfaces';

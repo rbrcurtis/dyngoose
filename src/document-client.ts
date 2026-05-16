@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from './dynamodb'
 import { HelpfulError } from './errors'
 import { batchWrite } from './query/batch-write'
 import { buildQueryExpression } from './query/expression'

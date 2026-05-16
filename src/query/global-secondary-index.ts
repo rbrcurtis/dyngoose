@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from '../dynamodb'
 import { get, has, isArray } from 'lodash'
 import { HelpfulError, QueryError } from '../errors'
 import * as Metadata from '../metadata'

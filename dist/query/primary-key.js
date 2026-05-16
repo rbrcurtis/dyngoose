@@ -280,7 +280,9 @@ class PrimaryKey {
      * It then has the Table.Schema build the DynamoDB.UpdateItemInput with all the requested changes.
      */
     async update(input) {
-        return await this.fromKey(input.hash, input.range).fromJSON(input.changes).save(input.conditions);
+        const record = this.fromKey(input.hash, input.range);
+        record.setValues(input.changes);
+        return await record.save(input.conditions);
     }
 }
 exports.PrimaryKey = PrimaryKey;

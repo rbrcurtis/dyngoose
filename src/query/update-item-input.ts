@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from '../dynamodb'
 import * as _ from 'lodash'
 import { DynamoReturnValues } from '../interfaces'
 import { Table } from '../table'

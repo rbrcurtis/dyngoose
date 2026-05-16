@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from '../dynamodb'
 import * as _ from 'lodash'
 import { Attribute } from '../attribute'
 import { QueryError } from '../errors'
@@ -250,7 +250,12 @@ class FilterExpressionQuery<T extends Table> {
           throw new QueryError('Cannot use beginsWith with number attributes')
         }
 
-        const strValue = attr.toDynamoAssert(filter[1])
+        let strValue: DynamoDB.AttributeValue
+        if ((attr.type.type === 'SS' || attr.type.type === 'NS' || attr.type.type === 'BS') && !_.isArray(filter[1])) {
+          strValue = new Attribute('__query', attr.type, attr.metadata).toDynamoAssert([filter[1]])
+        } else {
+          strValue = attr.toDynamoAssert(filter[1])
+        }
 
         // convert sets to single values, since contains and not contains only work on the single value
         // and sets do not support beginsWith so we don't have to be concerned with that here

@@ -1,5 +1,5 @@
 import { flatten, filter, isArray, isEqual, chunk } from 'lodash'
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from './dynamodb'
 import Config from './config'
 import { Table } from './table'
 import { buildProjectionExpression } from './query/projection-expression'

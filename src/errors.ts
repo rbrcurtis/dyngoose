@@ -1,6 +1,7 @@
-import { AWSError } from 'aws-sdk'
-import { BatchWriteItemOutput } from 'aws-sdk/clients/dynamodb'
+import { type BatchWriteItemOutput } from './dynamodb'
 import { ITable } from './table'
+
+interface AWSError extends Error {}
 
 export class DyngooseError extends Error {
   constructor(message: string) {

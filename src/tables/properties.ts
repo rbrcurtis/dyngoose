@@ -1,4 +1,4 @@
-import { BinarySetAttributeValue } from 'aws-sdk/clients/dynamodb'
+import { type BinarySetAttributeValue } from '../dynamodb'
 import { Table } from '../table'
 
 export type TableProperty<T> = Exclude<keyof T, keyof Table>

@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from './dynamodb'
 import { RateLimit } from 'async-sema'
 import * as _ from 'lodash'
 import Config from './config'

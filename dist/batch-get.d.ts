@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk';
+import { DynamoDB } from './dynamodb';
 import { Table } from './table';
 export declare class BatchGet<T extends Table> {
     static readonly MAX_BATCH_ITEMS = 100;

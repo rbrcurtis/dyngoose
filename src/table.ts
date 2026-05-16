@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from './dynamodb'
 import * as _ from 'lodash'
 import { extend } from 'lodash'
 import { Attribute } from './attribute'
@@ -95,9 +95,7 @@ export class Table {
     attributes: DynamoDB.AttributeMap,
     entireDocument = true,
   ): T {
-    const item = new this().fromDynamo(attributes, entireDocument)
-    item?.applyDefaults()
-    return item
+    return new this().fromDynamo(attributes, entireDocument)
   }
 
   /**
@@ -781,6 +779,10 @@ export class Table {
   }
 
   protected setByAttribute(attribute: Attribute<any>, value: any, params: SetPropParams = {}): this {
+    if (isTrulyEmpty(value)) {
+      return this.removeAttribute(attribute.name)
+    }
+
     const attributeValue = attribute.toDynamo(value)
 
     // avoid recording the value if it is unchanged, so we do not send it as an updated value during a save

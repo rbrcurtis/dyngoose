@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from '../dynamodb'
 import { Schema } from './schema'
 
 export async function describeTable(schema: Schema): Promise<DynamoDB.TableDescription> {

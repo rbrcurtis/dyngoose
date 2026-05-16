@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk';
+import { DynamoDB } from '../dynamodb';
 import { ITable, Table } from '../table';
 interface IProjectionExpression {
     ProjectionExpression: DynamoDB.ProjectionExpression;

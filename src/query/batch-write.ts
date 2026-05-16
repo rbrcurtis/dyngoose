@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from '../dynamodb'
 import * as _ from 'lodash'
 
 // this is limit of dynamoDB

@@ -3,26 +3,23 @@ import { BatchWrite } from './batch-write'
 import { PrimaryKey } from './query/primary-key'
 import { Table } from './table'
 
-import {
-  Attribute as AttributeDecorator,
-  PrimaryKey as PrimaryKeyDecorator,
-  Table as TableDecorator,
-} from './decorator'
+import * as Decorator from './decorator'
 import { BatchError } from './errors'
+[Decorator.Table, Decorator.PrimaryKey, Decorator.Attribute].forEach(() => undefined)
 
 describe('BatchWrite', () => {
-  @TableDecorator({ name: 'BatchWriteTestCardTable' })
+  @Decorator.Table({ name: 'BatchWriteTestCardTable' })
   class Card extends Table {
-    @PrimaryKeyDecorator('id', 'title')
+    @Decorator.PrimaryKey('id', 'title')
     public static readonly primaryKey: PrimaryKey<Card, number, string>
 
-    @AttributeDecorator.Number()
+    @Decorator.Attribute.Number()
     public id: number
 
-    @AttributeDecorator.String()
+    @Decorator.Attribute.String()
     public title: string
 
-    @AttributeDecorator.Number()
+    @Decorator.Attribute.Number()
     public count: number
   }
 

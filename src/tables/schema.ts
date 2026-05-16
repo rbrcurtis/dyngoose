@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk'
+import { DynamoDB } from '../dynamodb'
 import { Attribute } from '../attribute'
 import { MapAttributeType } from '../decorator/attribute-types/map'
 import { SchemaError } from '../errors'
